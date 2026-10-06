@@ -1,0 +1,9 @@
+test-output/
+node_modules/
+coverage/
+.cache/
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
