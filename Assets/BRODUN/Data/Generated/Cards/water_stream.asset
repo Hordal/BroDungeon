@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e840ba6fd4ff35489498e57af77874f, type: 3}
+  m_Name: water_stream
+  m_EditorClassIdentifier: 
+  definition:
+    id: water_stream
+    name: "\uC218\uB9E5\uC758 \uD750\uB984"
+    description: "\uD53C\uD574 3. 1\uC7A5 \uB4DC\uB85C\uC6B0."
+    element: water
+    cost: 1
+    effects:
+    - type: damage
+      condition: 
+      amount: 3
+      hits: 0
+    - type: draw
+      condition: 
+      amount: 1
+      hits: 0
+  artwork: {fileID: 0}

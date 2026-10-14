@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 676340a7a1a5c434b9d92658f098af46, type: 3}
+  m_Name: mage
+  m_EditorClassIdentifier: 
+  definition:
+    id: mage
+    name: "\uB9C8\uBC95\uC0AC"
+    desc: "\uBD88\xB7\uC5BC\uC74C\xB7\uBC88\uAC1C / \uC6D0\uC18C\uC220"
+    maxHP: 60
+    energy: 3
+    starter:
+    - fire_bolt
+    - ice_guard
+    - lightning_strike
+    - lightning_charge
+  portrait: {fileID: 0}

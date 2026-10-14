@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 242a7dca93391c34183cb016d9917597, type: 3}
+  m_Name: GameCatalog
+  m_EditorClassIdentifier: 
+  cards:
+  - {fileID: 11400000, guid: 340b4d9565d2fcb4fb44473296a200eb, type: 2}
+  - {fileID: 11400000, guid: 7b80e7bed44e82344abd96d0b2a94680, type: 2}
+  - {fileID: 11400000, guid: 4a85f31c8504b7b428480359a04085fd, type: 2}
+  - {fileID: 11400000, guid: 692db244ceabe1e46addff209785b7b1, type: 2}
+  - {fileID: 11400000, guid: 03c815502f08faf47ae20b2564cf81e9, type: 2}
+  - {fileID: 11400000, guid: 48bd681fea21cd34b8c1bd7c557ade5a, type: 2}
+  - {fileID: 11400000, guid: ac1f3cb4d838b204daaa9cacaf0fc32f, type: 2}
+  - {fileID: 11400000, guid: 9dae956233cc45e438838689c22ee436, type: 2}
+  - {fileID: 11400000, guid: b00ed474484614c4db14dce24e6c5d0a, type: 2}
+  - {fileID: 11400000, guid: 7c0821ec210cf3647a23c91897f2a638, type: 2}
+  - {fileID: 11400000, guid: e582d2975e7a9e3409df532f873720b6, type: 2}
+  - {fileID: 11400000, guid: 60c2fbf6cfc377b40aefd6022e1dc141, type: 2}
+  - {fileID: 11400000, guid: 08c1ebee2f75ba94e95590f27a9330c6, type: 2}
+  - {fileID: 11400000, guid: e21ca23757bc4d84ba01659b494c255a, type: 2}
+  - {fileID: 11400000, guid: 9f31c77369165fe4b82ce48c1032c06d, type: 2}
+  - {fileID: 11400000, guid: 303d7ed9b8aeb624384b88f122a50c5a, type: 2}
+  - {fileID: 11400000, guid: 718d95892cae8b24ab3472db4dde34b4, type: 2}
+  - {fileID: 11400000, guid: ac81a6cdbe325df4fac42f2c1aebe89d, type: 2}
+  - {fileID: 11400000, guid: 177399661e1be0649959d34b8bd8ff93, type: 2}
+  - {fileID: 11400000, guid: baf92231a4192fe47822be04e04b6390, type: 2}
+  - {fileID: 11400000, guid: ed6826be16ec2de45bc9e38330588e1b, type: 2}
+  - {fileID: 11400000, guid: e754a78c74cb0dc4085c28024eeba73d, type: 2}
+  - {fileID: 11400000, guid: fe31fe4658695554c87aa80bd1b9aa6d, type: 2}
+  - {fileID: 11400000, guid: fcb0d69fea115454f9a6b08fb0a0d43c, type: 2}
+  - {fileID: 11400000, guid: 3e0651884a3e162419d251a0eedede68, type: 2}
+  - {fileID: 11400000, guid: d1852014a5b58a441af782019c7d9296, type: 2}
+  - {fileID: 11400000, guid: aa70fdbed5628c44f9b09c6e9e6829a8, type: 2}
+  characters:
+  - {fileID: 11400000, guid: c2406bba2793d494b8cba60e463317de, type: 2}
+  - {fileID: 11400000, guid: 4db970a9f38db3748aa107b9acf2536c, type: 2}
+  - {fileID: 11400000, guid: 6fa0a37d175266143ba611aebbf09ebc, type: 2}
+  enemies:
+  - {fileID: 11400000, guid: 2d04c3c72974a2f42ab8e856459cb604, type: 2}
+  - {fileID: 11400000, guid: 9adbdf501ae0c9e468a2b2efbc641e9a, type: 2}
+  - {fileID: 11400000, guid: a2e15155154d86d45ac1e6814d7cea50, type: 2}
+  - {fileID: 11400000, guid: ba5acbda0ba57e74e8b128b0b8f1be11, type: 2}
+  - {fileID: 11400000, guid: 64f4b009fdd5aba40979753d9c9a56ec, type: 2}
+  - {fileID: 11400000, guid: 0df82a3d70a07274bb8b88a4a8e5a93a, type: 2}
+  - {fileID: 11400000, guid: 253771300ea1e07469c71aa4ad0bec52, type: 2}
+  - {fileID: 11400000, guid: 94a1a30f0242f4440b190f2e3be6ef37, type: 2}
+  - {fileID: 11400000, guid: ae6ff431665b9ad458c9424978576ec3, type: 2}
+  - {fileID: 11400000, guid: 3349538a6f7be074c85534482a316d62, type: 2}
+  - {fileID: 11400000, guid: 4d37386f14a7ca34a997b5b58561a33c, type: 2}
+  - {fileID: 11400000, guid: 98f3e69a921bd2c4684cfbb490a1bdb5, type: 2}
+  config: {fileID: 11400000, guid: 1d97682d1a595074b965a97106e68336, type: 2}
+  reward: {fileID: 11400000, guid: 74073f51accc8804a8ce97f4d3e980be, type: 2}
+  elements:
+  - id: earth
+    name: "\uB545"
+  - id: stone
+    name: "\uBC14\uC704"
+  - id: wind
+    name: "\uBC14\uB78C"
+  - id: water
+    name: "\uBB3C"
+  - id: ice
+    name: "\uC5BC\uC74C"
+  - id: poison
+    name: "\uB3C5"
+  - id: fire
+    name: "\uBD88"
+  - id: lightning
+    name: "\uBC88\uAC1C"
+  - id: explosion
+    name: "\uD3ED\uBC1C"

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e840ba6fd4ff35489498e57af77874f, type: 3}
+  m_Name: ice_link
+  m_EditorClassIdentifier: 
+  definition:
+    id: ice_link
+    name: "\uBE59\uACB0 \uC5F0\uACC4"
+    description: "\uD53C\uD574 4. \uC801\uC758 \uC9C1\uC804 \uC18D\uC131\uC774 \uBB3C
+      \uC2DC \uCD94\uAC00 \uD53C\uD574 7."
+    element: ice
+    cost: 1
+    effects:
+    - type: damage
+      condition: 
+      amount: 4
+      hits: 0
+    - type: conditional_damage
+      condition: water
+      amount: 7
+      hits: 0
+  artwork: {fileID: 0}

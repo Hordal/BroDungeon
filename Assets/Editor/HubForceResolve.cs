@@ -1,4 +1,7 @@
-
+// Legacy one-shot Unity Hub recovery helper, preserved with its original GUID.
+// Disabled by default: automatic Resolve and self-deletion are unsafe for a shared project.
+// Do not enable this symbol without reviewing the legacy behavior with the team.
+#if BRODUN_ENABLE_LEGACY_HUB_FORCE_RESOLVE
       using System.IO;
       using UnityEditor;
       using UnityEditor.PackageManager;
@@ -74,3 +77,4 @@
               }
           }
       }
+#endif

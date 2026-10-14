@@ -1,0 +1,1460 @@
+{
+  "schema": 1,
+  "sourceCommit": "eedba21b4552200874388bdb9f637850b14b3af0",
+  "config": {
+    "max_hp": 60,
+    "max_cost": 3,
+    "energy_cap": 6,
+    "hand_size": 4,
+    "gold_reward": 50,
+    "weak_reduction": 3,
+    "normal_hp_step": 2,
+    "animation": {
+      "card_impact_ms": 330,
+      "card_end_ms": 800,
+      "enemy_impact_ms": 400,
+      "enemy_end_ms": 900,
+      "victory_ms": 650
+    },
+    "event": {
+      "heal": 8,
+      "gold": 15
+    }
+  },
+  "cards": [
+    {
+      "id": "earth_strike",
+      "name": "지반 강타",
+      "cost": 1,
+      "element": "earth",
+      "effects": [
+        {
+          "type": "damage",
+          "amount": 5
+        }
+      ],
+      "description": "피해 5."
+    },
+    {
+      "id": "stone_guard",
+      "name": "바위 방벽",
+      "cost": 1,
+      "element": "stone",
+      "effects": [
+        {
+          "type": "block",
+          "amount": 5
+        }
+      ],
+      "description": "방어도 5."
+    },
+    {
+      "id": "wind_cut",
+      "name": "돌풍 베기",
+      "cost": 1,
+      "element": "wind",
+      "effects": [
+        {
+          "type": "damage",
+          "amount": 4
+        }
+      ],
+      "description": "피해 4."
+    },
+    {
+      "id": "fire_bolt",
+      "name": "화염탄",
+      "cost": 1,
+      "element": "fire",
+      "effects": [
+        {
+          "type": "damage",
+          "amount": 5
+        }
+      ],
+      "description": "피해 5."
+    },
+    {
+      "id": "ice_guard",
+      "name": "빙결 장막",
+      "cost": 1,
+      "element": "ice",
+      "effects": [
+        {
+          "type": "block",
+          "amount": 5
+        }
+      ],
+      "description": "방어도 5."
+    },
+    {
+      "id": "lightning_strike",
+      "name": "낙뢰",
+      "cost": 1,
+      "element": "lightning",
+      "effects": [
+        {
+          "type": "damage",
+          "amount": 5
+        }
+      ],
+      "description": "피해 5."
+    },
+    {
+      "id": "water_wave",
+      "name": "정화의 파동",
+      "cost": 1,
+      "element": "water",
+      "effects": [
+        {
+          "type": "damage",
+          "amount": 4
+        },
+        {
+          "type": "heal",
+          "amount": 1
+        }
+      ],
+      "description": "피해 4. HP 1 회복."
+    },
+    {
+      "id": "earth_blessing",
+      "name": "대지의 가호",
+      "cost": 1,
+      "element": "earth",
+      "effects": [
+        {
+          "type": "block",
+          "amount": 5
+        }
+      ],
+      "description": "방어도 5."
+    },
+    {
+      "id": "wind_judgment",
+      "name": "심판의 바람",
+      "cost": 1,
+      "element": "wind",
+      "effects": [
+        {
+          "type": "damage",
+          "amount": 5
+        }
+      ],
+      "description": "피해 5."
+    },
+    {
+      "id": "earth_crush",
+      "name": "대지 분쇄",
+      "cost": 2,
+      "element": "earth",
+      "effects": [
+        {
+          "type": "damage",
+          "amount": 13
+        }
+      ],
+      "description": "피해 13."
+    },
+    {
+      "id": "stone_retaliation",
+      "name": "반석의 반격",
+      "cost": 1,
+      "element": "stone",
+      "effects": [
+        {
+          "type": "damage",
+          "amount": 4
+        },
+        {
+          "type": "conditional_damage",
+          "condition": "block",
+          "amount": 5
+        }
+      ],
+      "description": "피해 4. 방어도 보유 시 추가 피해 5."
+    },
+    {
+      "id": "wind_read",
+      "name": "바람 읽기",
+      "cost": 0,
+      "element": "wind",
+      "effects": [
+        {
+          "type": "draw",
+          "amount": 1
+        },
+        {
+          "type": "exhaust"
+        }
+      ],
+      "description": "1장 드로우. 이번 전투에서 소멸."
+    },
+    {
+      "id": "water_stream",
+      "name": "수맥의 흐름",
+      "cost": 1,
+      "element": "water",
+      "effects": [
+        {
+          "type": "damage",
+          "amount": 3
+        },
+        {
+          "type": "draw",
+          "amount": 1
+        }
+      ],
+      "description": "피해 3. 1장 드로우."
+    },
+    {
+      "id": "water_rest",
+      "name": "치유의 물결",
+      "cost": 0,
+      "element": "water",
+      "effects": [
+        {
+          "type": "heal",
+          "amount": 3
+        },
+        {
+          "type": "block",
+          "amount": 2
+        },
+        {
+          "type": "exhaust"
+        }
+      ],
+      "description": "HP 3 회복. 방어도 2. 이번 전투에서 소멸."
+    },
+    {
+      "id": "ice_shard",
+      "name": "얼음 파편",
+      "cost": 1,
+      "element": "ice",
+      "effects": [
+        {
+          "type": "damage",
+          "amount": 5
+        },
+        {
+          "type": "weak",
+          "amount": 2
+        }
+      ],
+      "description": "피해 5. 약화 2턴(공격 -3)."
+    },
+    {
+      "id": "ice_link",
+      "name": "빙결 연계",
+      "cost": 1,
+      "element": "ice",
+      "effects": [
+        {
+          "type": "damage",
+          "amount": 4
+        },
+        {
+          "type": "conditional_damage",
+          "condition": "water",
+          "amount": 7
+        }
+      ],
+      "description": "피해 4. 적의 직전 속성이 물 시 추가 피해 7."
+    },
+    {
+      "id": "poison_touch",
+      "name": "독의 손길",
+      "cost": 1,
+      "element": "poison",
+      "effects": [
+        {
+          "type": "damage",
+          "amount": 2
+        },
+        {
+          "type": "poison",
+          "amount": 3
+        }
+      ],
+      "description": "피해 2. 독 3(적 턴 피해 후 1 감소)."
+    },
+    {
+      "id": "poison_sting",
+      "name": "맹독 찌르기",
+      "cost": 1,
+      "element": "poison",
+      "effects": [
+        {
+          "type": "damage",
+          "amount": 5
+        },
+        {
+          "type": "conditional_damage",
+          "condition": "poison",
+          "amount": 5
+        }
+      ],
+      "description": "피해 5. 적이 독 상태 시 추가 피해 5."
+    },
+    {
+      "id": "poison_mist",
+      "name": "독안개",
+      "cost": 1,
+      "element": "poison",
+      "effects": [
+        {
+          "type": "poison",
+          "amount": 3
+        },
+        {
+          "type": "weak",
+          "amount": 1
+        }
+      ],
+      "description": "독 3(적 턴 피해 후 1 감소). 약화 1턴(공격 -3)."
+    },
+    {
+      "id": "fire_inferno",
+      "name": "열화 폭격",
+      "cost": 2,
+      "element": "fire",
+      "effects": [
+        {
+          "type": "damage",
+          "amount": 14
+        }
+      ],
+      "description": "피해 14."
+    },
+    {
+      "id": "fire_strength",
+      "name": "화로의 힘",
+      "cost": 1,
+      "element": "fire",
+      "effects": [
+        {
+          "type": "strength",
+          "amount": 2
+        },
+        {
+          "type": "block",
+          "amount": 3
+        }
+      ],
+      "description": "이번 전투 힘 +2. 방어도 3."
+    },
+    {
+      "id": "lightning_chain",
+      "name": "연쇄 번개",
+      "cost": 1,
+      "element": "lightning",
+      "effects": [
+        {
+          "type": "damage",
+          "amount": 3,
+          "hits": 2
+        }
+      ],
+      "description": "피해 3 × 2회(타격마다 힘 적용)."
+    },
+    {
+      "id": "lightning_charge",
+      "name": "전하 축적",
+      "cost": 0,
+      "element": "lightning",
+      "effects": [
+        {
+          "type": "energy",
+          "amount": 1
+        },
+        {
+          "type": "exhaust"
+        }
+      ],
+      "description": "행동력 +1(최대 6). 이번 전투에서 소멸."
+    },
+    {
+      "id": "explosion_blast",
+      "name": "폭발 일격",
+      "cost": 2,
+      "element": "explosion",
+      "effects": [
+        {
+          "type": "damage",
+          "amount": 15
+        }
+      ],
+      "description": "피해 15."
+    },
+    {
+      "id": "explosion_link",
+      "name": "점화 연계",
+      "cost": 1,
+      "element": "explosion",
+      "effects": [
+        {
+          "type": "damage",
+          "amount": 5
+        },
+        {
+          "type": "conditional_damage",
+          "condition": "fire",
+          "amount": 8
+        }
+      ],
+      "description": "피해 5. 적의 직전 속성이 불 시 추가 피해 8."
+    },
+    {
+      "id": "explosion_barrier",
+      "name": "충격 방벽",
+      "cost": 1,
+      "element": "explosion",
+      "effects": [
+        {
+          "type": "block",
+          "amount": 7
+        },
+        {
+          "type": "damage",
+          "amount": 2
+        }
+      ],
+      "description": "방어도 7. 피해 2."
+    },
+    {
+      "id": "stone_fortress",
+      "name": "돌의 요새",
+      "cost": 2,
+      "element": "stone",
+      "effects": [
+        {
+          "type": "block",
+          "amount": 12
+        }
+      ],
+      "description": "방어도 12."
+    }
+  ],
+  "characters": [
+    {
+      "id": "warrior",
+      "name": "전사",
+      "desc": "땅·바위·바람 / 검과 방패",
+      "starter": [
+        "earth_strike",
+        "stone_guard",
+        "wind_cut",
+        "wind_read"
+      ],
+      "maxHP": 60,
+      "energy": 3
+    },
+    {
+      "id": "mage",
+      "name": "마법사",
+      "desc": "불·얼음·번개 / 원소술",
+      "starter": [
+        "fire_bolt",
+        "ice_guard",
+        "lightning_strike",
+        "lightning_charge"
+      ],
+      "maxHP": 60,
+      "energy": 3
+    },
+    {
+      "id": "priest",
+      "name": "사제",
+      "desc": "물·땅·바람 / 회복과 지원",
+      "starter": [
+        "water_wave",
+        "earth_blessing",
+        "wind_judgment",
+        "water_rest"
+      ],
+      "maxHP": 60,
+      "energy": 3
+    }
+  ],
+  "enemies": [
+    {
+      "id": "ruin_gargoyle",
+      "name": "폐허 가고일",
+      "rank": "normal",
+      "area_index": 1,
+      "asset_id": "ruin_gargoyle",
+      "display_height": 180,
+      "hp": 38,
+      "area_hp_step": 4,
+      "patterns": [
+        {
+          "type": "attack",
+          "amount": 6,
+          "hits": 1
+        },
+        {
+          "type": "attack",
+          "amount": 8,
+          "hits": 1
+        },
+        {
+          "type": "block",
+          "amount": 5
+        }
+      ]
+    },
+    {
+      "id": "gale_warden",
+      "name": "질풍 파수꾼",
+      "rank": "elite",
+      "area_index": 1,
+      "asset_id": "gale_warden",
+      "display_height": 205,
+      "hp": 52,
+      "area_hp_step": 6,
+      "patterns": [
+        {
+          "type": "attack",
+          "amount": 8,
+          "hits": 1
+        },
+        {
+          "type": "attack",
+          "amount": 5,
+          "hits": 2
+        },
+        {
+          "type": "buff",
+          "amount": 2
+        },
+        {
+          "type": "attack",
+          "amount": 10,
+          "hits": 1
+        }
+      ]
+    },
+    {
+      "id": "fallen_colossus",
+      "name": "몰락한 거신",
+      "rank": "boss",
+      "area_index": 1,
+      "asset_id": "fallen_colossus",
+      "display_height": 230,
+      "hp": 64,
+      "area_hp_step": 8,
+      "patterns": [
+        {
+          "type": "attack",
+          "amount": 10,
+          "hits": 1
+        },
+        {
+          "type": "block",
+          "amount": 8
+        },
+        {
+          "type": "attack",
+          "amount": 6,
+          "hits": 2
+        },
+        {
+          "type": "buff",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "venom_eel",
+      "name": "맹독 장어",
+      "rank": "normal",
+      "area_index": 2,
+      "asset_id": "venom_eel",
+      "display_height": 180,
+      "hp": 38,
+      "area_hp_step": 4,
+      "patterns": [
+        {
+          "type": "attack",
+          "amount": 6,
+          "hits": 1
+        },
+        {
+          "type": "attack",
+          "amount": 8,
+          "hits": 1
+        },
+        {
+          "type": "block",
+          "amount": 5
+        }
+      ]
+    },
+    {
+      "id": "frost_seer",
+      "name": "서리 예언자",
+      "rank": "elite",
+      "area_index": 2,
+      "asset_id": "frost_seer",
+      "display_height": 205,
+      "hp": 52,
+      "area_hp_step": 6,
+      "patterns": [
+        {
+          "type": "attack",
+          "amount": 8,
+          "hits": 1
+        },
+        {
+          "type": "attack",
+          "amount": 5,
+          "hits": 2
+        },
+        {
+          "type": "buff",
+          "amount": 2
+        },
+        {
+          "type": "attack",
+          "amount": 10,
+          "hits": 1
+        }
+      ]
+    },
+    {
+      "id": "abyssal_leviathan",
+      "name": "심연의 레비아탄",
+      "rank": "boss",
+      "area_index": 2,
+      "asset_id": "abyssal_leviathan",
+      "display_height": 230,
+      "hp": 64,
+      "area_hp_step": 8,
+      "patterns": [
+        {
+          "type": "attack",
+          "amount": 10,
+          "hits": 1
+        },
+        {
+          "type": "block",
+          "amount": 8
+        },
+        {
+          "type": "attack",
+          "amount": 6,
+          "hits": 2
+        },
+        {
+          "type": "buff",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "ember_gremlin",
+      "name": "불씨 그렘린",
+      "rank": "normal",
+      "area_index": 3,
+      "asset_id": "ember_gremlin",
+      "display_height": 180,
+      "hp": 38,
+      "area_hp_step": 4,
+      "patterns": [
+        {
+          "type": "attack",
+          "amount": 6,
+          "hits": 1
+        },
+        {
+          "type": "attack",
+          "amount": 8,
+          "hits": 1
+        },
+        {
+          "type": "block",
+          "amount": 5
+        }
+      ]
+    },
+    {
+      "id": "coil_golem",
+      "name": "코일 골렘",
+      "rank": "elite",
+      "area_index": 3,
+      "asset_id": "coil_golem",
+      "display_height": 205,
+      "hp": 52,
+      "area_hp_step": 6,
+      "patterns": [
+        {
+          "type": "attack",
+          "amount": 8,
+          "hits": 1
+        },
+        {
+          "type": "attack",
+          "amount": 5,
+          "hits": 2
+        },
+        {
+          "type": "buff",
+          "amount": 2
+        },
+        {
+          "type": "attack",
+          "amount": 10,
+          "hits": 1
+        }
+      ]
+    },
+    {
+      "id": "foundry_tyrant",
+      "name": "주조소 폭군",
+      "rank": "boss",
+      "area_index": 3,
+      "asset_id": "foundry_tyrant",
+      "display_height": 230,
+      "hp": 64,
+      "area_hp_step": 8,
+      "patterns": [
+        {
+          "type": "attack",
+          "amount": 10,
+          "hits": 1
+        },
+        {
+          "type": "block",
+          "amount": 8
+        },
+        {
+          "type": "attack",
+          "amount": 6,
+          "hits": 2
+        },
+        {
+          "type": "buff",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "moss_slime",
+      "legacy": true,
+      "name": "이끼 슬라임",
+      "rank": "normal",
+      "area_index": 1,
+      "asset_id": "moss_slime",
+      "display_height": 170,
+      "hp": 38,
+      "area_hp_step": 4,
+      "patterns": [
+        {
+          "type": "attack",
+          "amount": 6,
+          "hits": 1
+        },
+        {
+          "type": "attack",
+          "amount": 8,
+          "hits": 1
+        },
+        {
+          "type": "block",
+          "amount": 5
+        }
+      ]
+    },
+    {
+      "id": "crystal_crawler",
+      "legacy": true,
+      "name": "수정 갑각충",
+      "rank": "normal",
+      "area_index": 2,
+      "asset_id": "crystal_crawler",
+      "display_height": 170,
+      "hp": 38,
+      "area_hp_step": 4,
+      "patterns": [
+        {
+          "type": "attack",
+          "amount": 6,
+          "hits": 1
+        },
+        {
+          "type": "attack",
+          "amount": 8,
+          "hits": 1
+        },
+        {
+          "type": "block",
+          "amount": 5
+        }
+      ]
+    },
+    {
+      "id": "furnace_sentinel",
+      "legacy": true,
+      "name": "화로 파수병",
+      "rank": "normal",
+      "area_index": 3,
+      "asset_id": "furnace_sentinel",
+      "display_height": 170,
+      "hp": 38,
+      "area_hp_step": 4,
+      "patterns": [
+        {
+          "type": "attack",
+          "amount": 6,
+          "hits": 1
+        },
+        {
+          "type": "attack",
+          "amount": 8,
+          "hits": 1
+        },
+        {
+          "type": "block",
+          "amount": 5
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": "earth",
+      "name": "땅"
+    },
+    {
+      "id": "stone",
+      "name": "바위"
+    },
+    {
+      "id": "wind",
+      "name": "바람"
+    },
+    {
+      "id": "water",
+      "name": "물"
+    },
+    {
+      "id": "ice",
+      "name": "얼음"
+    },
+    {
+      "id": "poison",
+      "name": "독"
+    },
+    {
+      "id": "fire",
+      "name": "불"
+    },
+    {
+      "id": "lightning",
+      "name": "번개"
+    },
+    {
+      "id": "explosion",
+      "name": "폭발"
+    }
+  ],
+  "fixtures": [
+    {
+      "seed": 0,
+      "hand": [
+        "wind_read",
+        "stone_guard",
+        "earth_strike",
+        "wind_cut"
+      ],
+      "reward": [
+        "poison_mist",
+        "explosion_link",
+        "water_rest"
+      ],
+      "map": [
+        {
+          "id": "start",
+          "room_type": "start",
+          "column": 0,
+          "x": 7,
+          "y": 50,
+          "floor_index": 1,
+          "next_room_ids": [
+            "r1"
+          ]
+        },
+        {
+          "id": "r1",
+          "room_type": "battle",
+          "column": 1,
+          "x": 24.2,
+          "y": 50,
+          "floor_index": 1,
+          "next_room_ids": [
+            "r2",
+            "r3",
+            "r4"
+          ],
+          "encounter_type": "normal"
+        },
+        {
+          "id": "r2",
+          "room_type": "event",
+          "column": 2,
+          "x": 41.4,
+          "y": 20,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r5",
+            "r6"
+          ],
+          "event_kind": "shop"
+        },
+        {
+          "id": "r3",
+          "room_type": "event",
+          "column": 2,
+          "x": 41.4,
+          "y": 50,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r5",
+            "r6",
+            "r7"
+          ],
+          "event_kind": "altar"
+        },
+        {
+          "id": "r4",
+          "room_type": "battle",
+          "column": 2,
+          "x": 41.4,
+          "y": 80,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r6",
+            "r7"
+          ],
+          "encounter_type": "normal"
+        },
+        {
+          "id": "r5",
+          "room_type": "puzzle",
+          "column": 3,
+          "x": 58.599999999999994,
+          "y": 20,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r8"
+          ]
+        },
+        {
+          "id": "r6",
+          "room_type": "battle",
+          "column": 3,
+          "x": 58.599999999999994,
+          "y": 50,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r8",
+            "r9"
+          ],
+          "encounter_type": "normal"
+        },
+        {
+          "id": "r7",
+          "room_type": "puzzle",
+          "column": 3,
+          "x": 58.599999999999994,
+          "y": 80,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r9"
+          ]
+        },
+        {
+          "id": "r8",
+          "room_type": "battle",
+          "column": 4,
+          "x": 75.8,
+          "y": 32,
+          "floor_index": 3,
+          "next_room_ids": [
+            "boss"
+          ],
+          "encounter_type": "normal"
+        },
+        {
+          "id": "r9",
+          "room_type": "battle",
+          "column": 4,
+          "x": 75.8,
+          "y": 68,
+          "floor_index": 3,
+          "next_room_ids": [
+            "boss"
+          ],
+          "encounter_type": "elite"
+        },
+        {
+          "id": "boss",
+          "room_type": "boss",
+          "column": 5,
+          "x": 93,
+          "y": 50,
+          "floor_index": 3,
+          "next_room_ids": []
+        }
+      ]
+    },
+    {
+      "seed": 17,
+      "hand": [
+        "earth_strike",
+        "wind_cut",
+        "wind_read",
+        "stone_guard"
+      ],
+      "reward": [
+        "lightning_charge",
+        "earth_blessing",
+        "water_stream"
+      ],
+      "map": [
+        {
+          "id": "start",
+          "room_type": "start",
+          "column": 0,
+          "x": 7,
+          "y": 50,
+          "floor_index": 1,
+          "next_room_ids": [
+            "r1"
+          ]
+        },
+        {
+          "id": "r1",
+          "room_type": "battle",
+          "column": 1,
+          "x": 24.2,
+          "y": 50,
+          "floor_index": 1,
+          "next_room_ids": [
+            "r2",
+            "r3",
+            "r4"
+          ],
+          "encounter_type": "normal"
+        },
+        {
+          "id": "r2",
+          "room_type": "puzzle",
+          "column": 2,
+          "x": 41.4,
+          "y": 20,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r5",
+            "r6"
+          ]
+        },
+        {
+          "id": "r3",
+          "room_type": "battle",
+          "column": 2,
+          "x": 41.4,
+          "y": 50,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r5",
+            "r6",
+            "r7"
+          ],
+          "encounter_type": "normal"
+        },
+        {
+          "id": "r4",
+          "room_type": "event",
+          "column": 2,
+          "x": 41.4,
+          "y": 80,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r6",
+            "r7"
+          ],
+          "event_kind": "shop"
+        },
+        {
+          "id": "r5",
+          "room_type": "event",
+          "column": 3,
+          "x": 58.599999999999994,
+          "y": 20,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r8"
+          ],
+          "event_kind": "altar"
+        },
+        {
+          "id": "r6",
+          "room_type": "battle",
+          "column": 3,
+          "x": 58.599999999999994,
+          "y": 50,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r8",
+            "r9"
+          ],
+          "encounter_type": "normal"
+        },
+        {
+          "id": "r7",
+          "room_type": "puzzle",
+          "column": 3,
+          "x": 58.599999999999994,
+          "y": 80,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r9"
+          ]
+        },
+        {
+          "id": "r8",
+          "room_type": "battle",
+          "column": 4,
+          "x": 75.8,
+          "y": 32,
+          "floor_index": 3,
+          "next_room_ids": [
+            "boss"
+          ],
+          "encounter_type": "normal"
+        },
+        {
+          "id": "r9",
+          "room_type": "battle",
+          "column": 4,
+          "x": 75.8,
+          "y": 68,
+          "floor_index": 3,
+          "next_room_ids": [
+            "boss"
+          ],
+          "encounter_type": "elite"
+        },
+        {
+          "id": "boss",
+          "room_type": "boss",
+          "column": 5,
+          "x": 93,
+          "y": 50,
+          "floor_index": 3,
+          "next_room_ids": []
+        }
+      ]
+    },
+    {
+      "seed": 29,
+      "hand": [
+        "stone_guard",
+        "earth_strike",
+        "wind_cut",
+        "wind_read"
+      ],
+      "reward": [
+        "lightning_charge",
+        "ice_link",
+        "poison_sting"
+      ],
+      "map": [
+        {
+          "id": "start",
+          "room_type": "start",
+          "column": 0,
+          "x": 7,
+          "y": 50,
+          "floor_index": 1,
+          "next_room_ids": [
+            "r1"
+          ]
+        },
+        {
+          "id": "r1",
+          "room_type": "battle",
+          "column": 1,
+          "x": 24.2,
+          "y": 50,
+          "floor_index": 1,
+          "next_room_ids": [
+            "r2",
+            "r3",
+            "r4"
+          ],
+          "encounter_type": "normal"
+        },
+        {
+          "id": "r2",
+          "room_type": "battle",
+          "column": 2,
+          "x": 41.4,
+          "y": 20,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r5",
+            "r6"
+          ],
+          "encounter_type": "normal"
+        },
+        {
+          "id": "r3",
+          "room_type": "event",
+          "column": 2,
+          "x": 41.4,
+          "y": 50,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r5",
+            "r6",
+            "r7"
+          ],
+          "event_kind": "rest_site"
+        },
+        {
+          "id": "r4",
+          "room_type": "puzzle",
+          "column": 2,
+          "x": 41.4,
+          "y": 80,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r6",
+            "r7"
+          ]
+        },
+        {
+          "id": "r5",
+          "room_type": "event",
+          "column": 3,
+          "x": 58.599999999999994,
+          "y": 20,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r8"
+          ],
+          "event_kind": "shop"
+        },
+        {
+          "id": "r6",
+          "room_type": "battle",
+          "column": 3,
+          "x": 58.599999999999994,
+          "y": 50,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r8",
+            "r9"
+          ],
+          "encounter_type": "normal"
+        },
+        {
+          "id": "r7",
+          "room_type": "puzzle",
+          "column": 3,
+          "x": 58.599999999999994,
+          "y": 80,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r9"
+          ]
+        },
+        {
+          "id": "r8",
+          "room_type": "battle",
+          "column": 4,
+          "x": 75.8,
+          "y": 32,
+          "floor_index": 3,
+          "next_room_ids": [
+            "boss"
+          ],
+          "encounter_type": "normal"
+        },
+        {
+          "id": "r9",
+          "room_type": "battle",
+          "column": 4,
+          "x": 75.8,
+          "y": 68,
+          "floor_index": 3,
+          "next_room_ids": [
+            "boss"
+          ],
+          "encounter_type": "elite"
+        },
+        {
+          "id": "boss",
+          "room_type": "boss",
+          "column": 5,
+          "x": 93,
+          "y": 50,
+          "floor_index": 3,
+          "next_room_ids": []
+        }
+      ]
+    },
+    {
+      "seed": 4294967295,
+      "hand": [
+        "wind_read",
+        "wind_cut",
+        "earth_strike",
+        "stone_guard"
+      ],
+      "reward": [
+        "poison_sting",
+        "wind_judgment",
+        "fire_bolt"
+      ],
+      "map": [
+        {
+          "id": "start",
+          "room_type": "start",
+          "column": 0,
+          "x": 7,
+          "y": 50,
+          "floor_index": 1,
+          "next_room_ids": [
+            "r1"
+          ]
+        },
+        {
+          "id": "r1",
+          "room_type": "battle",
+          "column": 1,
+          "x": 24.2,
+          "y": 50,
+          "floor_index": 1,
+          "next_room_ids": [
+            "r2",
+            "r3",
+            "r4"
+          ],
+          "encounter_type": "normal"
+        },
+        {
+          "id": "r2",
+          "room_type": "puzzle",
+          "column": 2,
+          "x": 41.4,
+          "y": 20,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r5",
+            "r6"
+          ]
+        },
+        {
+          "id": "r3",
+          "room_type": "puzzle",
+          "column": 2,
+          "x": 41.4,
+          "y": 50,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r5",
+            "r6",
+            "r7"
+          ]
+        },
+        {
+          "id": "r4",
+          "room_type": "battle",
+          "column": 2,
+          "x": 41.4,
+          "y": 80,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r6",
+            "r7"
+          ],
+          "encounter_type": "normal"
+        },
+        {
+          "id": "r5",
+          "room_type": "event",
+          "column": 3,
+          "x": 58.599999999999994,
+          "y": 20,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r8"
+          ],
+          "event_kind": "altar"
+        },
+        {
+          "id": "r6",
+          "room_type": "battle",
+          "column": 3,
+          "x": 58.599999999999994,
+          "y": 50,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r8",
+            "r9"
+          ],
+          "encounter_type": "normal"
+        },
+        {
+          "id": "r7",
+          "room_type": "event",
+          "column": 3,
+          "x": 58.599999999999994,
+          "y": 80,
+          "floor_index": 2,
+          "next_room_ids": [
+            "r9"
+          ],
+          "event_kind": "rest_site"
+        },
+        {
+          "id": "r8",
+          "room_type": "battle",
+          "column": 4,
+          "x": 75.8,
+          "y": 32,
+          "floor_index": 3,
+          "next_room_ids": [
+            "boss"
+          ],
+          "encounter_type": "normal"
+        },
+        {
+          "id": "r9",
+          "room_type": "battle",
+          "column": 4,
+          "x": 75.8,
+          "y": 68,
+          "floor_index": 3,
+          "next_room_ids": [
+            "boss"
+          ],
+          "encounter_type": "elite"
+        },
+        {
+          "id": "boss",
+          "room_type": "boss",
+          "column": 5,
+          "x": 93,
+          "y": 50,
+          "floor_index": 3,
+          "next_room_ids": []
+        }
+      ]
+    }
+  ]
+}

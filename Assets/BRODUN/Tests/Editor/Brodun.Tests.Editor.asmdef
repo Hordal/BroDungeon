@@ -1,0 +1,18 @@
+{
+  "name": "Brodun.Tests.Editor",
+  "rootNamespace": "Brodun.Tests",
+  "references": [
+    "Brodun.Rules",
+    "Brodun.Data",
+    "Brodun.Editor",
+    "Brodun.Flow",
+    "Brodun.Presentation",
+    "Unity.InputSystem"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}

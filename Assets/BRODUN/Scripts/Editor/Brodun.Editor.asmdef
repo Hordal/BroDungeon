@@ -1,0 +1,14 @@
+{
+  "name": "Brodun.Editor",
+  "rootNamespace": "Brodun.Editor",
+  "references": [
+    "Brodun.Data",
+    "Brodun.Rules",
+    "Brodun.Flow",
+    "Brodun.Presentation",
+    "Unity.InputSystem"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}
