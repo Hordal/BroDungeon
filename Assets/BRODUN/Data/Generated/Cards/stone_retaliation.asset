@@ -28,4 +28,4 @@ MonoBehaviour:
       condition: block
       amount: 5
       hits: 0
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: 1da20a706a874cfa979514c4e7f89569, type: 3}

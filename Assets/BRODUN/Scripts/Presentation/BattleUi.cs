@@ -32,6 +32,16 @@ namespace Brodun.Presentation
             var bg=Image(parent,name+" track",null,new Color(.07f,.09f,.11f),min,max);
             return Image(bg.transform,name,null,tint,Vector2.zero,Vector2.one);
         }
+        public static void Readable(Text label)
+        {
+            var outline=label.GetComponent<Outline>()??label.gameObject.AddComponent<Outline>();
+            outline.effectColor=new Color(.005f,.01f,.02f,.95f);outline.effectDistance=new Vector2(2,-2);
+        }
+        public static BattleHudGlyph Glyph(Transform parent,string name,BattleHudGlyph.Symbol symbol,Color tint,Vector2 min,Vector2 max)
+        {
+            var glyph=Rect(parent,name,min,max).gameObject.AddComponent<BattleHudGlyph>();
+            glyph.Kind=symbol;glyph.color=tint;glyph.raycastTarget=false;return glyph;
+        }
         public static RectTransform Panel(Transform parent,string name,Vector2 min,Vector2 max)
         {
             var edge=Image(parent,name+" rim",null,new Color(.49f,.40f,.24f,.92f),min,max);
@@ -52,6 +62,42 @@ namespace Brodun.Presentation
             if(intent==null)return "전투가 종료되었습니다.";
             return intent.Type==IntentType.Attack?"다음 행동: "+intent.Amount+" 피해를 "+intent.Hits+"회 가합니다.\n현재 방어도 기준 HP 피해: "+intent.ExpectedHPDamage(block):
                 intent.Type==IntentType.Block?"다음 행동: 적 방어도 "+intent.Amount+" 획득":"다음 행동: 적 힘 +"+intent.Amount;
+        }
+    }
+    // HUD symbols, not another combat-effects system. No font glyph or external asset dependency.
+    [RequireComponent(typeof(CanvasRenderer))]
+    public sealed class BattleHudGlyph : MaskableGraphic
+    {
+        public enum Symbol { Shield, Sword, Power, Energy }
+        private Symbol kind;
+        public Symbol Kind {get=>kind;set{kind=value;SetVerticesDirty();}}
+        public BattleHudGlyph(){useLegacyMeshGeneration=false;}
+        protected override void OnPopulateMesh(VertexHelper vh)
+        {
+            vh.Clear();var r=rectTransform.rect;float size=Mathf.Min(r.width,r.height);var center=r.center;
+            if(kind==Symbol.Shield)
+            {
+                Poly(vh,center,size,new[]{new Vector2(-.39f,.40f),new Vector2(.39f,.40f),new Vector2(.30f,-.12f),new Vector2(0,-.47f),new Vector2(-.30f,-.12f)},color);
+                Poly(vh,center+Vector2.up*size*.02f,size*.69f,new[]{new Vector2(-.39f,.40f),new Vector2(.39f,.40f),new Vector2(.30f,-.12f),new Vector2(0,-.47f),new Vector2(-.30f,-.12f)},new Color(.035f,.09f,.10f,color.a));
+            }
+            else if(kind==Symbol.Sword)
+            {
+                Poly(vh,center,size,new[]{new Vector2(-.29f,-.12f),new Vector2(.22f,.43f),new Vector2(.43f,.46f),new Vector2(.40f,.23f),new Vector2(-.12f,-.29f)},color);
+                Poly(vh,center,size,new[]{new Vector2(-.45f,-.19f),new Vector2(-.33f,-.08f),new Vector2(.01f,-.43f),new Vector2(-.10f,-.49f)},color);
+                Poly(vh,center,size,new[]{new Vector2(-.39f,-.49f),new Vector2(-.49f,-.39f),new Vector2(-.29f,-.18f),new Vector2(-.18f,-.29f)},color);
+            }
+            else if(kind==Symbol.Energy)
+            {
+                Poly(vh,center,size,new[]{new Vector2(0,.49f),new Vector2(.37f,0),new Vector2(0,-.49f),new Vector2(-.37f,0)},color);
+                Poly(vh,center,size,new[]{new Vector2(0,.34f),new Vector2(.19f,0),new Vector2(0,-.16f)},Color.Lerp(color,Color.white,.75f));
+            }
+            else Poly(vh,center,size,new[]{new Vector2(-.38f,.04f),new Vector2(0,.46f),new Vector2(.38f,.04f),new Vector2(.14f,.04f),new Vector2(.14f,-.45f),new Vector2(-.14f,-.45f),new Vector2(-.14f,.04f)},color);
+        }
+        private static void Poly(VertexHelper vh,Vector2 center,float size,Vector2[] points,Color ink)
+        {
+            int start=vh.currentVertCount;vh.AddVert(center,ink,Vector2.zero);
+            foreach(var p in points){var pos=center+p*size;vh.AddVert(new Vector2(Mathf.Round(pos.x),Mathf.Round(pos.y)),ink,Vector2.zero);}
+            for(int i=0;i<points.Length;i++)vh.AddTriangle(start,start+1+i,start+1+(i+1)%points.Length);
         }
     }
 }

@@ -28,4 +28,4 @@ MonoBehaviour:
       condition: poison
       amount: 5
       hits: 0
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: b420bff7abf544108ffd4b696939eb7c, type: 3}

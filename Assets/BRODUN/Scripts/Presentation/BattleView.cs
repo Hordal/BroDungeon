@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Brodun.Flow;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,6 +30,12 @@ namespace Brodun.Presentation
         public HandPresentation HandLayout { get; private set; }
         private int shownEnergy=-1;
         private float energyPulse;
+        private readonly List<BattleHudGlyph> energyPips=new List<BattleHudGlyph>();
+        private Coroutine shakeRoutine;
+        private float blockPulse;
+        private bool holdPlayerBlock;
+        public void HoldPlayerBlock(bool hold)
+        {holdPlayerBlock=hold;if(!hold&&context!=null)block.text=context.Runtime.Block.ToString();}
         public void Build(BattleContext value,BattlePresentationAssets assets,Action<CardView> cardClick,Action endTurn)
         {
             context=value;art=assets;var common=art.common;
@@ -38,37 +45,57 @@ namespace Brodun.Presentation
             Root.gameObject.AddComponent<GraphicRaycaster>();
             stage=BattleUi.Rect(Root,"Combat stage",Vector2.zero,Vector2.one);
             BattleUi.Image(stage,"Battle background",art.background,Color.white,Vector2.zero,Vector2.one);
-            BattleUi.Image(stage,"Battle veil",null,new Color(.01f,.025f,.04f,.28f),Vector2.zero,Vector2.one);
-            BattleUi.Image(Root,"Hand table",null,new Color(.025f,.04f,.055f,.88f),Vector2.zero,new Vector2(1,.345f));
-            BattleUi.Image(Root,"Hand gold rule",null,new Color(.65f,.51f,.27f,.65f),new Vector2(.02f,.343f),new Vector2(.98f,.345f));
-            BattleUi.Image(Root,"Player status panel",null,new Color(.02f,.045f,.06f,.82f),new Vector2(.055f,.81f),new Vector2(.32f,.95f));
-            BattleUi.Text(Root,"Battle title","잊혀진 회랑  /  "+(context.Room.Encounter==EnemyType.Elite?"엘리트 전투":context.Room.Type==RoomType.Boss?"보스 전투":"일반 전투"),common.font,24,BattleUi.Gold,new Vector2(.34f,.94f),new Vector2(.66f,.99f));
-            BattleUi.Text(Root,"Player name",context.Runtime.Data.Character(context.Run.SelectedCharacter).Name,common.font,28,BattleUi.Gold,new Vector2(.07f,.905f),new Vector2(.17f,.95f));
-            hp=BattleUi.Text(Root,"Player HP","",common.font,25,BattleUi.Pale,new Vector2(.16f,.905f),new Vector2(.31f,.95f));
-            hpBar=BattleUi.Bar(Root,"Player HP Bar",new Vector2(.07f,.88f),new Vector2(.305f,.892f),BattleUi.Teal);
-            block=BattleUi.Text(Root,"Player block","",common.font,23,BattleUi.Gold,new Vector2(.07f,.825f),new Vector2(.21f,.87f));
-            status=BattleUi.Text(Root,"Player status","",common.font,22,BattleUi.Teal,new Vector2(.21f,.825f),new Vector2(.31f,.87f));
-            player=BattleUi.Image(stage,"Player sprite",common.Portrait(context.Run.SelectedCharacter),Color.white,new Vector2(.25f,.38f),new Vector2(.25f,.38f));player.preserveAspect=true;
-            player.rectTransform.sizeDelta=new Vector2(360,390);player.rectTransform.pivot=new Vector2(.5f,0);
+            BattleUi.Image(stage,"Battle veil",null,new Color(.01f,.025f,.04f,.15f),Vector2.zero,Vector2.one);
+            // A soft floor-to-hand scrim, rather than a black rectangular table and gold border.
+            for(int i=0;i<12;i++)BattleUi.Image(Root,"Hand shade "+i,null,new Color(.015f,.025f,.035f,.94f*(1-i/12f)),new Vector2(0,i*.029f),new Vector2(1,(i+1)*.029f));
+            BattleUi.Text(Root,"Battle title","잊혀진 회랑  ·  "+(context.Room.Encounter==EnemyType.Elite?"엘리트":context.Room.Type==RoomType.Boss?"보스":"일반 전투"),common.font,20,BattleUi.Gold,new Vector2(.35f,.95f),new Vector2(.65f,.99f));
+            BattleUi.Text(Root,"Player name",context.Runtime.Data.Character(context.Run.SelectedCharacter).Name,common.font,22,BattleUi.Gold,new Vector2(.14f,.893f),new Vector2(.36f,.925f));
+            hp=BattleUi.Text(Root,"Player HP","",common.font,40,BattleUi.Pale,new Vector2(.13f,.815f),new Vector2(.37f,.866f));
+            hpBar=BattleUi.Bar(Root,"Player HP Bar",new Vector2(.13f,.825f),new Vector2(.37f,.877f),new Color(.11f,.43f,.36f));
+            var hpTrack=(RectTransform)hpBar.transform.parent;
+            hpTrack.GetComponent<Image>().color=new Color(.015f,.025f,.035f,.96f);
+            hp.rectTransform.SetParent(hpTrack,false);hp.rectTransform.anchorMin=Vector2.zero;hp.rectTransform.anchorMax=Vector2.one;
+            hp.rectTransform.offsetMin=hp.rectTransform.offsetMax=Vector2.zero;
+            hp.verticalOverflow=VerticalWrapMode.Overflow;hp.horizontalOverflow=HorizontalWrapMode.Overflow;
+            BattleUi.Glyph(Root,"Player shield",BattleHudGlyph.Symbol.Shield,BattleUi.Teal,new Vector2(.14f,.790f),new Vector2(.157f,.825f));
+            block=BattleUi.Text(Root,"Player block","",common.font,25,BattleUi.Teal,new Vector2(.16f,.790f),new Vector2(.25f,.825f));
+            status=BattleUi.Text(Root,"Player status","",common.font,20,BattleUi.Teal,new Vector2(.25f,.790f),new Vector2(.36f,.825f));
+            player=BattleUi.Image(stage,"Player sprite",common.Portrait(context.Run.SelectedCharacter),Color.white,new Vector2(.25f,.44f),new Vector2(.25f,.44f));player.preserveAspect=true;
+            player.rectTransform.sizeDelta=new Vector2(342,368);player.rectTransform.pivot=new Vector2(.5f,0);
             actor=player.gameObject.AddComponent<PlayerBattleActor>();actor.Bind(player,context.Run.SelectedCharacter);
-            var enemyRoot=BattleUi.Rect(stage,"Enemy stage",new Vector2(.59f,.38f),new Vector2(.95f,.86f));
+            var enemyRoot=BattleUi.Rect(stage,"Enemy stage",new Vector2(.60f,.44f),new Vector2(.94f,.80f));
             Enemy=Instantiate(art.enemyPrefab,enemyRoot,false);Enemy.Bind(context.Runtime.Enemy,art.Enemy(context.Runtime.Enemy.Definition.Id));
-            EnergyLabel=BattleUi.Text(Root,"Energy","",common.font,43,BattleUi.Gold,new Vector2(.03f,.15f),new Vector2(.185f,.285f));
-            turn=BattleUi.Text(Root,"Turn","",common.font,20,BattleUi.Pale,new Vector2(.03f,.08f),new Vector2(.185f,.15f));
+            BattleUi.Text(Root,"Energy caption","행동력 / ENERGY",common.font,21,BattleUi.Teal,new Vector2(.025f,.25f),new Vector2(.17f,.28f));
+            EnergyLabel=BattleUi.Text(Root,"Energy","",common.font,68,BattleUi.Gold,new Vector2(.025f,.105f),new Vector2(.17f,.205f));
+            BattleUi.Glyph(Root,"Energy emblem",BattleHudGlyph.Symbol.Energy,BattleUi.Teal,new Vector2(.080f,.205f),new Vector2(.115f,.249f));
+            for(int i=0;i<6;i++)
+            {
+                var pip=BattleUi.Glyph(Root,"Energy pip "+i,BattleHudGlyph.Symbol.Energy,BattleUi.Gold,new Vector2(.036f+i*.021f,.075f),new Vector2(.051f+i*.021f,.104f));
+                energyPips.Add(pip);
+            }
+            turn=BattleUi.Text(Root,"Turn","",common.font,17,BattleUi.Pale,new Vector2(.025f,.015f),new Vector2(.17f,.073f));
             gold=BattleUi.Text(Root,"Gold","",common.font,23,BattleUi.Gold,new Vector2(.84f,.95f),new Vector2(.98f,.995f));
-            piles=BattleUi.Text(Root,"Deck piles","",common.font,20,BattleUi.Pale,new Vector2(.26f,.355f),new Vector2(.77f,.405f));
-            banner=BattleUi.Text(Root,"Battle feedback","",common.font,27,BattleUi.Gold,new Vector2(.34f,.82f),new Vector2(.64f,.91f));
-            hand=BattleUi.Rect(Root,"Hand",new Vector2(.22f,.025f),new Vector2(.79f,.345f));
-            EndTurn=BattleUi.Button(Root,"EndTurn","턴 종료  ▶",common,new Vector2(.835f,.10f),new Vector2(.975f,.22f),endTurn);
+            piles=BattleUi.Text(Root,"Deck piles","",common.font,17,BattleUi.Pale,new Vector2(.81f,.035f),new Vector2(.99f,.09f));
+            banner=BattleUi.Text(Root,"Battle feedback","",common.font,23,BattleUi.Gold,new Vector2(.36f,.79f),new Vector2(.64f,.84f));
+            hand=BattleUi.Rect(Root,"Hand",new Vector2(.185f,.005f),new Vector2(.815f,.37f));
+            EndTurn=BattleUi.Button(Root,"EndTurn","턴 종료  ▶",common,new Vector2(.85f,.11f),new Vector2(.975f,.185f),endTurn);
             turnBanner=gameObject.AddComponent<BattleBanner>();turnBanner.Build(Root,common);
+            foreach(var label in new[]{hp,block,status,EnergyLabel,turn,gold})BattleUi.Readable(label);
             RefreshHand(cardClick);shownHP=context.Run.CurrentHP;Refresh();
         }
         public void Refresh(IntentData intentOverride=null,bool holdIntent=false)
         {
-            var b=context.Runtime;if(!holdPlayerHealth)hp.text="HP  "+context.Run.CurrentHP+" / "+context.Run.MaxHP;
-            block.text="BLOCK  "+b.Block;status.text=b.Strength>0?"힘 +"+b.Strength:"";
-            EnergyLabel.text="ENERGY\n"+b.Energy+" / "+b.MaxEnergy;
-            if(shownEnergy!=b.Energy){shownEnergy=b.Energy;energyPulse=.25f;}
+            var b=context.Runtime;if(!holdPlayerHealth)hp.text=context.Run.CurrentHP+" / "+context.Run.MaxHP;
+            if(!holdPlayerBlock)block.text=b.Block.ToString();status.text=b.Strength>0?"힘 +"+b.Strength:"";
+            EnergyLabel.text=b.Energy+" / "+b.MaxEnergy;
+            int pipCount=Mathf.Min(energyPips.Count,Mathf.Max(b.Energy,b.MaxEnergy));
+            for(int i=0;i<energyPips.Count;i++)
+            {
+                energyPips[i].gameObject.SetActive(i<pipCount);energyPips[i].color=i<b.Energy?BattleUi.Gold:new Color(.20f,.25f,.25f,.7f);
+                float x=.0975f-(pipCount*.021f-.006f)*.5f+i*.021f;
+                energyPips[i].rectTransform.anchorMin=new Vector2(x,.075f);energyPips[i].rectTransform.anchorMax=new Vector2(x+.015f,.104f);
+            }
+            if(shownEnergy!=b.Energy){energyPulse=shownEnergy>=0&&b.Energy>shownEnergy?.55f:.25f;shownEnergy=b.Energy;}
             turn.text="TURN  "+b.Turn+"\n"+(context.Phase==BattlePhase.EnemyTurn?"ENEMY TURN":context.Phase==BattlePhase.PlayerTurn?"PLAYER TURN":"진행 중");gold.text="GOLD  "+context.Run.Gold;
             piles.text="뽑을 카드 "+b.Deck.DrawPile.Count+"   ·   버림 "+b.Deck.DiscardPile.Count+"   ·   소멸 "+b.Deck.ExhaustPile.Count;
             Enemy.Refresh(b.Result!=BattleResult.Active?null:holdIntent?intentOverride:b.CurrentIntent,b.Block);
@@ -79,49 +106,75 @@ namespace Brodun.Presentation
         {EndTurn.interactable=enabled&&context.Phase==BattlePhase.PlayerTurn;HandLayout?.SetInput(enabled&&context.Phase==BattlePhase.PlayerTurn);foreach(var card in cards)card.SetAvailable(enabled&&context.CanPlay(card.InstanceId));}
         public void RefreshHand(Action<CardView> click)
         {
-            foreach(var card in cards){card.gameObject.SetActive(false);Destroy(card.gameObject);}cards.Clear();
-            HandLayout?.Dispose();
-            var entries=context.Runtime.Deck.Hand;float spacing=Mathf.Min(230,1040f/Mathf.Max(1,entries.Count));
+            float scroll=HandLayout?.ScrollPosition??0;
+            HandLayout?.Dispose();HandLayout=null;
+            var existing=cards.ToDictionary(card=>card.InstanceId);cards.Clear();
+            var entries=context.Runtime.Deck.Hand;
             for(int i=0;i<entries.Count;i++)
             {
-                var card=Instantiate(art.cardPrefab,hand,false);card.name="Hand_"+entries[i].InstanceId;
-                var rect=(RectTransform)card.transform;rect.anchoredPosition=new Vector2((i-(entries.Count-1)*.5f)*spacing,0);
-                card.Bind(context.Runtime.Data.Card(entries[i].CardId),entries[i].InstanceId,art,context.Runtime.Data,click);cards.Add(card);
+                string id=entries[i].InstanceId;
+                if(existing.TryGetValue(id,out var card)&&!card.IsPresenting)existing.Remove(id);
+                else
+                {
+                    card=Instantiate(art.cardPrefab,hand,false);card.name="Hand_"+id;
+                    card.Bind(context.Runtime.Data.Card(entries[i].CardId),id,art,context.Runtime.Data,click);
+                }
+                cards.Add(card);
             }
-            HandLayout=new HandPresentation(Root,art.common,cards);
+            foreach(var removed in existing.Values){removed.gameObject.SetActive(false);Destroy(removed.gameObject);}
+            HandLayout=new HandPresentation(Root,hand,art.common,cards,scroll);
         }
         public void Message(string message){banner.text=message;}
         public void Announce(string message){turnBanner.Show(message);}
-        public void HideHandForEnemyTurn(){foreach(var card in cards)card.gameObject.SetActive(false);}
+        public void HideHandForEnemyTurn(){HandLayout?.SetVisible(false);foreach(var card in cards)card.gameObject.SetActive(false);}
         public IEnumerator FloatNumber(string text,bool enemy,Color tint)
         {
             var label=BattleUi.Text(Root,"Floating feedback",text,art.common.font,46,tint,new Vector2(enemy?.66f:.12f,.56f),new Vector2(enemy?.90f:.36f,.66f));
+            var target=enemy?Enemy.sprite.rectTransform:player.rectTransform;
+            var rect=label.rectTransform;rect.anchorMin=rect.anchorMax=new Vector2(.5f,.5f);rect.sizeDelta=new Vector2(360,80);
+            rect.position=target.TransformPoint(target.rect.min+Vector2.Scale(target.rect.size,new Vector2(.5f,.60f)));
             yield return label.gameObject.AddComponent<DamageNumber>().Present(label,tint);
         }
         public IEnumerator PlayerHit()
         {
-            HoldPlayerHealth(false);StartCoroutine(ImpactShake(4));yield return actor.Hit();
+            HoldPlayerHealth(false);Shake(5);yield return actor.Hit();
         }
         public void HoldPlayerHealth(bool hold)
-        {holdPlayerHealth=hold;if(!hold)hp.text="HP  "+context.Run.CurrentHP+" / "+context.Run.MaxHP;}
-        public IEnumerator PresentCard(CardDefinition definition,Action impact)
+        {holdPlayerHealth=hold;if(!hold)hp.text=context.Run.CurrentHP+" / "+context.Run.MaxHP;}
+        public IEnumerator PresentCard(CardDefinition definition,Action impact,Action delivered=null)
         {
             bool attack=definition.Type==CardType.Attack;
+            float pause=BattleVfx.HitPause(definition);
+            bool heavy=definition.BaseDamage>=12||context.Runtime.LastCardResult.ConditionalTriggered;
+            int hits=context.Runtime.LastCardResult.Hits.Count;
             if(attack)StartCoroutine(actor.Attack(context.Run.SelectedCharacter==CharacterId.Warrior));
+            else if(definition.Id=="stone_guard"||definition.Id=="wind_read")StartCoroutine(actor.CastSupport(definition.Id=="stone_guard"));
             var rect=BattleUi.Rect(stage,"Card VFX "+definition.Id,Vector2.zero,Vector2.one);
             var fx=rect.gameObject.AddComponent<BattleVfx>();
+            fx.BindActors(player.rectTransform,Enemy.sprite.rectTransform);
             yield return fx.Present(definition,()=>
             {
                 Enemy.HoldHealth(false);
-                if(attack){StartCoroutine(ImpactShake(definition.BaseDamage>=12?7:4));StartCoroutine(Enemy.Play(SpriteMotion.Hurt));}
+                if(definition.Id=="stone_guard"){HoldPlayerBlock(false);blockPulse=.30f;}
+                if(attack)
+                {
+                    actor.HoldImpact(pause);
+                    Shake(definition.Id=="earth_strike"?8:definition.Id=="lightning_strike"?4:heavy?10:hits>1?3:definition.BaseDamage<=4?3.5f:6);
+                    StartCoroutine(Enemy.Play(SpriteMotion.Hurt,pause,heavy?1.35f:.8f,BattleVfx.IsSignature(definition.Id)?definition.Id:null));
+                }
                 impact?.Invoke();
-            },context.Runtime.LastCardResult.ConditionalTriggered);
+            },context.Runtime.LastCardResult.ConditionalTriggered,_=>
+            {
+                if(attack){Shake(heavy?7:4);StartCoroutine(Enemy.Play(SpriteMotion.Hurt,.018f,heavy?1.1f:.7f));}
+            },hits,delivered);
         }
+        private void Shake(float amount)
+        {if(shakeRoutine!=null)StopCoroutine(shakeRoutine);shakeRoutine=StartCoroutine(ImpactShake(amount));}
         private IEnumerator ImpactShake(float amount)
         {
-            for(float t=0;t<.16f;t+=Time.unscaledDeltaTime)
-            {float damping=1-t/.16f;stage.anchoredPosition=new Vector2(Mathf.Sin(t*135)*amount*damping,Mathf.Cos(t*105)*amount*.45f*damping);yield return null;}
-            stage.anchoredPosition=Vector2.zero;
+            for(float t=0;t<.21f;t+=Time.unscaledDeltaTime)
+            {float damping=Mathf.Exp(-t*20);stage.anchoredPosition=new Vector2(Mathf.Cos(t*140)*amount*damping,Mathf.Sin(t*109)*amount*.4f*damping);yield return null;}
+            stage.anchoredPosition=Vector2.zero;shakeRoutine=null;
         }
         public void ShowReward(Action<RewardType,string> choose)
         {
@@ -134,7 +187,7 @@ namespace Brodun.Presentation
             for(int i=0;i<reward.Candidates.Count;i++)
             {
                 string id=reward.Candidates[i];var card=Instantiate(art.cardPrefab,row,false);card.name="Reward_"+id;
-                ((RectTransform)card.transform).anchoredPosition=new Vector2((i-(reward.Candidates.Count-1)*.5f)*265,0);
+                ((RectTransform)card.transform).anchoredPosition=new Vector2((i-(reward.Candidates.Count-1)*.5f)*284,0);
                 card.Bind(context.Runtime.Data.Card(id),id,art,context.Runtime.Data,_=>choose(RewardType.Card,id));
                 ((RectTransform)card.transform).localScale=Vector3.one*1.08f;
             }
@@ -171,8 +224,11 @@ namespace Brodun.Presentation
         }
         private void Update()
         {
+            HandLayout?.Tick(Time.unscaledDeltaTime);
             if(context==null)return;if(!holdPlayerHealth)shownHP=Mathf.MoveTowards(shownHP,context.Run.CurrentHP,Time.unscaledDeltaTime*context.Run.MaxHP*3);BattleUi.SetBar(hpBar,shownHP/context.Run.MaxHP);
             energyPulse=Mathf.Max(0,energyPulse-Time.unscaledDeltaTime);EnergyLabel.transform.localScale=Vector3.one*(1+energyPulse*.18f);
+            EnergyLabel.color=Color.Lerp(BattleUi.Gold,Color.white,energyPulse);
+            blockPulse=Mathf.Max(0,blockPulse-Time.unscaledDeltaTime);block.transform.localScale=Vector3.one*(1+blockPulse*.65f);
         }
     }
 }

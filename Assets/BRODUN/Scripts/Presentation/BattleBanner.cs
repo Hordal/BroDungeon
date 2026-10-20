@@ -11,9 +11,9 @@ namespace Brodun.Presentation
         private Coroutine bannerRoutine;
         public void Build(Transform parent,PresentationAssets art)
         {
-            var panel=BattleUi.Image(parent,"Turn banner",art.buttonNormal,Color.white,new Vector2(.34f,.53f),new Vector2(.66f,.625f));
+            var panel=BattleUi.Image(parent,"Turn banner",null,new Color(.015f,.025f,.04f,.60f),new Vector2(.39f,.865f),new Vector2(.61f,.915f));
             group=panel.gameObject.AddComponent<CanvasGroup>();group.blocksRaycasts=false;group.alpha=0;
-            label=BattleUi.Text(panel.transform,"Announcement","",art.font,38,BattleUi.Gold,Vector2.zero,Vector2.one);
+            label=BattleUi.Text(panel.transform,"Announcement","",art.font,25,BattleUi.Gold,Vector2.zero,Vector2.one);
         }
         public void Show(string text)
         {if(bannerRoutine!=null)StopCoroutine(bannerRoutine);label.text=text;bannerRoutine=StartCoroutine(Animate());}

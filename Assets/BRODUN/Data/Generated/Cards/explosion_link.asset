@@ -28,4 +28,4 @@ MonoBehaviour:
       condition: fire
       amount: 8
       hits: 0
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: 06c00c5c95d24ba69f310cc115e29bbc, type: 3}

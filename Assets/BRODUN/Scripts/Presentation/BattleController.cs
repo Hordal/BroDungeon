@@ -36,7 +36,8 @@ namespace Brodun.Presentation
             var card=View.Cards.FirstOrDefault(c=>c.InstanceId==id);
             var definition=Context.Runtime.Data.Card(Context.Runtime.Deck.Hand.Single(c=>c.InstanceId==id).CardId);
             View.Enemy.HoldHealth(true);
-            if(!Context.Play(id,Context.EnemyTargetId)){View.Enemy.HoldHealth(false);return false;}
+            if(definition.Id=="stone_guard")View.HoldPlayerBlock(true);
+            if(!Context.Play(id,Context.EnemyTargetId)){View.Enemy.HoldHealth(false);if(definition.Id=="stone_guard")View.HoldPlayerBlock(false);return false;}
             AudioCue?.Invoke("card");View.Refresh();View.SetInput(false);
             StartCoroutine(ResolveCard(card,definition));return true;
         }
@@ -44,13 +45,18 @@ namespace Brodun.Presentation
         {
             if(card!=null)yield return card.PresentUse(definition.Exhausts);
             var result=Context.Runtime.LastCardResult;
-            yield return View.PresentCard(definition,()=>StartCoroutine(CardHitFeedback(result)));
+            bool handDelivered=false;
+            Action delivery=definition.Id=="wind_read"?(Action)(()=>
+            {
+                View.RefreshHand(CardClicked);View.SetInput(false);handDelivered=true;
+            }):null;
+            yield return View.PresentCard(definition,()=>StartCoroutine(CardHitFeedback(result)),delivery);
             if(result.ConditionalTriggered)
                 View.Message("COMBO / "+definition.Name);
             else View.Message(definition.Name+(definition.Exhausts?" · 소멸":" · 버림"));
             // Let hit reaction / multi-hit numbers settle, including the lethal hit, before Death.
             yield return new WaitForSecondsRealtime(Mathf.Max(.18f,result.Hits.Count*.13f));
-            View.RefreshHand(CardClicked);Context.FinishActionPresentation();View.Refresh();
+            if(!handDelivered)View.RefreshHand(CardClicked);Context.FinishActionPresentation();View.Refresh();
             if(Context.Phase==BattlePhase.Victory)yield return FinishBattle();else View.SetInput(true);
         }
         private IEnumerator CardHitFeedback(CardResult result)
@@ -59,7 +65,7 @@ namespace Brodun.Presentation
             {
                 if(hit.HPDamage>0){AudioCue?.Invoke("hit");StartCoroutine(View.FloatNumber("−"+hit.HPDamage,true,BattleUi.Gold));}
                 if(hit.Blocked>0)StartCoroutine(View.FloatNumber("방어 −"+hit.Blocked,true,BattleUi.Teal));
-                if(result.Hits.Count>1)yield return new WaitForSecondsRealtime(.13f);
+                if(result.Hits.Count>1)yield return new WaitForSecondsRealtime(BattleVfx.MultiHitInterval);
             }
         }
         public void EndTurn(){TryEndTurn();}

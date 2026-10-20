@@ -18,6 +18,7 @@ namespace Brodun.Presentation
         [SerializeField] private PresentationAssets assets;
         public FlowSession Session { get; private set; }
         public PresentationAssets Assets => assets;
+        public Sprite CardArtwork(string id) => catalog.CardArtwork(id);
         public event Action<PendingRoomContext> BattleEntryRequested;
         private CanvasGroup fade;
         private InputActionAsset actions;

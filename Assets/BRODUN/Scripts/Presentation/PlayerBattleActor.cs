@@ -11,13 +11,16 @@ namespace Brodun.Presentation
         private float scale,timer;
         private bool busy;
         private int frame;
+        private float impactHold;
+        public void HoldImpact(float seconds){if(IsAttacking)impactHold=Mathf.Max(impactHold,seconds);}
         public bool IsAttacking { get; private set; }
         public void Bind(Image target,CharacterId character)
         {
             image=target;home=image.rectTransform.anchoredPosition;
             data=Resources.Load<CombatMotionAssets>("BrodunCombatMotion")?.Hero(character);
             var idle=data?.Animation(SpriteMotion.Idle);
-            scale=idle!=null?390f/idle.frames[0].rect.height:1;
+            // Respect the BattleView size for every animation frame, keeping native foot pivots.
+            scale=idle!=null?Mathf.Max(1,target.rectTransform.sizeDelta.y)/idle.frames[0].rect.height:1;
             if(idle!=null)Show(idle.frames[0]);
         }
         private void Show(Sprite sprite)
@@ -28,17 +31,31 @@ namespace Brodun.Presentation
         public IEnumerator Attack(bool melee)
         {
             busy=true;IsAttacking=true;var animation=data?.Animation(SpriteMotion.Attack);
-            float duration=animation!=null?animation.frames.Length/animation.fps:.4f;
-            for(float t=0;t<duration;t+=Time.unscaledDeltaTime)
+            float duration=Mathf.Max(.56f,animation!=null?animation.frames.Length/animation.fps:.4f);
+            for(float t=0;t<duration;)
             {
+                if(impactHold>0){impactHold-=Time.unscaledDeltaTime;yield return null;continue;}
                 float p=t/duration;
-                if(animation!=null)Show(animation.frames[Mathf.Min(animation.frames.Length-1,(int)(t*animation.fps))]);
+                if(animation!=null)Show(animation.frames[Mathf.Min(animation.frames.Length-1,(int)(p*animation.frames.Length))]);
                 // Anticipation, forward strike, recovery; never moves gameplay positions.
-                float travel=p<.2f?-18*p/.2f:p<.55f?Mathf.Lerp(-18,melee?115:32,(p-.2f)/.35f):Mathf.Lerp(melee?115:32,0,(p-.55f)/.45f);
+                float reach=melee?115:32;
+                float travel=p<.18f?-18*p/.18f:p<.55f?Mathf.Lerp(-18,reach,(p-.18f)/.37f):p<.72f?reach:Mathf.Lerp(reach,0,(p-.72f)/.28f);
                 image.rectTransform.anchoredPosition=home+new Vector2(travel,Mathf.Sin(p*Mathf.PI)*8);
-                yield return null;
+                t+=Time.unscaledDeltaTime;yield return null;
             }
             ResetPose();
+        }
+        public IEnumerator CastSupport(bool brace)
+        {
+            busy=true;
+            for(float t=0;t<.36f;t+=Time.unscaledDeltaTime)
+            {
+                float wave=Mathf.Sin(t/.36f*Mathf.PI);
+                image.rectTransform.anchoredPosition=home+new Vector2(brace?-14*wave:0,brace?0:7*wave);
+                image.rectTransform.localRotation=Quaternion.Euler(0,0,(brace?3:-2)*wave);
+                yield return null;
+            }
+            image.rectTransform.localRotation=Quaternion.identity;ResetPose();
         }
         public IEnumerator Hit()
         {
@@ -54,7 +71,7 @@ namespace Brodun.Presentation
         private void ResetPose()
         {
             image.color=Color.white;image.rectTransform.anchoredPosition=home;
-            busy=false;IsAttacking=false;frame=0;timer=0;
+            busy=false;IsAttacking=false;impactHold=0;frame=0;timer=0;
             var idle=data?.Animation(SpriteMotion.Idle);if(idle!=null)Show(idle.frames[0]);
         }
         private void Update()

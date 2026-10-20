@@ -28,4 +28,4 @@ MonoBehaviour:
       condition: water
       amount: 7
       hits: 0
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: babddeeae4b5476dbf324dbb6004bc97, type: 3}

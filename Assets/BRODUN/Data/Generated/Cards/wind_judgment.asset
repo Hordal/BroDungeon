@@ -23,4 +23,4 @@ MonoBehaviour:
       condition: 
       amount: 5
       hits: 0
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: c2bd143b6cd0464cbae175eb478d1480, type: 3}
