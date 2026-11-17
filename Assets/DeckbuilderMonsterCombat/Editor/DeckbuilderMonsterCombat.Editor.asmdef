@@ -1,0 +1,5 @@
+{
+  "name": "DeckbuilderMonsterCombat.Editor",
+  "references": ["DeckbuilderMonsterCombat.Runtime"],
+  "includePlatforms": ["Editor"]
+}
