@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e840ba6fd4ff35489498e57af77874f, type: 3}
+  m_Name: stone_retaliation
+  m_EditorClassIdentifier: 
+  definition:
+    id: stone_retaliation
+    name: "\uBC18\uC11D\uC758 \uBC18\uACA9"
+    description: "\uD53C\uD574 4. \uBC29\uC5B4\uB3C4 \uBCF4\uC720 \uC2DC \uCD94\uAC00
+      \uD53C\uD574 5."
+    element: stone
+    cost: 1
+    effects:
+    - type: damage
+      condition: 
+      amount: 4
+      hits: 0
+    - type: conditional_damage
+      condition: block
+      amount: 5
+      hits: 0
+  artwork: {fileID: 21300000, guid: 1da20a706a874cfa979514c4e7f89569, type: 3}

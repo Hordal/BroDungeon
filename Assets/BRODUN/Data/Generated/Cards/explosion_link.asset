@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e840ba6fd4ff35489498e57af77874f, type: 3}
+  m_Name: explosion_link
+  m_EditorClassIdentifier: 
+  definition:
+    id: explosion_link
+    name: "\uC810\uD654 \uC5F0\uACC4"
+    description: "\uD53C\uD574 5. \uC801\uC758 \uC9C1\uC804 \uC18D\uC131\uC774 \uBD88
+      \uC2DC \uCD94\uAC00 \uD53C\uD574 8."
+    element: explosion
+    cost: 1
+    effects:
+    - type: damage
+      condition: 
+      amount: 5
+      hits: 0
+    - type: conditional_damage
+      condition: fire
+      amount: 8
+      hits: 0
+  artwork: {fileID: 21300000, guid: 06c00c5c95d24ba69f310cc115e29bbc, type: 3}

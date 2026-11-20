@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0f216682dcc2564b9af8831794b517e, type: 3}
+  m_Name: gale_warden
+  m_EditorClassIdentifier: 
+  definition:
+    id: gale_warden
+    name: "\uC9C8\uD48D \uD30C\uC218\uAFBC"
+    rank: elite
+    asset_id: gale_warden
+    area_index: 1
+    hp: 52
+    area_hp_step: 6
+    display_height: 205
+    legacy: 0
+    patterns:
+    - type: attack
+      amount: 8
+      hits: 1
+    - type: attack
+      amount: 5
+      hits: 2
+    - type: buff
+      amount: 2
+      hits: 0
+    - type: attack
+      amount: 10
+      hits: 1

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0f216682dcc2564b9af8831794b517e, type: 3}
+  m_Name: foundry_tyrant
+  m_EditorClassIdentifier: 
+  definition:
+    id: foundry_tyrant
+    name: "\uC8FC\uC870\uC18C \uD3ED\uAD70"
+    rank: boss
+    asset_id: foundry_tyrant
+    area_index: 3
+    hp: 64
+    area_hp_step: 8
+    display_height: 230
+    legacy: 0
+    patterns:
+    - type: attack
+      amount: 10
+      hits: 1
+    - type: block
+      amount: 8
+      hits: 0
+    - type: attack
+      amount: 6
+      hits: 2
+    - type: buff
+      amount: 2
+      hits: 0

@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b7f07bf05bfd445bcf5fa5d282aef0, type: 3}
+  m_Name: Presentation
+  m_EditorClassIdentifier: 
+  font: {fileID: 12800000, guid: 1a106cdad5d054549bcc658ee4d23c95, type: 3}
+  logoFont: {fileID: 12800000, guid: e350aec93a6379b4589928873deb0714, type: 3}
+  inputActions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  titleBackground: {fileID: 21300000, guid: 30abe3959707db84f8490586dc1216de, type: 3}
+  mapBackground: {fileID: 21300000, guid: bc67f0d952043d54291ee72d88767f2a, type: 3}
+  warrior: {fileID: 21300000, guid: b11b4b0a4f5464b4bb202915e0a3424f, type: 3}
+  mage: {fileID: 21300000, guid: 34400cc32c9fc494fb17a8e0d649ea35, type: 3}
+  priest: {fileID: 21300000, guid: 11e7b150e3e907541aa382dfee8f0a58, type: 3}
+  buttonNormal: {fileID: 21300000, guid: cceda1d10265ebe4c815ca2e69c883f8, type: 3}
+  buttonHover: {fileID: 21300000, guid: 83d00e42757cc104c90da483e5e676aa, type: 3}
+  buttonPressed: {fileID: 21300000, guid: 83d1c67c704efa94f93adbbf08c1b34a, type: 3}
+  buttonDisabled: {fileID: 21300000, guid: b8fb9b33d7d5f6841b7c2c26744e3e72, type: 3}
+  nodeNormal: {fileID: 21300000, guid: f834aec1ad926734a9a300c600280f85, type: 3}
+  nodeHover: {fileID: 21300000, guid: 3ec4acb4068721343868daa7e218e372, type: 3}
+  nodeSelected: {fileID: 21300000, guid: 129d2b2242cec404fbf2da59c5dfe08b, type: 3}
+  nodeLocked: {fileID: 21300000, guid: 4c6c0bb52e6c87044a4d30d820540dd3, type: 3}
+  battle: {fileID: 21300000, guid: 8e03a1c36ff68b4468707f5d23a6a4a3, type: 3}
+  boss: {fileID: 21300000, guid: be38baba4e017154f832505d7461f6e7, type: 3}
+  puzzle: {fileID: 21300000, guid: 1e8d7650a17c96443b23cf99d5085c30, type: 3}
+  roomEvent: {fileID: 21300000, guid: 97d10090792034444bd36c3ab6ecf003, type: 3}
+  shop: {fileID: 21300000, guid: 76f704229357f274584ea2978f051112, type: 3}
+  altar: {fileID: 21300000, guid: e2b33d13582e6d840804c585caa8fa5c, type: 3}
+  rest: {fileID: 21300000, guid: 1204e4cf22b98b04aa0f7180910ab2b4, type: 3}
+  current: {fileID: 21300000, guid: 6432bc7df94703f41b3d0f0b8ec8ca97, type: 3}
+  completed: {fileID: 21300000, guid: da0a55167df95564c9ba76a2b9c91491, type: 3}

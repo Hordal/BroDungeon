@@ -1,0 +1,10 @@
+{
+  "name": "Brodun.Presentation",
+  "references": [
+    "Brodun.Rules",
+    "Brodun.Data",
+    "Brodun.Flow",
+    "Unity.ugui",
+    "Unity.InputSystem"
+  ]
+}

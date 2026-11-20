@@ -1,0 +1,7 @@
+{
+  "name": "Brodun.Data",
+  "rootNamespace": "Brodun.Data",
+  "references": [
+    "Brodun.Rules"
+  ]
+}

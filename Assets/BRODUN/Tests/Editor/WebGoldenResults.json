@@ -1,0 +1,7659 @@
+{
+  "source": "Actual WebPrototype JS execution; no C# expected value calculation",
+  "cases": [
+    {
+      "id": "earth_strike",
+      "previous": "none",
+      "hp": 96,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "earth",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 4,
+      "blocked": 3
+    },
+    {
+      "id": "earth_strike",
+      "previous": "water",
+      "hp": 96,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "earth",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 4,
+      "blocked": 3
+    },
+    {
+      "id": "earth_strike",
+      "previous": "fire",
+      "hp": 96,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "earth",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 4,
+      "blocked": 3
+    },
+    {
+      "id": "stone_guard",
+      "previous": "none",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "none",
+      "playerHP": 40,
+      "block": 8,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "stone_guard",
+      "previous": "water",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "water",
+      "playerHP": 40,
+      "block": 8,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "stone_guard",
+      "previous": "fire",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "fire",
+      "playerHP": 40,
+      "block": 8,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "wind_cut",
+      "previous": "none",
+      "hp": 97,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "wind",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 3,
+      "blocked": 3
+    },
+    {
+      "id": "wind_cut",
+      "previous": "water",
+      "hp": 97,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "wind",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 3,
+      "blocked": 3
+    },
+    {
+      "id": "wind_cut",
+      "previous": "fire",
+      "hp": 97,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "wind",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 3,
+      "blocked": 3
+    },
+    {
+      "id": "fire_bolt",
+      "previous": "none",
+      "hp": 96,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "fire",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 4,
+      "blocked": 3
+    },
+    {
+      "id": "fire_bolt",
+      "previous": "water",
+      "hp": 96,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "fire",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 4,
+      "blocked": 3
+    },
+    {
+      "id": "fire_bolt",
+      "previous": "fire",
+      "hp": 96,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "fire",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 4,
+      "blocked": 3
+    },
+    {
+      "id": "ice_guard",
+      "previous": "none",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "none",
+      "playerHP": 40,
+      "block": 8,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "ice_guard",
+      "previous": "water",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "water",
+      "playerHP": 40,
+      "block": 8,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "ice_guard",
+      "previous": "fire",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "fire",
+      "playerHP": 40,
+      "block": 8,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "lightning_strike",
+      "previous": "none",
+      "hp": 96,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "lightning",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 4,
+      "blocked": 3
+    },
+    {
+      "id": "lightning_strike",
+      "previous": "water",
+      "hp": 96,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "lightning",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 4,
+      "blocked": 3
+    },
+    {
+      "id": "lightning_strike",
+      "previous": "fire",
+      "hp": 96,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "lightning",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 4,
+      "blocked": 3
+    },
+    {
+      "id": "water_wave",
+      "previous": "none",
+      "hp": 97,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "water",
+      "playerHP": 41,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 3,
+      "blocked": 3
+    },
+    {
+      "id": "water_wave",
+      "previous": "water",
+      "hp": 97,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "water",
+      "playerHP": 41,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 3,
+      "blocked": 3
+    },
+    {
+      "id": "water_wave",
+      "previous": "fire",
+      "hp": 97,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "water",
+      "playerHP": 41,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 3,
+      "blocked": 3
+    },
+    {
+      "id": "earth_blessing",
+      "previous": "none",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "none",
+      "playerHP": 40,
+      "block": 8,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "earth_blessing",
+      "previous": "water",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "water",
+      "playerHP": 40,
+      "block": 8,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "earth_blessing",
+      "previous": "fire",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "fire",
+      "playerHP": 40,
+      "block": 8,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "wind_judgment",
+      "previous": "none",
+      "hp": 96,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "wind",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 4,
+      "blocked": 3
+    },
+    {
+      "id": "wind_judgment",
+      "previous": "water",
+      "hp": 96,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "wind",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 4,
+      "blocked": 3
+    },
+    {
+      "id": "wind_judgment",
+      "previous": "fire",
+      "hp": 96,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "wind",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 4,
+      "blocked": 3
+    },
+    {
+      "id": "earth_crush",
+      "previous": "none",
+      "hp": 88,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "earth",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 12,
+      "blocked": 3
+    },
+    {
+      "id": "earth_crush",
+      "previous": "water",
+      "hp": 88,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "earth",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 12,
+      "blocked": 3
+    },
+    {
+      "id": "earth_crush",
+      "previous": "fire",
+      "hp": 88,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "earth",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 12,
+      "blocked": 3
+    },
+    {
+      "id": "stone_retaliation",
+      "previous": "none",
+      "hp": 92,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "stone",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 8,
+      "blocked": 3
+    },
+    {
+      "id": "stone_retaliation",
+      "previous": "water",
+      "hp": 92,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "stone",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 8,
+      "blocked": 3
+    },
+    {
+      "id": "stone_retaliation",
+      "previous": "fire",
+      "hp": 92,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "stone",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 8,
+      "blocked": 3
+    },
+    {
+      "id": "wind_read",
+      "previous": "none",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "none",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "wind_read",
+      "previous": "water",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "water",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "wind_read",
+      "previous": "fire",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "fire",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "water_stream",
+      "previous": "none",
+      "hp": 98,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "water",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 2,
+      "blocked": 3
+    },
+    {
+      "id": "water_stream",
+      "previous": "water",
+      "hp": 98,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "water",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 2,
+      "blocked": 3
+    },
+    {
+      "id": "water_stream",
+      "previous": "fire",
+      "hp": 98,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "water",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 2,
+      "blocked": 3
+    },
+    {
+      "id": "water_rest",
+      "previous": "none",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "none",
+      "playerHP": 43,
+      "block": 5,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "water_rest",
+      "previous": "water",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "water",
+      "playerHP": 43,
+      "block": 5,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "water_rest",
+      "previous": "fire",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "fire",
+      "playerHP": 43,
+      "block": 5,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "ice_shard",
+      "previous": "none",
+      "hp": 96,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 2,
+      "element": "ice",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 4,
+      "blocked": 3
+    },
+    {
+      "id": "ice_shard",
+      "previous": "water",
+      "hp": 96,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 2,
+      "element": "ice",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 4,
+      "blocked": 3
+    },
+    {
+      "id": "ice_shard",
+      "previous": "fire",
+      "hp": 96,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 2,
+      "element": "ice",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 4,
+      "blocked": 3
+    },
+    {
+      "id": "ice_link",
+      "previous": "none",
+      "hp": 97,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "ice",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 3,
+      "blocked": 3
+    },
+    {
+      "id": "ice_link",
+      "previous": "water",
+      "hp": 90,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "ice",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 10,
+      "blocked": 3
+    },
+    {
+      "id": "ice_link",
+      "previous": "fire",
+      "hp": 97,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "ice",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 3,
+      "blocked": 3
+    },
+    {
+      "id": "poison_touch",
+      "previous": "none",
+      "hp": 99,
+      "enemyBlock": 0,
+      "poison": 5,
+      "weak": 0,
+      "element": "poison",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 1,
+      "blocked": 3
+    },
+    {
+      "id": "poison_touch",
+      "previous": "water",
+      "hp": 99,
+      "enemyBlock": 0,
+      "poison": 5,
+      "weak": 0,
+      "element": "poison",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 1,
+      "blocked": 3
+    },
+    {
+      "id": "poison_touch",
+      "previous": "fire",
+      "hp": 99,
+      "enemyBlock": 0,
+      "poison": 5,
+      "weak": 0,
+      "element": "poison",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 1,
+      "blocked": 3
+    },
+    {
+      "id": "poison_sting",
+      "previous": "none",
+      "hp": 91,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "poison",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 9,
+      "blocked": 3
+    },
+    {
+      "id": "poison_sting",
+      "previous": "water",
+      "hp": 91,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "poison",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 9,
+      "blocked": 3
+    },
+    {
+      "id": "poison_sting",
+      "previous": "fire",
+      "hp": 91,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "poison",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 9,
+      "blocked": 3
+    },
+    {
+      "id": "poison_mist",
+      "previous": "none",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 5,
+      "weak": 1,
+      "element": "poison",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "poison_mist",
+      "previous": "water",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 5,
+      "weak": 1,
+      "element": "poison",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "poison_mist",
+      "previous": "fire",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 5,
+      "weak": 1,
+      "element": "poison",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "fire_inferno",
+      "previous": "none",
+      "hp": 87,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "fire",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 13,
+      "blocked": 3
+    },
+    {
+      "id": "fire_inferno",
+      "previous": "water",
+      "hp": 87,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "fire",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 13,
+      "blocked": 3
+    },
+    {
+      "id": "fire_inferno",
+      "previous": "fire",
+      "hp": 87,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "fire",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 13,
+      "blocked": 3
+    },
+    {
+      "id": "fire_strength",
+      "previous": "none",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "none",
+      "playerHP": 40,
+      "block": 6,
+      "strength": 4,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "fire_strength",
+      "previous": "water",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "water",
+      "playerHP": 40,
+      "block": 6,
+      "strength": 4,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "fire_strength",
+      "previous": "fire",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "fire",
+      "playerHP": 40,
+      "block": 6,
+      "strength": 4,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "lightning_chain",
+      "previous": "none",
+      "hp": 93,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "lightning",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 7,
+      "blocked": 3
+    },
+    {
+      "id": "lightning_chain",
+      "previous": "water",
+      "hp": 93,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "lightning",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 7,
+      "blocked": 3
+    },
+    {
+      "id": "lightning_chain",
+      "previous": "fire",
+      "hp": 93,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "lightning",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 7,
+      "blocked": 3
+    },
+    {
+      "id": "lightning_charge",
+      "previous": "none",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "none",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 4,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "lightning_charge",
+      "previous": "water",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "water",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 4,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "lightning_charge",
+      "previous": "fire",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "fire",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 4,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "explosion_blast",
+      "previous": "none",
+      "hp": 86,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "explosion",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 14,
+      "blocked": 3
+    },
+    {
+      "id": "explosion_blast",
+      "previous": "water",
+      "hp": 86,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "explosion",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 14,
+      "blocked": 3
+    },
+    {
+      "id": "explosion_blast",
+      "previous": "fire",
+      "hp": 86,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "explosion",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 14,
+      "blocked": 3
+    },
+    {
+      "id": "explosion_link",
+      "previous": "none",
+      "hp": 96,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "explosion",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 4,
+      "blocked": 3
+    },
+    {
+      "id": "explosion_link",
+      "previous": "water",
+      "hp": 96,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "explosion",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 4,
+      "blocked": 3
+    },
+    {
+      "id": "explosion_link",
+      "previous": "fire",
+      "hp": 88,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "explosion",
+      "playerHP": 40,
+      "block": 3,
+      "strength": 2,
+      "energy": 3,
+      "damage": 12,
+      "blocked": 3
+    },
+    {
+      "id": "explosion_barrier",
+      "previous": "none",
+      "hp": 99,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "explosion",
+      "playerHP": 40,
+      "block": 10,
+      "strength": 2,
+      "energy": 3,
+      "damage": 1,
+      "blocked": 3
+    },
+    {
+      "id": "explosion_barrier",
+      "previous": "water",
+      "hp": 99,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "explosion",
+      "playerHP": 40,
+      "block": 10,
+      "strength": 2,
+      "energy": 3,
+      "damage": 1,
+      "blocked": 3
+    },
+    {
+      "id": "explosion_barrier",
+      "previous": "fire",
+      "hp": 99,
+      "enemyBlock": 0,
+      "poison": 2,
+      "weak": 0,
+      "element": "explosion",
+      "playerHP": 40,
+      "block": 10,
+      "strength": 2,
+      "energy": 3,
+      "damage": 1,
+      "blocked": 3
+    },
+    {
+      "id": "stone_fortress",
+      "previous": "none",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "none",
+      "playerHP": 40,
+      "block": 15,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "stone_fortress",
+      "previous": "water",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "water",
+      "playerHP": 40,
+      "block": 15,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    },
+    {
+      "id": "stone_fortress",
+      "previous": "fire",
+      "hp": 100,
+      "enemyBlock": 3,
+      "poison": 2,
+      "weak": 0,
+      "element": "fire",
+      "playerHP": 40,
+      "block": 15,
+      "strength": 2,
+      "energy": 3,
+      "damage": 0,
+      "blocked": 0
+    }
+  ],
+  "traces": [
+    {
+      "character": "warrior",
+      "seed": 0,
+      "steps": [
+        {
+          "kind": "begin",
+          "instance": "",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-3",
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-3",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 60,
+          "enemyHP": 33,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 59,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 59,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 59,
+          "enemyHP": 24,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 59,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 56,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 56,
+          "enemyHP": 16,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 5,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 56,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 56,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 55,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 55,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 55,
+          "enemyHP": 0,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        }
+      ]
+    },
+    {
+      "character": "warrior",
+      "seed": 17,
+      "steps": [
+        {
+          "kind": "begin",
+          "instance": "",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-3",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 60,
+          "enemyHP": 33,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-3",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-3",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-3",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-2"
+          ],
+          "draw": [
+            "card-0"
+          ],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [
+            "card-0"
+          ],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 59,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 59,
+          "enemyHP": 24,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 59,
+          "enemyHP": 24,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 59,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-1",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 56,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 56,
+          "enemyHP": 15,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 5,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1",
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 1,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 1,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 56,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 55,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 55,
+          "enemyHP": 2,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 55,
+          "enemyHP": 0,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        }
+      ]
+    },
+    {
+      "character": "warrior",
+      "seed": 29,
+      "steps": [
+        {
+          "kind": "begin",
+          "instance": "",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0",
+            "card-2",
+            "card-3"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-3"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 60,
+          "enemyHP": 33,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-3"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-3"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-3",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0"
+          ],
+          "draw": [
+            "card-2",
+            "card-1"
+          ],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 59,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1",
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 59,
+          "enemyHP": 25,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 59,
+          "enemyHP": 25,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 59,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 56,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 56,
+          "enemyHP": 16,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 5,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1",
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 1,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 1,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 56,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 55,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 55,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 55,
+          "enemyHP": 0,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        }
+      ]
+    },
+    {
+      "character": "warrior",
+      "seed": 4294967295,
+      "steps": [
+        {
+          "kind": "begin",
+          "instance": "",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-3",
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-3",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 60,
+          "enemyHP": 34,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 59,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 59,
+          "enemyHP": 24,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 59,
+          "enemyHP": 24,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 59,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-1",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 56,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 56,
+          "enemyHP": 15,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 5,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 5,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 56,
+          "enemyHP": 11,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 56,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 55,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1",
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 55,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 55,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 55,
+          "enemyHP": 0,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        }
+      ]
+    },
+    {
+      "character": "mage",
+      "seed": 0,
+      "steps": [
+        {
+          "kind": "begin",
+          "instance": "",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-3",
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-3",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 4,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 60,
+          "enemyHP": 33,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 60,
+          "enemyHP": 28,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 59,
+          "enemyHP": 28,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 59,
+          "enemyHP": 28,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 59,
+          "enemyHP": 23,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 59,
+          "enemyHP": 18,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 56,
+          "enemyHP": 18,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 56,
+          "enemyHP": 13,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 56,
+          "enemyHP": 8,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 56,
+          "enemyHP": 8,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 56,
+          "enemyHP": 8,
+          "enemyBlock": 5,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 56,
+          "enemyHP": 8,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 56,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 56,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 55,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 55,
+          "enemyHP": 0,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        }
+      ]
+    },
+    {
+      "character": "mage",
+      "seed": 17,
+      "steps": [
+        {
+          "kind": "begin",
+          "instance": "",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-3",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 60,
+          "enemyHP": 33,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-3",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 60,
+          "enemyHP": 28,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-3",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-3",
+          "hp": 60,
+          "enemyHP": 28,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 60,
+          "enemyHP": 28,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 59,
+          "enemyHP": 28,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-2",
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 59,
+          "enemyHP": 28,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 59,
+          "enemyHP": 23,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 59,
+          "enemyHP": 18,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-2",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 56,
+          "enemyHP": 18,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 56,
+          "enemyHP": 18,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 56,
+          "enemyHP": 13,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 56,
+          "enemyHP": 8,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 56,
+          "enemyHP": 8,
+          "enemyBlock": 5,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 56,
+          "enemyHP": 8,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 56,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 56,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 55,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 55,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 55,
+          "enemyHP": 0,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        }
+      ]
+    },
+    {
+      "character": "mage",
+      "seed": 29,
+      "steps": [
+        {
+          "kind": "begin",
+          "instance": "",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0",
+            "card-2",
+            "card-3"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-3"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 60,
+          "enemyHP": 33,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-3"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 60,
+          "enemyHP": 28,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-3"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-3",
+          "hp": 60,
+          "enemyHP": 28,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 59,
+          "enemyHP": 28,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 59,
+          "enemyHP": 23,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 59,
+          "enemyHP": 18,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 59,
+          "enemyHP": 18,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 56,
+          "enemyHP": 18,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 56,
+          "enemyHP": 13,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 56,
+          "enemyHP": 13,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 56,
+          "enemyHP": 8,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-1",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 56,
+          "enemyHP": 8,
+          "enemyBlock": 5,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 56,
+          "enemyHP": 8,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 56,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 56,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 55,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 55,
+          "enemyHP": 0,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        }
+      ]
+    },
+    {
+      "character": "mage",
+      "seed": 4294967295,
+      "steps": [
+        {
+          "kind": "begin",
+          "instance": "",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-3",
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-3",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 4,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 60,
+          "enemyHP": 33,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 60,
+          "enemyHP": 28,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 60,
+          "enemyHP": 28,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 59,
+          "enemyHP": 28,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 59,
+          "enemyHP": 23,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 59,
+          "enemyHP": 23,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 59,
+          "enemyHP": 18,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-1",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 56,
+          "enemyHP": 18,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 56,
+          "enemyHP": 13,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 56,
+          "enemyHP": 8,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 56,
+          "enemyHP": 8,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 56,
+          "enemyHP": 8,
+          "enemyBlock": 5,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 56,
+          "enemyHP": 8,
+          "enemyBlock": 5,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 56,
+          "enemyHP": 8,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 56,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 55,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1",
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 55,
+          "enemyHP": 0,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        }
+      ]
+    },
+    {
+      "character": "priest",
+      "seed": 0,
+      "steps": [
+        {
+          "kind": "begin",
+          "instance": "",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-3",
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-3",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 2,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 7,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 60,
+          "enemyHP": 34,
+          "enemyBlock": 0,
+          "block": 7,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 7,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 60,
+          "enemyHP": 25,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 60,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 57,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 57,
+          "enemyHP": 15,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 58,
+          "enemyHP": 11,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 58,
+          "enemyHP": 11,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 58,
+          "enemyHP": 11,
+          "enemyBlock": 5,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 59,
+          "enemyHP": 11,
+          "enemyBlock": 1,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 59,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 59,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 58,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 58,
+          "enemyHP": 2,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 59,
+          "enemyHP": 0,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        }
+      ]
+    },
+    {
+      "character": "priest",
+      "seed": 17,
+      "steps": [
+        {
+          "kind": "begin",
+          "instance": "",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-3",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 60,
+          "enemyHP": 34,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-3",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-3",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-3",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 2,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 7,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-2",
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 60,
+          "enemyHP": 24,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 60,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-2",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 57,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 57,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 58,
+          "enemyHP": 16,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 58,
+          "enemyHP": 11,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 58,
+          "enemyHP": 11,
+          "enemyBlock": 5,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 59,
+          "enemyHP": 11,
+          "enemyBlock": 1,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 59,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 59,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 58,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 58,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 59,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 59,
+          "enemyHP": 0,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        }
+      ]
+    },
+    {
+      "character": "priest",
+      "seed": 29,
+      "steps": [
+        {
+          "kind": "begin",
+          "instance": "",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0",
+            "card-2",
+            "card-3"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-3"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 60,
+          "enemyHP": 34,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-3"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-3"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-3",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 7,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 60,
+          "enemyHP": 25,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 60,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 60,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 57,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 58,
+          "enemyHP": 16,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 58,
+          "enemyHP": 16,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 58,
+          "enemyHP": 11,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-1",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 58,
+          "enemyHP": 11,
+          "enemyBlock": 5,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 59,
+          "enemyHP": 11,
+          "enemyBlock": 1,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 59,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 59,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 58,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 59,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 59,
+          "enemyHP": 3,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 59,
+          "enemyHP": 0,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-1",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        }
+      ]
+    },
+    {
+      "character": "priest",
+      "seed": 4294967295,
+      "steps": [
+        {
+          "kind": "begin",
+          "instance": "",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-3",
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": []
+        },
+        {
+          "kind": "card",
+          "instance": "card-3",
+          "hp": 60,
+          "enemyHP": 38,
+          "enemyBlock": 0,
+          "block": 2,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 60,
+          "enemyHP": 33,
+          "enemyBlock": 0,
+          "block": 2,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 2,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 7,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 1,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-0",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 60,
+          "enemyHP": 29,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-1",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 60,
+          "enemyHP": 25,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 60,
+          "enemyHP": 25,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 60,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 2,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-1",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 57,
+          "enemyHP": 20,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 58,
+          "enemyHP": 16,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 58,
+          "enemyHP": 11,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [
+            "card-1"
+          ],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 58,
+          "enemyHP": 11,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 3,
+          "intentType": "block",
+          "intentAmount": 5,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-0",
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 58,
+          "enemyHP": 11,
+          "enemyBlock": 5,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 58,
+          "enemyHP": 11,
+          "enemyBlock": 5,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-0",
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 59,
+          "enemyHP": 11,
+          "enemyBlock": 1,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [
+            "card-2"
+          ],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 59,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 4,
+          "intentType": "attack",
+          "intentAmount": 6,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-1",
+            "card-0",
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "end",
+          "instance": "",
+          "hp": 58,
+          "enemyHP": 7,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 3,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-2",
+            "card-1",
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-2",
+          "hp": 58,
+          "enemyHP": 2,
+          "enemyBlock": 0,
+          "block": 0,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 2,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-1",
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-1",
+          "hp": 58,
+          "enemyHP": 2,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 1,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [
+            "card-0"
+          ],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-1"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        },
+        {
+          "kind": "card",
+          "instance": "card-0",
+          "hp": 59,
+          "enemyHP": 0,
+          "enemyBlock": 0,
+          "block": 5,
+          "strength": 0,
+          "poison": 0,
+          "weak": 0,
+          "energy": 0,
+          "turn": 5,
+          "intentType": "attack",
+          "intentAmount": 8,
+          "intentHits": 1,
+          "hand": [],
+          "draw": [],
+          "discard": [
+            "card-2",
+            "card-1",
+            "card-0"
+          ],
+          "exhaust": [
+            "card-3"
+          ]
+        }
+      ]
+    }
+  ]
+}

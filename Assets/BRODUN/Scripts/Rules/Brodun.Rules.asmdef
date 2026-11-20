@@ -1,0 +1,5 @@
+{
+  "name": "Brodun.Rules",
+  "rootNamespace": "Brodun",
+  "noEngineReferences": true
+}
