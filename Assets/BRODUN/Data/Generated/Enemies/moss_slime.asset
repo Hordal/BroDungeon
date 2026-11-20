@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0f216682dcc2564b9af8831794b517e, type: 3}
+  m_Name: moss_slime
+  m_EditorClassIdentifier: 
+  definition:
+    id: moss_slime
+    name: "\uC774\uB07C \uC2AC\uB77C\uC784"
+    rank: normal
+    asset_id: moss_slime
+    area_index: 1
+    hp: 38
+    area_hp_step: 4
+    display_height: 170
+    legacy: 1
+    patterns:
+    - type: attack
+      amount: 6
+      hits: 1
+    - type: attack
+      amount: 8
+      hits: 1
+    - type: block
+      amount: 5
+      hits: 0

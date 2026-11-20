@@ -1,0 +1,14 @@
+{
+  "name": "Brodun.Tests.PlayMode",
+  "references": [
+    "Brodun.Rules",
+    "Brodun.Data",
+    "Brodun.Flow",
+    "Brodun.Presentation",
+    "Unity.ugui",
+    "Unity.InputSystem"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}

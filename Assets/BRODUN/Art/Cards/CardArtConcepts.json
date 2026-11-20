@@ -1,0 +1,290 @@
+{
+  "schema": 1,
+  "style": "Original dark fantasy pixel-art scenes; charcoal/slate shadows, ochre highlights, turquoise wind; consistent crisp pixel clusters, full-bleed square, no text/frame/logo.",
+  "note": "All 27 individual illustrations produced and connected by existing CardData ID. Concepts illustrate existing rules only; no gameplay effects added. Original four warrior artworks preserved.",
+  "generation": {
+    "method": "built-in image_gen",
+    "date": "2026-10-20",
+    "completedDate": "2026-10-20",
+    "references": [
+      "earth_strike.png",
+      "wind_read.png"
+    ],
+    "resolution": [
+      1254,
+      1254
+    ]
+  },
+  "cards": [
+    {
+      "id": "earth_strike",
+      "name": "지반 강타",
+      "element": "earth",
+      "concept": "검과 건틀릿의 지면 강타, 전경으로 갈라지는 균열과 흙 파편",
+      "composition": "low impact closeup",
+      "status": "produced",
+      "image": "earth_strike.png",
+      "prompt": "Use case: stylized-concept. Asset type: square card illustration for BRODUN, original dark fantasy pixel-art deckbuilder. Create ONE full-bleed square image, no card frame, no text, no letters, no UI, no logo, no watermark. Cohesive art direction for a four-card set: deliberate crisp chunky pixel clusters at roughly 160x160 logical resolution, limited palette of charcoal navy, weathered slate, muted ochre, sea-green accents, sharp bright focal highlights, deep dungeon shadows, no smooth painting or blurry gradients. Readable bold scene composition with main action occupying central 75%, side margins safe for card crop. Ancient ruined stone dungeon backdrop. Original imagery, no imitation of another game's card. Ground Strike: a steel-armored warrior's gauntlet and heavy sword slam into flagstones, low close camera, jagged amber-lit fissure radiates diagonally across the floor toward foreground, flying dirt chunks and angular stone debris, clearly depict a single grounded heavy impact. Warm ochre impact contrasts cold navy ruins."
+    },
+    {
+      "id": "earth_blessing",
+      "name": "대지의 가호",
+      "element": "earth",
+      "concept": "캐릭터를 감싸는 흙빛 보호막, 발치의 안정적인 대지 문양",
+      "composition": "protective centered silhouette",
+      "status": "produced",
+      "image": "earth_blessing.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: A kneeling armored adventurer enclosed by a translucent ochre earthen aegis, grounded amber sigil and orbiting small rocks. Protective blessing, no attacking."
+    },
+    {
+      "id": "earth_crush",
+      "name": "대지 분쇄",
+      "element": "earth",
+      "concept": "적 아래에서 대규모 지반 폭발, 위로 솟는 암석 기둥과 파편",
+      "composition": "upward eruption",
+      "status": "produced",
+      "image": "earth_crush.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: A dark enemy silhouette hurled upward by a colossal eruption of jagged stone pillars and exploding flagstones, low camera, amber fractures and heavy angular rubble. Vast ground rupture, distinct from sword ground strike."
+    },
+    {
+      "id": "stone_guard",
+      "name": "바위 방벽",
+      "element": "stone",
+      "concept": "전사 앞에 솟아 공격을 막는 거대한 암석 장벽",
+      "composition": "three-quarter defensive wall",
+      "status": "produced",
+      "image": "stone_guard.png",
+      "prompt": "Use case: stylized-concept. Asset type: square card illustration for BRODUN, original dark fantasy pixel-art deckbuilder. Create ONE full-bleed square image, no card frame, no text, no letters, no UI, no logo, no watermark. Cohesive art direction for a four-card set: deliberate crisp chunky pixel clusters at roughly 160x160 logical resolution, limited palette of charcoal navy, weathered slate, muted ochre, sea-green accents, sharp bright focal highlights, deep dungeon shadows, no smooth painting or blurry gradients. Readable bold scene composition with main action occupying central 75%, side margins safe for card crop. Ancient ruined stone dungeon backdrop. Original imagery, no imitation of another game's card. Stone Guard: a massive rugged wall of interlocking stone slabs rises in front of a steel-armored warrior, three-quarter view, warrior partially visible behind protection with round shield, incoming anonymous red-orange impact sparks stopped at the wall, grounded stone dust and pale gold seams, clearly protective not offensive. Bold rock silhouette."
+    },
+    {
+      "id": "stone_retaliation",
+      "name": "반석의 반격",
+      "element": "stone",
+      "concept": "바위 방패에 막힌 공격 잔광과 반대 방향 반격 궤적",
+      "composition": "block then counter, not automatic new rule",
+      "status": "produced",
+      "image": "stone_retaliation.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: An armored knight with a massive rock shield blocking a blade at left while counterthrusting a sword toward a shadow enemy at right. Show clear solid existing stone protection and outward retaliatory blow in one readable scene."
+    },
+    {
+      "id": "stone_fortress",
+      "name": "돌의 요새",
+      "element": "stone",
+      "concept": "여러 겹 돌벽으로 보호되는 작은 중심 인물",
+      "composition": "layered fortress",
+      "status": "produced",
+      "image": "stone_fortress.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: Small armored guardian sheltered at center inside several concentric rugged stone ramparts, elevated three-quarter view, gold seams in slate, layered impenetrable fortress, not an offensive eruption."
+    },
+    {
+      "id": "wind_cut",
+      "name": "돌풍 베기",
+      "element": "wind",
+      "concept": "전사의 검을 따라 휘어지는 청록색 초승달 검기와 잔상",
+      "composition": "diagonal sweep",
+      "status": "produced",
+      "image": "wind_cut.png",
+      "prompt": "Use case: stylized-concept. Asset type: square card illustration for BRODUN, original dark fantasy pixel-art deckbuilder. Create ONE full-bleed square image, no card frame, no text, no letters, no UI, no logo, no watermark. Cohesive art direction for a four-card set: deliberate crisp chunky pixel clusters at roughly 160x160 logical resolution, limited palette of charcoal navy, weathered slate, muted ochre, sea-green accents, sharp bright focal highlights, deep dungeon shadows, no smooth painting or blurry gradients. Readable bold scene composition with main action occupying central 75%, side margins safe for card crop. Ancient ruined stone dungeon backdrop. Original imagery, no imitation of another game's card. Gust Slash: steel-armored warrior with red cape swings sword, a luminous turquoise crescent blade of wind sweeps diagonally across the scene, curled wind trails, flying dust, blade motion afterimages, low three-quarter view inside ruined dungeon, unmistakable slashing action, crescent dominates composition without washing out knight."
+    },
+    {
+      "id": "wind_judgment",
+      "name": "심판의 바람",
+      "element": "wind",
+      "concept": "적을 향해 전진하는 거대한 회오리, 이동하는 돌가루",
+      "composition": "advancing vortex",
+      "status": "produced",
+      "image": "wind_judgment.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: A huge turquoise tornado advances into one dark enemy, powerful spiralling air blades and lifted stones in a ruined hall. Vortex dominates, not a sword crescent."
+    },
+    {
+      "id": "wind_read",
+      "name": "바람 읽기",
+      "element": "wind",
+      "concept": "건틀릿 위 깃털과 청록색 바람 속에 떠오르는 마법 카드",
+      "composition": "calm draw, no attack",
+      "status": "produced",
+      "image": "wind_read.png",
+      "prompt": "Use case: stylized-concept. Asset type: square card illustration for BRODUN, original dark fantasy pixel-art deckbuilder. Create ONE full-bleed square image, no card frame, no text, no letters, no UI, no logo, no watermark. Cohesive art direction for a four-card set: deliberate crisp chunky pixel clusters at roughly 160x160 logical resolution, limited palette of charcoal navy, weathered slate, muted ochre, sea-green accents, sharp bright focal highlights, deep dungeon shadows, no smooth painting or blurry gradients. Readable bold scene composition with main action occupying central 75%, side margins safe for card crop. Ancient ruined stone dungeon backdrop. Original imagery, no imitation of another game's card. Read the Wind: three blank arcane cards float above an open steel-gauntleted hand among pale feathers and curling turquoise air currents in a ruined dungeon. Calm magical discovery and drawing cards, NOT an attack. Cards have abstract small ornamental marks only, no readable letters. Luminous mint focal point, same chunky pixel density and lighting as the warrior action cards."
+    },
+    {
+      "id": "water_wave",
+      "name": "정화의 파동",
+      "element": "water",
+      "concept": "적을 향한 푸른 파동과 시전자에게 돌아오는 치유 빛",
+      "composition": "outward strike and returning glow",
+      "status": "produced",
+      "image": "water_wave.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: A blue cresting wave strikes one shadow enemy on the right while a separate gentle pale aqua healing stream returns to an armored caster's raised hand at left. Both outward attack and returning restorative light readable."
+    },
+    {
+      "id": "water_stream",
+      "name": "수맥의 흐름",
+      "element": "water",
+      "concept": "적을 타격한 물줄기가 떠오르는 카드로 이어짐",
+      "composition": "flow to card",
+      "status": "produced",
+      "image": "water_stream.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: A narrow blue water jet hits an enemy, curls back across the foreground into a luminous blank magical card above a caster's hand. A flowing S composition connecting water attack to card draw, no healing symbols."
+    },
+    {
+      "id": "water_rest",
+      "name": "치유의 물결",
+      "element": "water",
+      "concept": "회복 물결과 캐릭터를 감싸는 얇은 물의 보호막",
+      "composition": "healing shelter",
+      "status": "produced",
+      "image": "water_rest.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: An injured armored adventurer quietly enveloped in circular restorative blue waves and a translucent water shield, tender cyan highlights, protected healing pose, no enemy or attack."
+    },
+    {
+      "id": "ice_guard",
+      "name": "빙결 장막",
+      "element": "ice",
+      "concept": "캐릭터 앞 반투명 얼음 장벽과 가장자리 서리",
+      "composition": "translucent defense",
+      "status": "produced",
+      "image": "ice_guard.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: A towering translucent ice curtain in front of an armored caster, faceted pale blue slabs with frosted edges, incoming sparks stopped at frozen surface. Defensive wall, clearly ice not rock."
+    },
+    {
+      "id": "ice_shard",
+      "name": "얼음 파편",
+      "element": "ice",
+      "concept": "적을 향해 날아가는 날카로운 얼음 결정과 서리 궤적",
+      "composition": "directed shards",
+      "status": "produced",
+      "image": "ice_shard.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: Several long sharp icy crystals fly diagonally toward one shadow enemy, lead crystal huge in foreground with white-blue highlights and angular frost trails, strong directed attack."
+    },
+    {
+      "id": "ice_link",
+      "name": "빙결 연계",
+      "element": "ice",
+      "concept": "물방울이 앞쪽부터 결정화되어 얼음 폭발로 이어짐",
+      "composition": "water to ice transformation",
+      "status": "produced",
+      "image": "ice_link.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: A flowing blue splash visibly freezes from liquid droplets on the left into jagged pale ice crystals exploding at the enemy on the right. Clear liquid-water to ice transformation in one action scene."
+    },
+    {
+      "id": "poison_touch",
+      "name": "독의 손길",
+      "element": "poison",
+      "concept": "독액이 흐르는 손이 적 표면을 오염시킴",
+      "composition": "contact contamination",
+      "status": "produced",
+      "image": "poison_touch.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: Close-up of a dark leather-gloved hand dripping luminous green venom touching a shadow enemy's armor, corrosion and sickly violet vapour bloom from contact. Distinct hand-contact contamination, no dagger."
+    },
+    {
+      "id": "poison_sting",
+      "name": "맹독 찌르기",
+      "element": "poison",
+      "concept": "독액을 머금은 단검이 오염된 표면을 찌름",
+      "composition": "precise thrust",
+      "status": "produced",
+      "image": "poison_sting.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: A gleaming narrow dagger coated in thick emerald venom thrusts into an already poisoned shadow foe, foreground blade, violet smoke, toxic droplets and corroded metal. Precision stabbing, not a hand spell."
+    },
+    {
+      "id": "poison_mist",
+      "name": "독안개",
+      "element": "poison",
+      "concept": "녹색 독액 입자를 품은 보랏빛 안개가 적을 감쌈",
+      "composition": "enveloping cloud",
+      "status": "produced",
+      "image": "poison_mist.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: One enemy silhouette engulfed in dense curling purple poisonous fog with suspended green venom droplets, sinister dungeon arch behind, readable silhouette swallowed by cloud, no weapon."
+    },
+    {
+      "id": "fire_bolt",
+      "name": "화염탄",
+      "element": "fire",
+      "concept": "응축된 화염구, 뜨거운 중심과 꼬리 불꽃",
+      "composition": "arcing projectile",
+      "status": "produced",
+      "image": "fire_bolt.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: A condensed bright yellow-core fireball launched from an armored mage's hand races toward a dark enemy, large flame projectile foreground with orange-red curling tail and separated embers. Projectile action, not static ball."
+    },
+    {
+      "id": "fire_inferno",
+      "name": "열화 폭격",
+      "element": "fire",
+      "concept": "위에서 쏟아지는 화염과 적을 덮는 큰 화염 폭발",
+      "composition": "descending firestorm",
+      "status": "produced",
+      "image": "fire_inferno.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: One enemy overwhelmed by a descending bombardment of raging orange-red flames and massive fiery ground explosion, white-yellow center and dark ember silhouettes. Broad overwhelming firestorm distinct from single projectile."
+    },
+    {
+      "id": "fire_strength",
+      "name": "화로의 힘",
+      "element": "fire",
+      "concept": "갑옷을 안에서 비추는 붉은 오라와 화염",
+      "composition": "empowered armor, not damage",
+      "status": "produced",
+      "image": "fire_strength.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: Close-up of a powerful suit of dark knight armor and held sword empowered by a glowing red furnace aura and inner amber seams, ember halo also forming a protective mantle. Strength plus protection, no outgoing attack."
+    },
+    {
+      "id": "lightning_strike",
+      "name": "낙뢰",
+      "element": "lightning",
+      "concept": "하늘에서 적에게 수직으로 꽂히는 번개와 작은 가지 전격",
+      "composition": "vertical strike",
+      "status": "produced",
+      "image": "lightning_strike.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: A violent branching blue-white lightning bolt falls vertically from a ruined vaulted ceiling onto one shadow enemy, sharp golden contact flash and small branching arcs. Vertical instant strike, not projectile."
+    },
+    {
+      "id": "lightning_chain",
+      "name": "연쇄 번개",
+      "element": "lightning",
+      "concept": "시차가 느껴지는 두 번개 궤적이 같은 적을 연속 관통",
+      "composition": "two hits, not extra targets",
+      "status": "produced",
+      "image": "lightning_chain.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: Exactly two distinct jagged blue-white lightning paths successively pierce the SAME single shadow enemy, one bright fresh bolt and one fading gold-blue afterimage, offset angles. Readable double hit, not multiple targets."
+    },
+    {
+      "id": "lightning_charge",
+      "name": "전하 축적",
+      "element": "lightning",
+      "concept": "손에 모이는 번개 구체와 몸 안으로 흐르는 전기 오라",
+      "composition": "inward energy, no attack",
+      "status": "produced",
+      "image": "lightning_charge.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: An open armored hand collects a brilliant contained electric sphere, blue-white arcs curve INWARD from surrounding runes and toward the caster's body, quiet charged aura. Energy resource accumulation, no enemy or outgoing attack."
+    },
+    {
+      "id": "explosion_blast",
+      "name": "폭발 일격",
+      "element": "explosion",
+      "concept": "무기의 충돌점에서 터지는 폭발과 바깥 방향 충격파",
+      "composition": "contact detonation",
+      "status": "produced",
+      "image": "explosion_blast.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: A heavy mace collides with enemy armor at close range and a huge jagged orange-gold detonation bursts directly from the weapon contact point, radial blast fragments and smoky recoil. Physical impact causes explosion."
+    },
+    {
+      "id": "explosion_link",
+      "name": "점화 연계",
+      "element": "explosion",
+      "concept": "남아 있는 불꽃이 점화되어 연속적인 폭발로 전환",
+      "composition": "fire to explosion",
+      "status": "produced",
+      "image": "explosion_link.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: A small residual red flame on an enemy becomes an enormous amber detonation, clear left-to-right sequence of ember ignition and expanding explosive burst in one unified scene. Fire-to-explosion synergy, not weapon swing."
+    },
+    {
+      "id": "explosion_barrier",
+      "name": "충격 방벽",
+      "element": "explosion",
+      "concept": "인물을 지키는 보호막에서 적을 향해 퍼지는 충격파",
+      "composition": "defense and outward impact",
+      "status": "produced",
+      "image": "explosion_barrier.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square full-bleed standalone card illustration for BRODUN. Input images are STYLE REFERENCES ONLY, never edit or copy their subject. Match their original dark fantasy pixel-art: crisp deliberate chunky pixel clusters roughly 160x160 logical density, charcoal navy and slate shadows, restrained detailed ruined stone dungeon backdrop, high contrast pale focal highlights, weathered armor, dramatic elemental light. Distinct bold scene not a simple icon. Central action readable at small card size; keep key subject within central 85%. NOT smooth painting, photorealism, vector or casual mobile art. No text, letters, numbers, UI, card frame, watermark or copied game design. Square 1:1 composition, opaque background. Subject: An armored guardian inside a strong translucent gold shield dome, a sharp orange concussive wave bursts outward FROM the shield toward a single enemy. Protection at center plus outward offensive shockwave clearly visible."
+    }
+  ]
+}

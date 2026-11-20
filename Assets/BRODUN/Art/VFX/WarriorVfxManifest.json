@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "method": "built-in image_gen; mechanical RGBA slicing and fixed-canvas registration",
+  "frames_per_card": 16,
+  "frame_size": [
+    256,
+    256
+  ],
+  "source_grid": [
+    4,
+    4
+  ],
+  "alpha": "true alpha; values below 5/255 cleared; soft fringes retained",
+  "clips": [
+    {
+      "card": "earth_strike",
+      "resources": "BrodunWarriorVfx/earth_strike",
+      "source": "Sources/earth_strike_sheet.png",
+      "prompt": "Use case: stylized-concept. Production game VFX SPRITE SHEET, exactly 4 equal columns by 4 equal rows, 16 animation frames in chronological row-major order. Square canvas. All 16 frames evenly aligned to an invisible grid, identical cell sizes and scale; each effect entirely inside its own cell with at least 12% transparent padding. No visible grid, labels, numbers, text or borders. ACTUAL TRANSPARENT alpha background throughout all empty areas, not a checkerboard, not a black or white backdrop. Dark fantasy 2D side-view pixel art with crisp chunky silhouettes, hand-painted pixel clusters and restrained soft luminous fringes and particles. Not vector art, not casual mobile art, not photorealistic. Frames must visibly evolve: first row preparation/emergence, second row growth and motion, third row peak and impact, fourth row decay and disappearance. Same fixed camera, baseline and effect registration throughout, no cropping at cell boundaries. NO characters, NO enemies, NO background scene, only isolated effects. Earth Strike. A LOW horizontal fractured-earth impact anchored at the bottom center of every cell: initially small ochre dust, then jagged floor cracks and grit, then a big crown of chunky gray-brown rocks erupting upward, then stones flying outward, falling fragments and thinning dust. Warm ochre glint in cracks but NOT lava or fire. All frames occupy a fixed transparent 3/4-view ground plane, baseline at 78% of cell height. There is NO solid ground tile, background, floor rectangle, character or weapon."
+    },
+    {
+      "card": "stone_guard",
+      "resources": "BrodunWarriorVfx/stone_guard",
+      "source": "Sources/stone_guard_sheet.png",
+      "prompt": "Use case: stylized-concept. Production game VFX SPRITE SHEET, exactly 4 equal columns by 4 equal rows, 16 animation frames in chronological row-major order. Square canvas. All 16 frames evenly aligned to an invisible grid, identical cell sizes and scale; each effect entirely inside its own cell with at least 12% transparent padding. No visible grid, labels, numbers, text or borders. ACTUAL TRANSPARENT alpha background throughout all empty areas, not a checkerboard, not a black or white backdrop. Dark fantasy 2D side-view pixel art with crisp chunky silhouettes, hand-painted pixel clusters and restrained soft luminous fringes and particles. Not vector art, not casual mobile art, not photorealistic. Frames must visibly evolve: first row preparation/emergence, second row growth and motion, third row peak and impact, fourth row decay and disappearance. Same fixed camera, baseline and effect registration throughout, no cropping at cell boundaries. NO characters, NO enemies, NO background scene, only isolated effects. Stone Guard defensive wall. Fixed three-quarter side view, baseline at 78% height, centered in each cell. First dust and scattered tiny stones; rising jagged slabs; assembled massive three-slab rocky barricade; brief warm earth-magic edge glimmer; then dissolving stones and dust. Consistent gray-brown rock material and restrained ochre aura, strong faceted silhouette, no fire or explosion. Do not include a character, shield icon, enemy or scene."
+    },
+    {
+      "card": "wind_cut",
+      "resources": "BrodunWarriorVfx/wind_cut",
+      "source": "Sources/wind_cut_sheet.png",
+      "prompt": "Use case: stylized-concept. Production game VFX SPRITE SHEET, exactly 4 equal columns by 4 equal rows, 16 animation frames in chronological row-major order. Square canvas. All 16 frames evenly aligned to an invisible grid, identical cell sizes and scale; each effect entirely inside its own cell with at least 12% transparent padding. No visible grid, labels, numbers, text or borders. ACTUAL TRANSPARENT alpha background throughout all empty areas, not a checkerboard, not a black or white backdrop. Dark fantasy 2D side-view pixel art with crisp chunky silhouettes, hand-painted pixel clusters and restrained soft luminous fringes and particles. Not vector art, not casual mobile art, not photorealistic. Frames must visibly evolve: first row preparation/emergence, second row growth and motion, third row peak and impact, fourth row decay and disappearance. Same fixed camera, baseline and effect registration throughout, no cropping at cell boundaries. NO characters, NO enemies, NO background scene, only isolated effects. Gust Slash. A large sharp mint/turquoise CRESCENT sword-energy blade, oriented moving to the RIGHT, centered at a fixed position in each cell. Starts compact charged wind wisps, grows into a sweeping curved blade with layered teal trailing ribbons, peaks as a crossing pair of slashes and bright pointed hit sparks, then dissipates into curved wisps and tiny motes. Motion is within the effect, not a character. NOT a circle ring or sword icon. Dark teal shadow edge and bright ivory core with restrained soft glow."
+    },
+    {
+      "card": "wind_read",
+      "resources": "BrodunWarriorVfx/wind_read",
+      "source": "Sources/wind_read_sheet.png",
+      "prompt": "Use case: stylized-concept. Production game VFX SPRITE SHEET, exactly 4 equal columns by 4 equal rows, 16 animation frames in chronological row-major order. Square canvas. All 16 frames evenly aligned to an invisible grid, identical cell sizes and scale; each effect entirely inside its own cell with at least 12% transparent padding. No visible grid, labels, numbers, text or borders. ACTUAL TRANSPARENT alpha background throughout all empty areas, not a checkerboard, not a black or white backdrop. Dark fantasy 2D side-view pixel art with crisp chunky silhouettes, hand-painted pixel clusters and restrained soft luminous fringes and particles. Not vector art, not casual mobile art, not photorealistic. Frames must visibly evolve: first row preparation/emergence, second row growth and motion, third row peak and impact, fourth row decay and disappearance. Same fixed camera, baseline and effect registration throughout, no cropping at cell boundaries. NO characters, NO enemies, NO background scene, only isolated effects. Read the Wind support spell. Centered small turquoise wind vortex carrying two stylized blank glowing magical cards and a few pale feathers. Starts as calm wisps, then cards coalesce and orbit once, then drift downward-right toward an offscreen card hand, and dissolve into tiny mint motes. No attack, blade, hit spark, explosion or enemy. Cards use abstract ornamental lines, NO lettering."
+    }
+  ],
+  "note": "Generated animation frames, not a hand-keyed production animation. In-Editor registration, clipping and continuity require user visual review. Timing uses existing BattleVfx contact callbacks."
+}

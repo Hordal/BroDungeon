@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 676340a7a1a5c434b9d92658f098af46, type: 3}
+  m_Name: warrior
+  m_EditorClassIdentifier: 
+  definition:
+    id: warrior
+    name: "\uC804\uC0AC"
+    desc: "\uB545\xB7\uBC14\uC704\xB7\uBC14\uB78C / \uAC80\uACFC \uBC29\uD328"
+    maxHP: 60
+    energy: 3
+    starter:
+    - earth_strike
+    - stone_guard
+    - wind_cut
+    - wind_read
+  portrait: {fileID: 0}

@@ -1,0 +1,7 @@
+{
+  "name": "Brodun.Flow",
+  "references": [
+    "Brodun.Rules"
+  ],
+  "noEngineReferences": true
+}

@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71cfea3f760da2840a9a23610bc758ed, type: 3}
+  m_Name: BrodunCombatMotion
+  m_EditorClassIdentifier: 
+  heroes:
+  - character: 0
+    animations:
+    - motion: 0
+      fps: 6
+      loop: 1
+      frames:
+      - {fileID: 21300000, guid: 0119d9bb55ec9764ebf0e35a50b99d17, type: 3}
+      - {fileID: 21300000, guid: 3107c13cb9a6b4c42ae4b782cf590e24, type: 3}
+      - {fileID: 21300000, guid: a52f65a93a9139148b488cd1b7fa357e, type: 3}
+      - {fileID: 21300000, guid: a2577146f140a364ab280899d4cc924d, type: 3}
+    - motion: 1
+      fps: 10
+      loop: 0
+      frames:
+      - {fileID: 21300000, guid: ecf9869d5caa5114aa50b89ba3a10c55, type: 3}
+      - {fileID: 21300000, guid: 83e43ebbf67cbfe47a4c7a3df4e4c60d, type: 3}
+      - {fileID: 21300000, guid: 2c07a6f2361353a44b378533c72cf9ec, type: 3}
+      - {fileID: 21300000, guid: 75dd1a42a0d1edf41aa2cd64bdd13b57, type: 3}
+    - motion: 2
+      fps: 10
+      loop: 0
+      frames:
+      - {fileID: 21300000, guid: 94fb162e2236c3b4d9c14d74d73d53c9, type: 3}
+      - {fileID: 21300000, guid: 5f7785a5b5ce23c4da5527b722bc53a9, type: 3}
+      - {fileID: 21300000, guid: fcdd21f075a1d9b4dbcb94e45a506a95, type: 3}
+      - {fileID: 21300000, guid: 7af28af8cfc04514a96e78735573f978, type: 3}
+  - character: 1
+    animations:
+    - motion: 0
+      fps: 6
+      loop: 1
+      frames:
+      - {fileID: 21300000, guid: d333c52da1b35e745aac20a725763d1f, type: 3}
+      - {fileID: 21300000, guid: b8d5499f608ae7d4f88f316da431f0ca, type: 3}
+      - {fileID: 21300000, guid: 758501c24e8d7374694feed2de896d87, type: 3}
+      - {fileID: 21300000, guid: 138bee38e1d67ce48afdaf8af4ccc78b, type: 3}
+    - motion: 1
+      fps: 10
+      loop: 0
+      frames:
+      - {fileID: 21300000, guid: fa00b30489aa2f34db79a7822a7cae8d, type: 3}
+      - {fileID: 21300000, guid: 23d0f2c31cf1b86458886a7c6544580a, type: 3}
+      - {fileID: 21300000, guid: 587eafecb67c84540a57a7fd78278dda, type: 3}
+      - {fileID: 21300000, guid: 96ee8753e1afbca4e92f2204662258b9, type: 3}
+    - motion: 2
+      fps: 10
+      loop: 0
+      frames:
+      - {fileID: 21300000, guid: aa296ec167277da4fa8c7948c5c2ed2b, type: 3}
+      - {fileID: 21300000, guid: 26017dc46aee96a4cbb87a73673e570e, type: 3}
+      - {fileID: 21300000, guid: 61e7a3cd64f9a11418aad798be9ee330, type: 3}
+      - {fileID: 21300000, guid: 7a2abe6393bae1d409b968cb5268b7f8, type: 3}
+  - character: 2
+    animations:
+    - motion: 0
+      fps: 6
+      loop: 1
+      frames:
+      - {fileID: 21300000, guid: 5f011a2b75d596348929aef37d88a8e7, type: 3}
+      - {fileID: 21300000, guid: 68d6180b9a4617344892ce5f66345aac, type: 3}
+      - {fileID: 21300000, guid: e694360d81a7325409a9c30269fbb0d7, type: 3}
+      - {fileID: 21300000, guid: d52d1aa50a58ce54fbaae49310a40988, type: 3}
+    - motion: 1
+      fps: 10
+      loop: 0
+      frames:
+      - {fileID: 21300000, guid: c37fb0a430e989d4ea75be6b567f677d, type: 3}
+      - {fileID: 21300000, guid: 7797a71f922a93940a06d23f43454847, type: 3}
+      - {fileID: 21300000, guid: 1c059ad9a2e82ba4782b26570ea3216b, type: 3}
+      - {fileID: 21300000, guid: c0c59ee56e2e5be4b897020990471f10, type: 3}
+    - motion: 2
+      fps: 10
+      loop: 0
+      frames:
+      - {fileID: 21300000, guid: f49f7f9caa334484883209cf93693dc9, type: 3}
+      - {fileID: 21300000, guid: f5be8456e7f68b74597a3c1af5cc8d51, type: 3}
+      - {fileID: 21300000, guid: d032c9bf686950d49aa5d07e3123afcd, type: 3}
+      - {fileID: 21300000, guid: 4cfabc7c4c817d34ab8fada268913c42, type: 3}
