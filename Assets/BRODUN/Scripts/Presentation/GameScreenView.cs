@@ -20,6 +20,8 @@ namespace Brodun.Presentation
         private readonly Dictionary<string,GameObject> nodeStatus=new Dictionary<string,GameObject>();
         private readonly Dictionary<string,Text> nodeLabels=new Dictionary<string,Text>();
         private readonly Dictionary<string,Image> nodeIcons=new Dictionary<string,Image>();
+        private readonly Dictionary<string,StyledButton> themeButtons=new Dictionary<string,StyledButton>();
+        private Image screenBackground;
         private MapPathsGraphic paths;
         private GameObject modal,deckOverlay;
         private CanvasGroup content;
@@ -39,7 +41,12 @@ namespace Brodun.Presentation
             var scaler=canvasObject.GetComponent<CanvasScaler>();scaler.uiScaleMode=CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution=new Vector2(1920,1080);scaler.matchWidthOrHeight=.5f;
             content=canvasObject.GetComponent<CanvasGroup>();content.interactable=false;
-            Background(screen==FlowScreen.Title?Art.titleBackground:Art.mapBackground,screen==FlowScreen.Title?.13f:.78f);
+            var backdrop=screen==FlowScreen.Title?Art.titleBackground:Art.mapBackground;
+            if(screen==FlowScreen.DungeonMap&&flow.Session.Run!=null)
+                backdrop=BattleBackgrounds.Resolve(flow.Session.Run.ThemeId,false,backdrop);
+            if(screen==FlowScreen.CharacterSelect)
+                backdrop=BattleBackgrounds.Resolve(flow.Session.PendingThemeId,false,backdrop);
+            Background(backdrop,screen==FlowScreen.Title?.13f:.78f);
             if(screen==FlowScreen.Title)BuildTitle();
             else if(screen==FlowScreen.CharacterSelect)BuildCharacters();
             else if(screen==FlowScreen.DungeonMap)BuildMap();
@@ -59,6 +66,7 @@ namespace Brodun.Presentation
         private void Background(Sprite sprite,float darkness)
         {
             var bg=Image(Root,"Dungeon background",sprite,Color.white,Vector2.zero,Vector2.one);
+            screenBackground=bg;
             // Both supplied backgrounds are 16:9; fill the canvas, no web-like black gutters.
             bg.preserveAspect=false;
             Image(Root,"Veil",null,new Color(.015f,.025f,.03f,darkness),Vector2.zero,Vector2.one);
@@ -74,13 +82,21 @@ namespace Brodun.Presentation
             Label(Root,"운명을 고르고, 심연으로 내려가라",27,Pale,new Vector2(.25f,.61f),new Vector2(.75f,.67f));
             Button(Root,"GameStart","GAME START  /  게임 시작",new Vector2(.37f,.41f),new Vector2(.63f,.49f),()=>Flow.StartNewRun());
             Button(Root,"Quit","EXIT  /  종료",new Vector2(.40f,.29f),new Vector2(.60f,.36f),()=>Flow.QuitGame());
-            Label(Root,"B R O D U N   ·   잊혀진 회랑",21,Muted,new Vector2(.25f,.045f),new Vector2(.75f,.09f));
+            Label(Root,"B R O D U N   ·   테마를 선택하고 원정 시작",21,Muted,new Vector2(.25f,.045f),new Vector2(.75f,.09f));
             // No false Continue/Settings promise: neither feature is implemented yet.
         }
         private void BuildCharacters()
         {
-            Label(Root,"CHOOSE YOUR FATE",48,Gold,new Vector2(.2f,.855f),new Vector2(.8f,.93f));
-            Label(Root,"심연에 도전할 영웅을 선택하세요",24,Pale,new Vector2(.2f,.80f),new Vector2(.8f,.85f));
+            Label(Root,"CHOOSE YOUR FATE",42,Gold,new Vector2(.2f,.91f),new Vector2(.8f,.975f));
+            Label(Root,"원정 테마를 고른 뒤 영웅을 선택하세요",22,Pale,new Vector2(.2f,.86f),new Vector2(.8f,.905f));
+            for(int i=0;i<DungeonThemes.All.Count;i++)
+            {
+                var theme=DungeonThemes.All[i];float left=.10f+i*.207f;
+                var button=Button(Root,"Theme_"+theme.Id,theme.Name,new Vector2(left,.79f),new Vector2(left+.195f,.85f),()=>SelectTheme(theme.Id));
+                button.interactable=DungeonThemes.IsAvailable(Flow.Session.Definitions,theme.Id);
+                themeButtons.Add(theme.Id,button);
+            }
+            RefreshThemes();
             var definitions=Flow.Session.Definitions;
             for(int i=0;i<definitions.Characters.Count;i++)
             {
@@ -99,6 +115,22 @@ namespace Brodun.Presentation
             Button(Root,"Back","돌아가기",new Vector2(.04f,.05f),new Vector2(.19f,.12f),()=>Flow.ReturnToTitle());
             Label(Root,"선택한 영웅의 카드로 새로운 여정이 시작됩니다",22,Muted,new Vector2(.27f,.06f),new Vector2(.78f,.11f));
         }
+        private void SelectTheme(string id)
+        {
+            if(!Flow.ChooseTheme(id))return;
+            screenBackground.sprite=BattleBackgrounds.Resolve(id,false,Art.mapBackground);
+            RefreshThemes();
+        }
+        private void RefreshThemes()
+        {
+            foreach(var pair in themeButtons)
+            {
+                bool selected=pair.Key==Flow.Session.PendingThemeId;
+                pair.Value.normal=selected?Art.nodeSelected:Art.buttonNormal;
+                pair.Value.GetComponentInChildren<Text>().text=(selected?"✓ ":"")+DungeonThemes.Find(pair.Key).Name;
+                pair.Value.RefreshStyle();
+            }
+        }
         private void BuildMap()
         {
             var run=Flow.Session.Run;
@@ -111,7 +143,7 @@ namespace Brodun.Presentation
             areaHud=Label(hud,"",26,Muted,new Vector2(.55f,.12f),new Vector2(.75f,.88f));
             var deckButton=Button(hud,"DeckButton","현재 덱",new Vector2(.79f,.15f),new Vector2(.975f,.85f),OpenDeck);
             deckHud=deckButton.GetComponentInChildren<Text>();
-            Label(Root,"THE FORGOTTEN PATH",40,Gold,new Vector2(.2f,.77f),new Vector2(.8f,.85f));
+            Label(Root,DungeonThemes.Find(run.ThemeId).Name,40,Gold,new Vector2(.2f,.77f),new Vector2(.8f,.85f));
             var viewportImage=Image(Root,"DungeonMapViewport",null,new Color(.016f,.025f,.035f,.58f),new Vector2(.025f,.205f),new Vector2(.975f,.765f));
             viewportImage.raycastTarget=true;viewportImage.gameObject.AddComponent<RectMask2D>();
             MapScroller=viewportImage.gameObject.AddComponent<DungeonMapScroller>();
@@ -150,7 +182,7 @@ namespace Brodun.Presentation
             if(Screen!=FlowScreen.DungeonMap)return;
             var run=Flow.Session.Run;
             hpHud.text="HP  "+run.CurrentHP+" / "+run.MaxHP;goldHud.text="GOLD  "+run.Gold;
-            areaHud.text=run.CurrentArea+"구역 "+run.Floor+"층";deckHud.text="현재 덱  "+run.Deck.Count;
+            areaHud.fontSize=20;areaHud.text=run.CurrentArea+"구역 · "+DungeonThemes.Find(run.ThemeId).Name;deckHud.text="현재 덱  "+run.Deck.Count;
             foreach(var pair in nodes)
             {
                 var state=Flow.Session.NodeState(pair.Key);var button=pair.Value;

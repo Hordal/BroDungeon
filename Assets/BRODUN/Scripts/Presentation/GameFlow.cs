@@ -43,7 +43,7 @@ namespace Brodun.Presentation
         {
             if(Instance!=null && Instance!=this){Destroy(gameObject);return;}
             if(catalog==null || assets==null)throw new InvalidOperationException("BRODUN Boot dependencies missing.");
-            Instance=this;DontDestroyOnLoad(gameObject);Session=new FlowSession(catalog.ToDefinitions(),seed=>LayeredMapGenerator.Generate(seed));
+            Instance=this;DontDestroyOnLoad(gameObject);Session=new FlowSession(catalog.ToPlayableDefinitions(),seed=>LayeredMapGenerator.Generate(seed));
             var canvasObject=new GameObject("TransitionOverlay",typeof(RectTransform),typeof(Canvas),typeof(CanvasScaler),typeof(GraphicRaycaster),typeof(CanvasGroup));
             canvasObject.transform.SetParent(transform,false);
             var canvas=canvasObject.GetComponent<Canvas>();canvas.renderMode=RenderMode.ScreenSpaceOverlay;canvas.sortingOrder=1000;
@@ -78,7 +78,7 @@ namespace Brodun.Presentation
 #if UNITY_EDITOR
             if(editorPreviewSession && !Session.IsTransitioning && (Session.Screen==FlowScreen.Title||Session.Screen==FlowScreen.RunResult))
             {
-                Session=new FlowSession(catalog.ToDefinitions(),s=>LayeredMapGenerator.Generate(s));
+                Session=new FlowSession(catalog.ToPlayableDefinitions(),s=>LayeredMapGenerator.Generate(s));
                 Session.FinishTransition(FlowScreen.Title);editorPreviewSession=false;
             }
 #endif
@@ -91,6 +91,7 @@ namespace Brodun.Presentation
             if(!Session.ChooseCharacter(id))return false;
             StartCoroutine(Load(FlowScreen.DungeonMap));return true;
         }
+        public bool ChooseTheme(string id) => Session.ChooseTheme(id);
         public bool ReturnToTitle()
         { if(!Session.ReturnToTitle())return false;StartCoroutine(Load(FlowScreen.Title));return true; }
         public bool SelectRoom(string id)

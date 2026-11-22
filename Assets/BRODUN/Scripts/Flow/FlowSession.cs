@@ -18,6 +18,7 @@ namespace Brodun.Flow
         public FlowScreen Screen { get; private set; }=FlowScreen.Boot;
         public RunState Run { get; private set; }
         public uint PendingSeed { get; private set; }
+        public string PendingThemeId { get; private set; }=DungeonThemes.DefaultId;
         public PendingRoomContext PendingRoom { get; private set; }
         public BattleContext Battle { get; private set; }
         public RoomRuntime Room { get; private set; }
@@ -31,12 +32,17 @@ namespace Brodun.Flow
         public bool StartNewRun(uint seed)
         {
             if(IsTransitioning || (Screen!=FlowScreen.Title&&Screen!=FlowScreen.RunResult))return false;
-            Run=null;PendingRoom=null;Battle=null;Room=null;Summary=null;PendingSeed=seed;return BeginTransition();
+            Run=null;PendingRoom=null;Battle=null;Room=null;Summary=null;PendingSeed=seed;PendingThemeId=DungeonThemes.DefaultId;return BeginTransition();
+        }
+        public bool ChooseTheme(string id)
+        {
+            if(IsTransitioning||Screen!=FlowScreen.CharacterSelect||!DungeonThemes.IsAvailable(Definitions,id))return false;
+            PendingThemeId=id;return true;
         }
         public bool ChooseCharacter(CharacterId id)
         {
             if(IsTransitioning || Screen!=FlowScreen.CharacterSelect || !Definitions.Characters.Any(c=>c.Id==id))return false;
-            Run=new RunState(Definitions,id,PendingSeed,dungeon:dungeonFactory?.Invoke(PendingSeed));PendingRoom=null;return BeginTransition();
+            Run=new RunState(Definitions,id,PendingSeed,dungeon:dungeonFactory?.Invoke(PendingSeed),themeId:PendingThemeId);PendingRoom=null;return BeginTransition();
         }
         public bool ReturnToTitle()
         {

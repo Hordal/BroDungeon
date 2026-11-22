@@ -63,7 +63,7 @@ namespace Brodun.Tests.PlayMode
         {
             var original=Flow.Session.Definitions;
             var preview=new GameDefinitions(original.Cards,original.Characters,
-                original.Enemies.Select(e=>e.Area==1&&e.Type==EnemyType.Normal&&!e.IsLegacy
+                original.Enemies.Select(e=>e.Id=="ruin_gargoyle"
                     ?new EnemyDefinition(e.Id,e.Name,e.Type,e.Area,14,e.AreaHPStep,e.AssetId,e.Pattern,e.IsLegacy):e),
                 original.Config,original.Reward,original.Elements);
             Assert.IsTrue(Flow.StartEditorPreviewRun(preview,7));
@@ -76,7 +76,7 @@ namespace Brodun.Tests.PlayMode
             Click("Character_Warrior");yield return WaitFor(FlowScreen.DungeonMap);Click("Node_r2");
             while(Flow.Session.IsTransitioning)yield return null;
             Assert.AreEqual(38,Flow.Session.Battle.Runtime.Enemy.MaxHP);
-            Assert.AreEqual(38,original.Enemies.Single(e=>e.Area==1&&e.Type==EnemyType.Normal&&!e.IsLegacy).BaseHP);
+            Assert.AreEqual(38,original.Enemy("ruin_gargoyle").BaseHP);
         }
 #endif
         [UnityTest] public IEnumerator AllThreeCharactersUseCatalogStatsAndDeck()
@@ -87,6 +87,26 @@ namespace Brodun.Tests.PlayMode
                 yield return Map(hero);var definition=Flow.Session.Definitions.Character(hero);
                 Assert.AreEqual(definition.MaxHP,Flow.Session.Run.CurrentHP);
                 CollectionAssert.AreEqual(definition.StartingDeck,Flow.Session.Run.Deck.Select(c=>c.CardId));
+            }
+        }
+        [UnityTest] public IEnumerator ThemeButtonsEnterTheirOwnBattleAndBackground()
+        {
+            foreach(var theme in DungeonThemes.All)
+            {
+                if(Flow.Session.Screen!=FlowScreen.Title){Flow.ReturnToTitle();yield return WaitFor(FlowScreen.Title);}
+                Click("GameStart");yield return WaitFor(FlowScreen.CharacterSelect);
+                Click("Theme_"+theme.Id);Click("Character_Warrior");
+                yield return WaitFor(FlowScreen.DungeonMap);
+                Assert.AreEqual(theme.Id,Flow.Session.Run.ThemeId);
+                var node=Flow.Session.Run.Map.First(n=>n.Layer==1&&n.Type==RoomType.Battle);
+                Click("Node_"+node.Id);
+                while(Flow.Session.IsTransitioning)yield return null;
+                var controller=UnityEngine.Object.FindFirstObjectByType<BattleController>();
+                Assert.AreEqual(FlowScreen.Battle,Flow.Session.Screen);
+                Assert.Contains(controller.Context.Runtime.Enemy.Definition.Id,theme.EnemyIds.ToArray());
+                var background=controller.View.Root.GetComponentsInChildren<Image>().Single(i=>i.name=="Battle background");
+                Assert.AreSame(BattleBackgrounds.Resolve(theme.Id,false,null),background.sprite);
+                Assert.NotNull(controller.View.Enemy.sprite.sprite);
             }
         }
         [UnityTest] public IEnumerator LockedNodesAndBattleEntryRemainUncompletedAcrossReload()

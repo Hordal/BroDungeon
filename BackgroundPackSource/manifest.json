@@ -1,121 +1,155 @@
 {
-  "title": "BRODUN 전투 배경 테마팩",
-  "version": 1,
-  "created": "2026-11-22",
-  "generation": "built-in image_gen",
-  "count": 8,
-  "width": 1672,
-  "height": 941,
-  "gameIntegrated": false,
-  "notes": [
-    "4개 테마 중 3개를 방문하는 런 구조를 위한 배경 후보. 순서를 고정하지 않음.",
-    "01~03은 확인된 몬스터·보스 데이터의 모티프를 사용.",
-    "04 폭풍의 첨탑은 확정된 네 번째 구역 데이터를 찾지 못해 질풍 파수꾼·코일 골렘 모티프로 만든 가안. 기존 보스가 확인되었다는 뜻이 아님.",
-    "배경만 제공. 몬스터, 캐릭터, UI는 런타임에서 별도로 배치.",
-    "그림의 지면과 캐릭터 발 위치를 맞추는 통합 검수는 아직 수행하지 않음."
-  ],
-  "assets": [
+  "themes": [
     {
-      "id": "01_ruins_normal",
-      "file": "01_ruins_normal.png",
-      "theme": "잊혀진 회랑",
-      "type": "일반전",
-      "provisional": false,
-      "motifs": [
+      "id": "ruins",
+      "name": "잊혀진 회랑",
+      "boss": "fallen_colossus",
+      "backgroundKey": "01_ruins",
+      "enemyIds": [
         "ruin_gargoyle",
         "moss_slime",
-        "fallen_colossus"
-      ],
-      "prompt": "Create ONE finished standalone wide 16:9 landscape background for BRODUN, a 2D side-view turn-based card battler. Original art direction combining Limbus Company's oppressive theatrical dark fantasy, Reverse:1999's elegant painterly atmospheric environment design, and Slay the Spire's clear readable battle staging. Hand-painted 2D illustrated game background, restrained brush texture, strong designed silhouettes, muted sophisticated colors, NOT pixel art, NOT photorealistic, NOT 3D render. No characters, monsters, creature silhouettes, UI, lettering, logos, border, panels or collage. Horizontal continuous traversable floor, character feet baseline around 65% image height; unobstructed left quarter for hero and right third for enemy sprites, focal architecture in distant background not occupying these sprite positions. Bottom 25% subdued dark floor for card interface overlay, top 12% restrained detail for HUD. Rich but controlled detail in back layers with atmospheric depth. Output wide high resolution, preferably 1920x1080. Image must fill entire canvas.\nSCENE: Abandoned moss-covered palace arcade inhabited by ruin gargoyles and moss slimes. Crumbling gothic stone arches, rain-wet limestone slabs, ivy and fern clusters at edges, broken abstract statues embedded in distant wall, tarnished brass torch brackets with a few amber flames. Dusty slate, olive green and warm old gold, diffuse overcast daylight entering through side arches. A small-scale dangerous traversed corridor rather than grand boss arena. Absolutely no intact statues that could read as enemy sprites in foreground."
-    },
-    {
-      "id": "01_ruins_boss",
-      "file": "01_ruins_boss.png",
-      "theme": "잊혀진 회랑",
-      "type": "보스전",
-      "provisional": false,
-      "motifs": [
-        "ruin_gargoyle",
-        "moss_slime",
-        "fallen_colossus"
-      ],
-      "prompt": "Create ONE finished standalone wide 16:9 landscape background for BRODUN, a 2D side-view turn-based card battler. Original art direction combining Limbus Company's oppressive theatrical dark fantasy, Reverse:1999's elegant painterly atmospheric environment design, and Slay the Spire's clear readable battle staging. Hand-painted 2D illustrated game background, restrained brush texture, strong designed silhouettes, muted sophisticated colors, NOT pixel art, NOT photorealistic, NOT 3D render. No characters, monsters, creature silhouettes, UI, lettering, logos, border, panels or collage. Horizontal continuous traversable floor, character feet baseline around 65% image height; unobstructed left quarter for hero and right third for enemy sprites, focal architecture in distant background not occupying these sprite positions. Bottom 25% subdued dark floor for card interface overlay, top 12% restrained detail for HUD. Rich but controlled detail in back layers with atmospheric depth. Output wide high resolution, preferably 1920x1080. Image must fill entire canvas.\nSCENE: Monumental ruined coronation court prepared as the arena of a fallen stone colossus, without showing the creature. Giant broken crown-shaped arch and shattered throne dais in the far background, immense cracked masonry, moss tracing deep old fissures, a narrow pale gold shaft of light from a broken vault. Ancient royal insignia are purely abstract shapes, no letters. Broad sturdy empty stone battle platform, dramatic sense of scale and solemn tyranny; olive black, limestone gray, desaturated old gold."
-    },
-    {
-      "id": "02_waterway_normal",
-      "file": "02_waterway_normal.png",
-      "theme": "침잠의 수맥",
-      "type": "일반전",
-      "provisional": false,
-      "motifs": [
-        "venom_eel",
-        "crystal_crawler",
-        "abyssal_leviathan"
-      ],
-      "prompt": "Create ONE finished standalone wide 16:9 landscape background for BRODUN, a 2D side-view turn-based card battler. Original art direction combining Limbus Company's oppressive theatrical dark fantasy, Reverse:1999's elegant painterly atmospheric environment design, and Slay the Spire's clear readable battle staging. Hand-painted 2D illustrated game background, restrained brush texture, strong designed silhouettes, muted sophisticated colors, NOT pixel art, NOT photorealistic, NOT 3D render. No characters, monsters, creature silhouettes, UI, lettering, logos, border, panels or collage. Horizontal continuous traversable floor, character feet baseline around 65% image height; unobstructed left quarter for hero and right third for enemy sprites, focal architecture in distant background not occupying these sprite positions. Bottom 25% subdued dark floor for card interface overlay, top 12% restrained detail for HUD. Rich but controlled detail in back layers with atmospheric depth. Output wide high resolution, preferably 1920x1080. Image must fill entire canvas.\nSCENE: Submerged underground aqueduct habitat of venom eels and crystal crawlers, no creatures. Broad intact wet stone walkway across image foreground; shallow black-blue channels behind it, eroded brick arches, tiny patches of sickly chartreuse algae, pale blue mineral growth and distant waterfall haze. Low diffuse teal reflections, no excessive neon. Cold cyan, deep petrol blue, very sparse venom-green accents. Moody intimate neglected water infrastructure, not an enormous cave vista."
-    },
-    {
-      "id": "02_waterway_boss",
-      "file": "02_waterway_boss.png",
-      "theme": "침잠의 수맥",
-      "type": "보스전",
-      "provisional": false,
-      "motifs": [
-        "venom_eel",
-        "crystal_crawler",
-        "abyssal_leviathan"
-      ],
-      "prompt": "Create ONE finished standalone wide 16:9 landscape background for BRODUN, a 2D side-view turn-based card battler. Original art direction combining Limbus Company's oppressive theatrical dark fantasy, Reverse:1999's elegant painterly atmospheric environment design, and Slay the Spire's clear readable battle staging. Hand-painted 2D illustrated game background, restrained brush texture, strong designed silhouettes, muted sophisticated colors, NOT pixel art, NOT photorealistic, NOT 3D render. No characters, monsters, creature silhouettes, UI, lettering, logos, border, panels or collage. Horizontal continuous traversable floor, character feet baseline around 65% image height; unobstructed left quarter for hero and right third for enemy sprites, focal architecture in distant background not occupying these sprite positions. Bottom 25% subdued dark floor for card interface overlay, top 12% restrained detail for HUD. Rich but controlled detail in back layers with atmospheric depth. Output wide high resolution, preferably 1920x1080. Image must fill entire canvas.\nSCENE: The drowned reservoir arena belonging to an abyssal leviathan, but do not depict the creature or any creature silhouettes. Vast circular floodgate far behind the empty battle pier, a huge dark water opening, drowned pillars and giant iron mooring rings, mist over an abyssal pool, ghostly light from high broken windows reflected in ink-blue water. The space suggests terrible pressure and depth through scale alone. Broad continuous dry stone platform supports hero and large boss sprites. Ink blue, oxidized copper, tiny cold aquamarine highlights."
-    },
-    {
-      "id": "03_foundry_normal",
-      "file": "03_foundry_normal.png",
-      "theme": "소멸의 화로",
-      "type": "일반전",
-      "provisional": false,
-      "motifs": [
-        "ember_gremlin",
-        "furnace_sentinel",
-        "foundry_tyrant"
-      ],
-      "prompt": "Create ONE finished standalone wide 16:9 landscape background for BRODUN, a 2D side-view turn-based card battler. Original art direction combining Limbus Company's oppressive theatrical dark fantasy, Reverse:1999's elegant painterly atmospheric environment design, and Slay the Spire's clear readable battle staging. Hand-painted 2D illustrated game background, restrained brush texture, strong designed silhouettes, muted sophisticated colors, NOT pixel art, NOT photorealistic, NOT 3D render. No characters, monsters, creature silhouettes, UI, lettering, logos, border, panels or collage. Horizontal continuous traversable floor, character feet baseline around 65% image height; unobstructed left quarter for hero and right third for enemy sprites, focal architecture in distant background not occupying these sprite positions. Bottom 25% subdued dark floor for card interface overlay, top 12% restrained detail for HUD. Rich but controlled detail in back layers with atmospheric depth. Output wide high resolution, preferably 1920x1080. Image must fill entire canvas.\nSCENE: Abandoned working foundry habitat of ember gremlins and furnace sentinels, without inhabitants. Wide empty riveted iron service platform across foreground; small smelting furnaces and refractory brick, iron pipes, distant pulley gears, cooling slag piles confined to edges, amber ember light filtered through soot. Charcoal black, weathered rust brown, deep oxblood and restrained molten orange. Strong industrial dark fantasy, quiet danger, no foreground lava obstructing feet."
-    },
-    {
-      "id": "03_foundry_boss",
-      "file": "03_foundry_boss.png",
-      "theme": "소멸의 화로",
-      "type": "보스전",
-      "provisional": false,
-      "motifs": [
-        "ember_gremlin",
-        "furnace_sentinel",
-        "foundry_tyrant"
-      ],
-      "prompt": "Create ONE finished standalone wide 16:9 landscape background for BRODUN, a 2D side-view turn-based card battler. Original art direction combining Limbus Company's oppressive theatrical dark fantasy, Reverse:1999's elegant painterly atmospheric environment design, and Slay the Spire's clear readable battle staging. Hand-painted 2D illustrated game background, restrained brush texture, strong designed silhouettes, muted sophisticated colors, NOT pixel art, NOT photorealistic, NOT 3D render. No characters, monsters, creature silhouettes, UI, lettering, logos, border, panels or collage. Horizontal continuous traversable floor, character feet baseline around 65% image height; unobstructed left quarter for hero and right third for enemy sprites, focal architecture in distant background not occupying these sprite positions. Bottom 25% subdued dark floor for card interface overlay, top 12% restrained detail for HUD. Rich but controlled detail in back layers with atmospheric depth. Output wide high resolution, preferably 1920x1080. Image must fill entire canvas.\nSCENE: Grand heart of an annihilation furnace, an arena for the foundry tyrant without showing any being. Colossal crowned blast-furnace mouth in distant background, monumental suspended crucible and heavy chains above, towering soot-black masonry, narrow controlled streams of molten metal behind the platform. Broad empty iron battle deck with worn radial foundry patterns but no text, symmetrical oppressive throne-room machinery. Blackened iron, deep crimson shadow, intense but localized pale orange heat at rear center, no bright lava across character silhouettes."
-    },
-    {
-      "id": "04_storm_normal",
-      "file": "04_storm_normal.png",
-      "theme": "폭풍의 첨탑 가안",
-      "type": "일반전",
-      "provisional": true,
-      "motifs": [
         "gale_warden",
-        "coil_golem"
-      ],
-      "prompt": "Create ONE finished standalone wide 16:9 landscape background for BRODUN, a 2D side-view turn-based card battler. Original art direction combining Limbus Company's oppressive theatrical dark fantasy, Reverse:1999's elegant painterly atmospheric environment design, and Slay the Spire's clear readable battle staging. Hand-painted 2D illustrated game background, restrained brush texture, strong designed silhouettes, muted sophisticated colors, NOT pixel art, NOT photorealistic, NOT 3D render. No characters, monsters, creature silhouettes, UI, lettering, logos, border, panels or collage. Horizontal continuous traversable floor, character feet baseline around 65% image height; unobstructed left quarter for hero and right third for enemy sprites, focal architecture in distant background not occupying these sprite positions. Bottom 25% subdued dark floor for card interface overlay, top 12% restrained detail for HUD. Rich but controlled detail in back layers with atmospheric depth. Output wide high resolution, preferably 1920x1080. Image must fill entire canvas.\nSCENE: Wind-scoured upper tower gallery, a provisional environment built around the gale warden and coil golem motifs, no monsters or humanoid statues. Broad flat slate foreground walkway, gothic ribs, storm-damaged copper lightning conductors and ceramic insulators around outer edges, distant suspended bridges fading into violet-gray thunderclouds. Tattered plain cloth strips indicate strong wind. Slate blue, bruised violet, cold oxidized turquoise, tiny electrical highlights, melancholic quiet before a storm. Distinguish clearly from moss ruins, water cavern and fire foundry."
+        "fallen_colossus"
+      ]
     },
     {
-      "id": "04_storm_boss",
-      "file": "04_storm_boss.png",
-      "theme": "폭풍의 첨탑 가안",
-      "type": "보스전",
-      "provisional": true,
-      "motifs": [
-        "gale_warden",
-        "coil_golem"
-      ],
-      "prompt": "Create ONE finished standalone wide 16:9 landscape background for BRODUN, a 2D side-view turn-based card battler. Original art direction combining Limbus Company's oppressive theatrical dark fantasy, Reverse:1999's elegant painterly atmospheric environment design, and Slay the Spire's clear readable battle staging. Hand-painted 2D illustrated game background, restrained brush texture, strong designed silhouettes, muted sophisticated colors, NOT pixel art, NOT photorealistic, NOT 3D render. No characters, monsters, creature silhouettes, UI, lettering, logos, border, panels or collage. Horizontal continuous traversable floor, character feet baseline around 65% image height; unobstructed left quarter for hero and right third for enemy sprites, focal architecture in distant background not occupying these sprite positions. Bottom 25% subdued dark floor for card interface overlay, top 12% restrained detail for HUD. Rich but controlled detail in back layers with atmospheric depth. Output wide high resolution, preferably 1920x1080. Image must fill entire canvas.\nSCENE: Open crown of a towering storm observatory, provisional boss arena combining gale and lightning motifs, no boss or characters shown. Massive broken astronomical ring far behind stage, two tall dormant copper induction pylons toward extreme edges, violet storm wall and one remote branching lightning flash, distant clouds below parapet show immense altitude. Broad intact empty slate and dark metal circular platform across foreground with no edge gap between hero and boss standing areas. Monumental isolated confrontation, cool gray, desaturated purple, restrained icy cyan, little warm color."
+      "id": "fire",
+      "name": "소멸의 화로",
+      "boss": "fire_crowned_dragon",
+      "backgroundKey": "03_foundry",
+      "enemyIds": [
+        "fire_ember_mite",
+        "fire_ash_hound",
+        "fire_kiln_imp",
+        "fire_cinder_moth",
+        "fire_coal_porter",
+        "fire_chain_penitent",
+        "fire_slag_slime",
+        "fire_bellows_bat",
+        "fire_brand_guard",
+        "fire_chimney_wraith",
+        "fire_glass_scorpion",
+        "fire_crucible_monk",
+        "fire_salamander",
+        "fire_blade_dancer",
+        "fire_coal_heart",
+        "fire_furnace_warden",
+        "fire_ash_bride",
+        "fire_anvil_twins",
+        "fire_crowned_dragon"
+      ]
+    },
+    {
+      "id": "frost",
+      "name": "서리의 수맥",
+      "boss": "frost_funeral_queen",
+      "backgroundKey": "02_waterway",
+      "enemyIds": [
+        "frost_rime_tick",
+        "frost_snow_stitch",
+        "frost_bell_fox",
+        "frost_icicle_raven",
+        "frost_frozen_bearer",
+        "frost_needle_seamstress",
+        "frost_frost_clapper",
+        "frost_mirror_elk",
+        "frost_snow_mourner",
+        "frost_rime_crab",
+        "frost_ice_lantern",
+        "frost_frozen_swimmer",
+        "frost_silk_widow",
+        "frost_frost_tuning",
+        "frost_coffin_knight",
+        "frost_bell_pallbearer",
+        "frost_mirror_marshal",
+        "frost_frost_librarian",
+        "frost_funeral_queen"
+      ]
+    },
+    {
+      "id": "void",
+      "name": "공허의 성좌",
+      "boss": "void_eclipse_prellate",
+      "backgroundKey": "04_storm",
+      "enemyIds": [
+        "void_ink_crawler",
+        "void_candle_acolyte",
+        "void_hollow_gargoyle",
+        "void_star_moth",
+        "void_mask_worm",
+        "void_silent_choir",
+        "void_stained_spider",
+        "void_orbit_urchin",
+        "void_page_eater",
+        "void_shadow_censer",
+        "void_eclipse_sentinel",
+        "void_confession_doll",
+        "void_clock_deacon",
+        "void_star_gravedigger",
+        "void_nightsail_ray",
+        "void_nameless_confessor",
+        "void_orbit_angel",
+        "void_reverse_astrologer",
+        "void_eclipse_prellate"
+      ]
     }
+  ],
+  "created": "2026-11-22",
+  "version": 2,
+  "backgrounds": [
+    {
+      "sha256": "A7204429D95E3B4137D97D4ABC841B924514D2165A2B1F094B4F554B2E8F4A84",
+      "height": 941,
+      "file": "01_ruins_boss.png",
+      "width": 1672
+    },
+    {
+      "sha256": "D36EBB98CE23BA1F993D888DE9BBA1FE2DC2239B20E9AC9F961FB2FC8873B3C8",
+      "height": 941,
+      "file": "01_ruins_normal.png",
+      "width": 1672
+    },
+    {
+      "sha256": "E8B04D3E2598C7E0B16602C8D698BEA4185A7677D2818D5619E623C8BA74B484",
+      "height": 941,
+      "file": "02_waterway_boss.png",
+      "width": 1672
+    },
+    {
+      "sha256": "A780687A8B75FC989C0AB4A4AB00744E0FD93348E8437A0F8E4F57871EA7F9DB",
+      "height": 941,
+      "file": "02_waterway_normal.png",
+      "width": 1672
+    },
+    {
+      "sha256": "2CA84BF1051E430D832EB68E599EC76C3877D55361458FE972F33724F97B1461",
+      "height": 941,
+      "file": "03_foundry_boss.png",
+      "width": 1672
+    },
+    {
+      "sha256": "3A87F67B1FE4AF78A3E490E339F9DE9A69773A50E4C976183DBDF1117A766455",
+      "height": 941,
+      "file": "03_foundry_normal.png",
+      "width": 1672
+    },
+    {
+      "sha256": "27B3ADDA348263F9FC5412B49356F6809ABD939BC27FE878676C74701DCCA65B",
+      "height": 941,
+      "file": "04_storm_boss.png",
+      "width": 1672
+    },
+    {
+      "sha256": "A16338F9B7A9AA297D5EA429A5F524615FEAC2055FF3E92A4A761118F307E2D8",
+      "height": 941,
+      "file": "04_storm_normal.png",
+      "width": 1672
+    }
+  ],
+  "notes": [
+    "ThemeId is independent of CurrentArea.",
+    "One selected stage is playable per run; three-stage progression is not implemented.",
+    "New boss role descriptions are not executable mechanics; existing rank tuning is used.",
+    "Background filenames are retained for Unity GUID compatibility."
   ]
 }
