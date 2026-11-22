@@ -1,0 +1,5 @@
+{
+  "name": "DeckbuilderMonsterCombat.Tests.PlayMode",
+  "references": ["DeckbuilderMonsterCombat.Runtime"],
+  "optionalUnityReferences": ["TestAssemblies"]
+}

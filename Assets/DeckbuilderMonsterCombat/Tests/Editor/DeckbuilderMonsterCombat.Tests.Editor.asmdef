@@ -1,0 +1,6 @@
+{
+  "name": "DeckbuilderMonsterCombat.Tests.Editor",
+  "references": ["DeckbuilderMonsterCombat.Runtime", "DeckbuilderMonsterCombat.Editor"],
+  "includePlatforms": ["Editor"],
+  "optionalUnityReferences": ["TestAssemblies"]
+}
