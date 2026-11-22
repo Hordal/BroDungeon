@@ -44,11 +44,14 @@ namespace Brodun.Presentation
             var scaler=Root.gameObject.AddComponent<CanvasScaler>();scaler.uiScaleMode=CanvasScaler.ScaleMode.ScaleWithScreenSize;scaler.referenceResolution=new Vector2(1920,1080);scaler.matchWidthOrHeight=.5f;
             Root.gameObject.AddComponent<GraphicRaycaster>();
             stage=BattleUi.Rect(Root,"Combat stage",Vector2.zero,Vector2.one);
-            BattleUi.Image(stage,"Battle background",art.background,Color.white,Vector2.zero,Vector2.one);
+            int area=context.Runtime.Enemy.Definition.Area;
+            bool boss=context.Room.Type==RoomType.Boss;
+            var background=BattleBackgrounds.Resolve(area,boss,art.background);
+            BattleUi.Image(stage,"Battle background",background,Color.white,Vector2.zero,Vector2.one);
             BattleUi.Image(stage,"Battle veil",null,new Color(.01f,.025f,.04f,.15f),Vector2.zero,Vector2.one);
             // A soft floor-to-hand scrim, rather than a black rectangular table and gold border.
             for(int i=0;i<12;i++)BattleUi.Image(Root,"Hand shade "+i,null,new Color(.015f,.025f,.035f,.94f*(1-i/12f)),new Vector2(0,i*.029f),new Vector2(1,(i+1)*.029f));
-            BattleUi.Text(Root,"Battle title","잊혀진 회랑  ·  "+(context.Room.Encounter==EnemyType.Elite?"엘리트":context.Room.Type==RoomType.Boss?"보스":"일반 전투"),common.font,20,BattleUi.Gold,new Vector2(.35f,.95f),new Vector2(.65f,.99f));
+            BattleUi.Text(Root,"Battle title",BattleBackgrounds.ThemeName(area)+"  ·  "+(boss?"보스":context.Room.Encounter==EnemyType.Elite?"엘리트":"일반 전투"),common.font,20,BattleUi.Gold,new Vector2(.35f,.95f),new Vector2(.65f,.99f));
             BattleUi.Text(Root,"Player name",context.Runtime.Data.Character(context.Run.SelectedCharacter).Name,common.font,22,BattleUi.Gold,new Vector2(.14f,.893f),new Vector2(.36f,.925f));
             hp=BattleUi.Text(Root,"Player HP","",common.font,40,BattleUi.Pale,new Vector2(.13f,.815f),new Vector2(.37f,.866f));
             hpBar=BattleUi.Bar(Root,"Player HP Bar",new Vector2(.13f,.825f),new Vector2(.37f,.877f),new Color(.11f,.43f,.36f));
