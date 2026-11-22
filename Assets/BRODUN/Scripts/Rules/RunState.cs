@@ -17,6 +17,7 @@ namespace Brodun
         public string RunId { get; }
         public uint Seed { get; }
         public CharacterId SelectedCharacter { get; }
+        public string ThemeId { get; }
         public RunStatus Status { get; internal set; } = RunStatus.InProgress;
         public int CurrentHP { get; internal set; }
         public int MaxHP { get; }
@@ -40,8 +41,10 @@ namespace Brodun
         public GeneratedDungeon GeneratedDungeon { get; }
         private int nextSerial;
         private readonly GameDefinitions definitions;
-        public RunState(GameDefinitions data, CharacterId character, uint seed, string runId = null,GeneratedDungeon dungeon = null)
+        public RunState(GameDefinitions data, CharacterId character, uint seed, string runId = null,GeneratedDungeon dungeon = null,string themeId = DungeonThemes.DefaultId)
         {
+            if(!DungeonThemes.IsAvailable(data,themeId))throw new ArgumentException("Unavailable dungeon theme: "+themeId,nameof(themeId));
+            ThemeId=themeId;
             definitions = data; SelectedCharacter = character; Seed = seed;
             RunId = runId ?? "run-" + Guid.NewGuid().ToString("N");
             var hero = data.Character(character); CurrentHP = MaxHP = hero.MaxHP;

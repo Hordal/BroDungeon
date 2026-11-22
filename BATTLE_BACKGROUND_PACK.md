@@ -1,39 +1,56 @@
-# BRODUN 전투 배경 팩
+# BRODUN 테마 선택과 몬스터 배경 연결
 
-일반전·엘리트와 보스전에 사용할 회화풍 PNG 8장이다. 기존 픽셀 배경과 몬스터 에셋은 보존한다.
+1구역을 시작할 때 회랑·불·서리·공허 중 하나를 선택한다. 선택한 ThemeId가 경로 지도, 일반전·엘리트 편성, 보스, 전투 배경, 결과 화면에 공통으로 적용된다.
 
-## 사용
+## 실행 방법
 
-- 기본 게임: 기존처럼 `Assets/BRODUN/Scenes/BrodunBoot.unity` 실행.
-- 8장 미리보기: **BRODUN > Art > Battle Background Pack**.
-- 위치: `Assets/BRODUN/Resources/BRODUN/Backgrounds/`.
-- 전투 배경은 실제 조우한 적의 `Definition.Area`와 방의 보스 여부로 선택한다. 일반전과 엘리트는 normal, 보스는 boss를 사용한다.
-- 미지원 구역이나 누락된 리소스에는 기존 `BattlePresentationAssets.background`를 사용한다.
+1. 기존처럼 `Assets/BRODUN/Scenes/BrodunBoot.unity`를 Play한다.
+2. 게임 시작 후 캐릭터 선택 화면 상단에서 테마를 고른다.
+3. 영웅을 선택하면 그 테마의 1구역 지도로 진입한다.
+4. 일반전과 엘리트는 선택한 테마의 해당 등급 풀에서 Seed로 뽑고, 보스 방에는 그 테마의 지정 보스가 나온다.
+5. 해당 보스 처치 후 런이 끝난다. 현재는 선택한 1개 테마를 진행하며, 4개 중 3개 테마를 이어가는 진행은 아직 구현하지 않는다.
 
-| 기존 구역 번호 | 테마 | 일반전 및 엘리트 | 보스전 |
-|---|---|---|---|
-| 1 | 잊혀진 회랑 | 01_ruins_normal.png | 01_ruins_boss.png |
-| 2 | 침잠의 수맥 | 02_waterway_normal.png | 02_waterway_boss.png |
-| 3 | 소멸의 화로 | 03_foundry_normal.png | 03_foundry_boss.png |
-| 4 리소스 시안 | 폭풍의 첨탑 | 04_storm_normal.png | 04_storm_boss.png |
+테마는 런 시작 뒤 바꿀 수 없다. 새 런을 시작하면 선택은 기본 회랑으로 초기화된다.
 
-**네 번째 테마는 질풍·번개 몬스터에서 확장한 시안이다.** 확정된 네 번째 구역이나 보스 데이터를 대체한다는 의미가 아니다. 4개 중 3개를 방문하는 새 진행 규칙을 이 변경에서 구현하지 않는다. 기본 게임의 현재 구역·몬스터 편성과 YeonJun의 별도 57종 모션 팩을 변경하지 않는다.
+## 연결표
 
-## 아트와 임포트
+| ThemeId | 이름 | 일반 | 엘리트 | 보스 | 배경 파일 접두사 |
+|---|---|---:|---:|---|---|
+| ruins | 잊혀진 회랑 | 가고일·이끼 슬라임 2종 | 질풍 파수꾼 1종 | 몰락한 거신 | 01_ruins |
+| fire | 소멸의 화로 | 불 계열 15종 | 불 계열 3종 | 왕관을 삼킨 용 아그라스 | 03_foundry |
+| frost | 서리의 수맥 | 서리 계열 15종 | 서리 계열 3종 | 영면의 여왕 이스벨 | 02_waterway |
+| void | 공허의 성좌 | 공허 계열 15종 | 공허 계열 3종 | 별을 삼킨 교황 녹틸 | 04_storm |
 
-- 각 1672 × 941 PNG. 몬스터·캐릭터·UI 없이 배경만 포함.
-- 단일 합성 배경이며 분리 레이어·타일셋은 아님.
-- Sprite Single, Bilinear, Clamp, mipmaps off, non-power-of-two scaling off, max size 2048, compression off.
-- built-in image_gen 제작. 프롬프트와 제작 명세는 `BackgroundPackSource/`에 보관한다.
-- 참고 방향: 림버스 컴퍼니의 어두운 무대감, 리버스 1999의 회화적 분위기, 슬레이 더 스파이어의 전투 가독성.
+PNG 파일 이름은 기존 Unity GUID와의 호환을 위해 유지했다. 02는 얼어붙은 수로와 장례 성소로, 04는 공허와 일식 성좌로 다시 그렸다. 더 이상 폭풍 가안을 네 번째 선택 테마로 사용하지 않는다.
 
-## 변경 범위
+상세 편성은 `BackgroundPackSource/manifest.json`과 `ThemeEnemyCatalog.cs`에 있다. 테마별 ID 목록을 명시하므로 불을 골랐을 때 서리·공허 몬스터가 섞이지 않는다.
 
-`BattleBackgrounds`는 리소스 선택만 담당하며 전투 수치·난수·런 상태를 변경하지 않는다. `BattleView`는 선택한 배경과 구역 제목을 표시한다. 씬·프리팹의 기존 직렬화 참조를 다시 만들거나 에디터·패키지 버전을 업그레이드하지 않았다.
+## 데이터와 표시 구조
+
+- `RunState.ThemeId`: 원정의 테마. `CurrentArea`는 진행 단계이며 테마와 분리한다.
+- `DungeonThemes`: 테마 ID·표시명·배경 키·등장 몬스터 ID를 함께 정의.
+- `EncounterPool.ForTheme`: 테마와 등급을 함께 필터링.
+- `GameCatalogData.ToDefinitions()`: 기존 12종 정의를 유지해 웹 규칙·기존 데이터 검증용으로 사용.
+- `ToPlayableDefinitions()`: 게임 부팅 시 기존 정의를 보존하면서 57종을 추가. 총 정의는 69종이며 선택 테마에 편성된 몬스터는 61종이다.
+- 새 몬스터 57종 PNG는 기존 YeonJun 모션 팩과 같은 이미지이며 `Resources/BRODUN/ThemeMonsters/`에 별도 GUID로 포함한다. main에서도 원본 모션 팩 전체를 가져오지 않고 표시할 수 있다.
+- 기존 몬스터 4종은 원래 프레임 연출을 유지한다. 새 57종은 단일 Sprite와 기존 UI 이동·피격·사망 연출을 연결한다. YeonJun의 SpriteRenderer/Animator 데모를 UI 전투에 그대로 이식한 것은 아니다.
+- 씬·프리팹을 재생성하지 않았고 Unity 에디터·패키지 버전을 변경하지 않았다.
+
+## 현재 전투 규칙의 범위
+
+새 몬스터의 이름과 외형·일반/엘리트/보스 분류를 연결했다. 전투 수치는 기존 1구역의 해당 등급 기준을 사용한다. 선택한 테마 때문에 시작부터 2·3구역 HP 보정이 적용되지 않는다.
+
+원본 monsters.json의 역할 설명에 있는 보스별 기믹, 장례 종, 비늘 개방, 성좌 매듭, 다중 페이즈는 아직 전투 로직으로 구현하지 않았다. 원본 설명은 출처 문서로 보존한다. 신규 57종은 기존 공격·방어·강화 패턴으로 전투하며, 특수 능력을 이미 구현한 것처럼 표시하지 않는다.
+
+## 미리보기
+
+**BRODUN > Art > Battle Background Pack**에서 게임과 동일한 네 테마 ID로 일반/엘리트·보스 배경을 바꿔 본다. 배경은 1672 × 941 PNG이며 몬스터와 UI는 별도로 배치한다. built-in image_gen 제작 프롬프트는 BackgroundPackSource에 보관한다.
 
 ## 검증
 
-- BRODUN 런타임·에디터 C# 전체를 설치된 Unity 6000.6.2f1 참조 어셈블리로 외부 컴파일: 오류 0, 경고 0.
-- PNG 8장의 원본 해시·1672 × 941 크기·리소스 경로·새 GUID 중복을 정적 검사.
-- `BattleBackgroundTests`에 4개 테마의 서로 다른 일반/보스 Sprite 및 임포트 설정, 미지원 구역의 fallback을 검사하는 EditMode 테스트 추가.
-- Unity batch 검증은 로컬 Unity 라이선스 미활성화로 실행되지 않았다. 실제 Sprite 임포트와 PlayMode, UI·몬스터 겹침 검증은 프로젝트 기준 Unity **6000.0.47f1**에서 확인해야 한다. 원본 프로젝트 버전은 유지했다.
+- .NET에서 실제 Rules·Flow 소스와 기존 순수 규칙 검사 및 ThemeMatchingTests를 실행: **81개 통과, 실패 0**.
+- 4테마 × 128 Seed의 모든 전투·보스 노드에서 테마·등급 일치와 결정적 편성을 검사.
+- 일반전 보상 → 지도 복귀 → 같은 테마 보스 → 결과 화면의 테마 유지 검사. 이 상태 전환 검사는 적 HP를 1로 설정하는 테스트 fixture이며 밸런스나 실제 완주 검증을 뜻하지 않는다.
+- 신규 57종 이미지의 원본 해시·메타데이터·GUID 중복과 배경 8장의 크기·리소스 경로 정적 검사.
+- 설치된 Unity 6000.6.2f1 참조 어셈블리로 C# 컴파일. 프로젝트 기준 버전은 6000.0.47f1 그대로다.
+- Unity 라이선스가 활성화되지 않아 에디터 Sprite 임포트와 PlayMode 실행·화면 배치 검증은 아직 못 했다. ThemeAssetMatchingTests와 ScreenFlowTests의 테마 버튼 검사를 프로젝트 기준 에디터에서 실행해야 한다.

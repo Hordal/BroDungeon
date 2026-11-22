@@ -12,7 +12,7 @@ namespace Brodun.Editor
         public const int PreviewHP=14;
         public static GameDefinitions PreviewDefinitions(GameDefinitions source)
         {
-            var enemies=source.Enemies.Select(e=>e.Area==1 && e.Type==EnemyType.Normal && !e.IsLegacy
+            var enemies=source.Enemies.Select(e=>e.Id=="ruin_gargoyle"
                 ?new EnemyDefinition(e.Id,e.Name,e.Type,e.Area,PreviewHP,e.AreaHPStep,e.AssetId,e.Pattern,e.IsLegacy):e);
             return new GameDefinitions(source.Cards,source.Characters,enemies,source.Config,source.Reward,source.Elements);
         }
