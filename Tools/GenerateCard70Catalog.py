@@ -4,7 +4,7 @@ from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 spec=json.loads((root/'Docs/Cards70.json').read_text(encoding='utf-8'))
 q=lambda s:json.dumps(s,ensure_ascii=False)
-elements=dict(zip(['땅','바위','불','물','얼음','번개','바람','독','폭발'],['Earth','Stone','Fire','Water','Ice','Lightning','Wind','Poison','Explosion']))
+elements={None:'None','불':'Fire','물':'Water','얼음':'Ice','번개':'Lightning','바람':'Wind','독':'Poison'}
 rarity={'기본':'Basic','하급':'Low','중급':'Mid','상급':'High'}
 upgrade_cost={'W13':1,'W14':1,'W15':0,'W16':2,'W17':1,'M09':2,'M15':1,'P08':1,'P13':1,'P14':1,'P15':2,'P16':2,'P17':0,'N11':0,'N13':1,'N14':1,'N15':0,'N16':0}
 retained={'W16','W18','M09','M17','P15','P16'}
@@ -25,7 +25,7 @@ using System.Linq;
 namespace Brodun {
 public static class Card70Catalog {
  public static readonly string[] Ids = new[]{IDS};
- public static GameDefinitions Apply(GameDefinitions legacy) => new GameDefinitions(Ids.Select(id=>Card(id)),new[]{HEROES},legacy.Enemies,new BattleConfig(4,6,legacy.Config.WeakReduction,legacy.Config.FloorHPStep,legacy.Config.EventHeal,legacy.Config.EventGold),legacy.Reward,legacy.Elements);
+ public static GameDefinitions Apply(GameDefinitions legacy) => new GameDefinitions(Ids.Select(id=>Card(id)),new[]{HEROES},legacy.Enemies,new BattleConfig(4,6,legacy.Config.WeakReduction,legacy.Config.FloorHPStep,legacy.Config.EventHeal,legacy.Config.EventGold),legacy.Reward,legacy.Elements.Where(e=>e.Id!=ElementType.Earth&&e.Id!=ElementType.Stone&&e.Id!=ElementType.Explosion));
  public static CardDefinition Card(string id,bool up=false) {switch(id){
 ROWS
 default:throw new ArgumentException("Unknown card: "+id);}}

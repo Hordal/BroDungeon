@@ -31,7 +31,8 @@ namespace Brodun.Presentation
         public void Bind(CardDefinition card,string id,BattlePresentationAssets art,GameDefinitions data,Action<CardView> click)
         {
             Definition=card;InstanceId=id;selected=click;restingIndex=transform.GetSiblingIndex();
-            title.text=card.Name;cost.text=(card.XCost?"X":card.Cost.ToString());element.text=data.Elements.Single(e=>e.Id==card.Element).Name;
+            title.text=card.Name;cost.text=(card.XCost?"X":card.Cost.ToString());element.text=data.ElementName(card.Element);
+            element.gameObject.SetActive(card.Element!=ElementType.None);
             kind.text=card.Type==CardType.Power?"지속":card.Type==CardType.Attack?"공격":card.Type==CardType.Guard?"방어":"기술";
             effect.text=(card.BaseDamage>0?"피해 "+card.BaseDamage+"   ":"")+(card.Block>0?"방어 "+card.Block:"");
             description.text=card.Description;
@@ -128,6 +129,7 @@ namespace Brodun.Presentation
         {
             switch(element)
             {
+                case ElementType.None:return new Color(.72f,.76f,.78f);
                 case ElementType.Earth:return new Color(.87f,.64f,.34f);
                 case ElementType.Stone:return new Color(.72f,.76f,.78f);
                 case ElementType.Wind:return new Color(.40f,.87f,.75f);

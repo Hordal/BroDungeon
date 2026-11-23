@@ -19,6 +19,7 @@ public sealed class Card70SceneTests {
   var node=DungeonRuntime.Available(flow.Session.Run).Select(id=>DungeonRuntime.Node(flow.Session.Run,id)).First(n=>n.Type==RoomType.Battle);
   Assert.IsTrue(flow.SelectRoom(node.Id));yield return Ready(FlowScreen.Battle);
   var controller=Object.FindFirstObjectByType<BattleController>();Assert.NotNull(controller);Assert.IsTrue(controller.View.Cards.All(c=>c.Definition.IsReworked));
+  foreach(var view in controller.View.Cards){Assert.AreEqual(view.Definition.Element!=ElementType.None,view.element.gameObject.activeSelf);Assert.AreEqual(flow.Session.Definitions.ElementName(view.Definition.Element),view.element.text);}
   var basic=controller.View.Cards.FirstOrDefault(c=>c.Definition.Id=="W01"||c.Definition.Id=="W02"||c.Definition.Id=="W03"||c.Definition.Id=="W05");Assert.NotNull(basic);Assert.IsTrue(controller.PlayCard(basic.InstanceId));
   float deadline=Time.realtimeSinceStartup+10;while(flow.Session.Battle.Phase==BattlePhase.ResolvingPlayerAction&&Time.realtimeSinceStartup<deadline)yield return null;Assert.Less(Time.realtimeSinceStartup,deadline);
   Object.Destroy(flow.gameObject);yield return null;

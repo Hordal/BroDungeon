@@ -233,7 +233,7 @@ namespace Brodun.Presentation
             foreach(var instance in Flow.Session.Run.Deck)
             {
                 var card=Flow.Session.Definitions.Card(instance.CardId,instance.UpgradeLevel);
-                string element=Flow.Session.Definitions.Elements.Single(e=>e.Id==card.Element).Name;
+                string element=Flow.Session.Definitions.ElementName(card.Element);
                 var row=Image(list,"DeckCard_"+instance.InstanceId,null,new Color(.09f,.13f,.16f,.95f),Vector2.zero,Vector2.one);
                 row.gameObject.AddComponent<LayoutElement>().preferredHeight=144;
                 var tint=CardView.ElementTint(card.Element);
@@ -247,7 +247,7 @@ namespace Brodun.Presentation
                 float start=illustration!=null?.18f:.025f;
                 Label((RectTransform)row.transform,card.Name,27,Pale,new Vector2(start,.62f),new Vector2(.58f,.94f),TextAnchor.MiddleLeft);
                 string role=card.Type==CardType.Attack?"공격":card.Type==CardType.Guard?"방어":"기술";
-                Label((RectTransform)row.transform,"비용 "+card.Cost+"  ·  "+element+" / "+role,21,card.Cost==0?BattleUi.Teal:tint,new Vector2(.58f,.63f),new Vector2(.975f,.94f),TextAnchor.MiddleRight);
+                Label((RectTransform)row.transform,"비용 "+card.Cost+"  ·  "+(element.Length>0?element+" / ":"")+role,21,card.Cost==0?BattleUi.Teal:tint,new Vector2(.58f,.63f),new Vector2(.975f,.94f),TextAnchor.MiddleRight);
                 var rules=Label((RectTransform)row.transform,card.Description,22,Pale,new Vector2(start,.09f),new Vector2(.965f,.61f),TextAnchor.MiddleLeft);
                 rules.resizeTextForBestFit=true;rules.resizeTextMinSize=18;rules.resizeTextMaxSize=22;
             }

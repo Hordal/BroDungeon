@@ -5,6 +5,7 @@ using System.Linq;
 namespace Brodun
 {
     public enum CharacterId { Warrior, Mage, Priest }
+    // Earth/Stone/Explosion retain their serialized values for the legacy catalog only.
     public enum ElementType { None, Earth, Stone, Wind, Water, Ice, Poison, Fire, Lightning, Explosion }
     // Presentation classification only; the web has no rarity or type-based gameplay filters.
     public enum CardType { Attack, Guard, Skill, Power }
@@ -127,6 +128,7 @@ namespace Brodun
         public GameDefinitions(IEnumerable<CardDefinition> c, IEnumerable<CharacterDefinition> h, IEnumerable<EnemyDefinition> e, BattleConfig config, RewardDefinition reward, IEnumerable<ElementDefinition> elements)
         { Cards = Array.AsReadOnly(c.ToArray()); Characters = Array.AsReadOnly(h.ToArray()); Enemies = Array.AsReadOnly(e.ToArray()); Config = config; Reward = reward; cards = Cards.ToDictionary(x => x.Id); Elements = Array.AsReadOnly(elements.ToArray()); }
         public CardDefinition Card(string id) => cards[id];
+        public string ElementName(ElementType element) => element==ElementType.None?string.Empty:Elements.Single(x=>x.Id==element).Name;
         public CardDefinition Card(string id,int upgrade) => upgrade>0 && cards[id].IsReworked?Card70Catalog.Card(id,true):cards[id];
         public CharacterDefinition Character(CharacterId id) => Characters.Single(x => x.Id == id);
         public EnemyDefinition Enemy(string id) => Enemies.Single(x => x.Id == id);
