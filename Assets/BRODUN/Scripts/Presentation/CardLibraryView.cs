@@ -40,10 +40,10 @@ namespace Brodun.Presentation
             if(deck)
             {
                 var run=flow.Session.Run;
-                var entries=run.Deck.GroupBy(card=>card.CardId).ToArray();
+                var entries=run.Deck.GroupBy(card=>(card.CardId,card.UpgradeLevel)).ToArray();
                 var hero=Data.Character(run.SelectedCharacter);
                 title.text=$"현재 덱  ·  {run.Deck.Count}장 / {entries.Length}종";
-                foreach(var entry in entries)AddRow(Data.Card(entry.Key),entry.Count(),hero.ProvisionalStartingCards.Contains(entry.Key),"DeckCard_");
+                foreach(var entry in entries)AddRow(Data.CardVersion(entry.Key.CardId,entry.Key.UpgradeLevel),entry.Count(),hero.ProvisionalStartingCards.Contains(entry.Key.CardId),"DeckCard_");
                 RefreshScroll();
             }
             else
@@ -130,15 +130,22 @@ namespace Brodun.Presentation
         private void ShowItems()
         {
             SelectTab(tabs.Length-1);
-            title.text="아이템 도감";
-            var hint=Text(list,"Item empty state","등록된 아이템이 없습니다.",26,BattleUi.Pale,0,0,1,1);
-            hint.gameObject.AddComponent<LayoutElement>().preferredHeight=140;
+            title.text="유물 도감  ·  "+Item50Catalog.All.Count+"종";
+            foreach(var item in Item50Catalog.All)
+            {
+                var row=BattleUi.Image(list,"CodexItem_"+item.Id,null,new Color(.063f,.083f,.112f,.98f),Vector2.zero,Vector2.one);
+                row.gameObject.AddComponent<LayoutElement>().preferredHeight=112;
+                Text(row.transform,"Item name",item.Name,26,BattleUi.Gold,.04f,.57f,.57f,.94f,TextAnchor.MiddleLeft);
+                string category=item.ThemeId==null?"범용":DungeonThemes.Find(item.ThemeId).Name;
+                Text(row.transform,"Item category",category,20,BattleUi.Teal,.57f,.57f,.96f,.94f,TextAnchor.MiddleRight);
+                Text(row.transform,"Item effect",item.Description,21,BattleUi.Pale,.04f,.08f,.96f,.56f,TextAnchor.MiddleLeft);
+            }
             RefreshScroll();
         }
 
         private void AddRow(CardDefinition card,int copies,bool provisional,string prefix)
         {
-            var row=BattleUi.Image(list,prefix+card.Id,null,new Color(.063f,.083f,.112f,.98f),Vector2.zero,Vector2.one);
+            var row=BattleUi.Image(list,prefix+card.Id+(card.UpgradeLevel>0?"_upgraded":""),null,new Color(.063f,.083f,.112f,.98f),Vector2.zero,Vector2.one);
             row.gameObject.AddComponent<LayoutElement>().preferredHeight=128;
             var tint=CardView.ElementTint(card.Element);
             BattleUi.Image(row.transform,"Element accent",null,tint,new Vector2(0,.07f),new Vector2(.004f,.93f));

@@ -114,7 +114,8 @@ namespace Brodun.Presentation
                     CharacterId.Mage=>"강한 마법으로 단일 적을 저격하거나, 광역 주문과 원소 반응을 활용합니다.",
                     _=>"회복과 축복으로 버티고, 약화와 낙인으로 적을 무너뜨립니다."
                 };
-                var playstyle=Label(rect,style,23,Pale,new Vector2(.075f,.125f),new Vector2(.925f,.29f));
+                Image(rect,"Playstyle background",null,new Color(.075f,.107f,.157f),new Vector2(.055f,.122f),new Vector2(.945f,.29f));
+                var playstyle=Label(rect,style,23,Pale,new Vector2(.085f,.132f),new Vector2(.915f,.28f));
                 playstyle.resizeTextForBestFit=true;
                 playstyle.resizeTextMinSize=18;playstyle.resizeTextMaxSize=23;
                 Label(rect,"선택",28,Gold,new Vector2(.12f,.025f),new Vector2(.88f,.13f));
@@ -126,24 +127,27 @@ namespace Brodun.Presentation
             var run=Flow.Session.Run;
             int area=(run?.CurrentArea??0)+1;
             Label(Root,area+"구역 테마 선택",48,Gold,new Vector2(.20f,.87f),new Vector2(.80f,.95f));
-            var themes=DungeonThemes.All.Where(theme=>run?.HasVisitedTheme(theme.Id)!=true&&
-                DungeonThemes.IsAvailable(Flow.Session.Definitions,theme.Id)).ToArray();
+            var themes=DungeonThemes.All.Where(theme=>DungeonThemes.IsAvailable(Flow.Session.Definitions,theme.Id)).ToArray();
             for(int i=0;i<themes.Length;i++)
-            {
-                float left=i==2&&themes.Length==3?.34f:.17f+(i%2)*.34f;
-                float bottom=themes.Length<=2?.32f:.49f-(i/2)*.35f;
-                BuildTheme(themes[i],left,bottom);
-            }
+                BuildTheme(themes[i],.052f+i*.228f,run?.HasVisitedTheme(themes[i].Id)==true,run);
             if(run==null)
                 Button(Root,"Back","돌아가기",new Vector2(.04f,.05f),new Vector2(.19f,.12f),()=>Flow.ReturnToCharacterSelect());
         }
-        private void BuildTheme(DungeonTheme theme,float left,float bottom)
+        private void BuildTheme(DungeonTheme theme,float left,bool cleared,RunState run)
         {
-            var option=Button(Root,"Theme_"+theme.Id,"",new Vector2(left,bottom),new Vector2(left+.32f,bottom+.33f),()=>Flow.ChooseTheme(theme.Id),true);
+            var option=Button(Root,"Theme_"+theme.Id,"",new Vector2(left,.24f),new Vector2(left+.212f,.77f),()=>Flow.ChooseTheme(theme.Id),true);
             var panel=(RectTransform)option.transform;
             var preview=BattleBackgrounds.Resolve(theme.Id,false,Art.mapBackground);
-            Image(panel,"Theme preview",preview,Color.white,new Vector2(.03f,.21f),new Vector2(.97f,.97f)).preserveAspect=true;
-            Label(panel,theme.Name,34,Gold,new Vector2(.04f,.02f),new Vector2(.96f,.21f));
+            Image(panel,"Theme preview",preview,cleared?new Color(.52f,.52f,.52f):Color.white,new Vector2(.055f,.48f),new Vector2(.945f,.94f)).preserveAspect=true;
+            Label(panel,theme.Name,30,cleared?Muted:Gold,new Vector2(.04f,.37f),new Vector2(.96f,.48f));
+            Label(panel,"테마 전용 유물",20,Pale,new Vector2(.04f,.272f),new Vector2(.96f,.36f));
+            var names=Item50Catalog.All.Where(item=>item.ThemeId==theme.Id)
+                .Select(item=>run?.HasItem(item.Id)==true?item.Name+" (보유)":item.Name);
+            var relics=Label(panel,string.Join("\n",names),22,Pale,new Vector2(.055f,.11f),new Vector2(.945f,.268f));
+            relics.resizeTextForBestFit=true;relics.resizeTextMinSize=17;relics.resizeTextMaxSize=22;
+            Label(panel,cleared?"클리어 완료  ·  재입장 불가":"선택",21,cleared?Muted:Gold,
+                new Vector2(.06f,.025f),new Vector2(.94f,.105f));
+            option.interactable=!cleared;
         }
         private void BuildMap()
         {
@@ -156,7 +160,6 @@ namespace Brodun.Presentation
             hpHud=Label(hud,"",29,Pale,new Vector2(.265f,.12f),new Vector2(.42f,.88f));
             goldHud=Label(hud,"",29,Gold,new Vector2(.43f,.12f),new Vector2(.58f,.88f));
             areaHud=Label(hud,"",26,Muted,new Vector2(.59f,.12f),new Vector2(.77f,.88f));
-            Button(Root,"MapItems","보유 유물",new Vector2(.835f,.055f),new Vector2(.975f,.115f),()=>ItemInventoryPanel.Show(Root,Art,run));
             var deckButton=Button(hud,"DeckButton","현재 덱",new Vector2(.79f,.15f),new Vector2(.975f,.85f),OpenDeck);
             deckHud=deckButton.GetComponentInChildren<Text>();
             Label(Root,run.IsThemedRun?DungeonThemes.Find(run.ThemeId).Name:"THE FORGOTTEN PATH",40,Gold,new Vector2(.2f,.77f),new Vector2(.8f,.85f));
@@ -187,7 +190,8 @@ namespace Brodun.Presentation
                 var marker=Label(rect,"",19,Gold,new Vector2(-.15f,1.01f),new Vector2(1.15f,1.35f));nodeStatus.Add(node.Id,marker.gameObject);
             }
             Label(Root,"드래그하여 앞길을 살펴보고, 금빛 경로에서 다음 방을 선택하세요",24,Pale,new Vector2(.18f,.13f),new Vector2(.82f,.185f));
-            Label(Root,"● 현재 위치     ◆ 이동 가능     ✓ 완료     ▪ 잠김",22,Muted,new Vector2(.27f,.055f),new Vector2(.85f,.105f));
+            Label(Root,"● 현재 위치     ◆ 이동 가능     ✓ 완료     ▪ 잠김",22,Muted,new Vector2(.35f,.055f),new Vector2(.77f,.105f));
+            Button(Root,"MapItems","보유 유물",new Vector2(.22f,.055f),new Vector2(.34f,.115f),()=>ItemInventoryPanel.Show(Root,Art,run));
             var leave=Button(Root,"LeaveRun","여정 종료",new Vector2(.035f,.055f),new Vector2(.20f,.115f),ConfirmLeave);
             leave.Destructive=true;leave.RefreshStyle();
             Button(Root,"FocusCurrent","현재 위치",new Vector2(.79f,.055f),new Vector2(.955f,.115f),()=>MapScroller.FocusLayer(DungeonRuntime.Node(run,run.CurrentNode).Layer,true));
@@ -283,7 +287,8 @@ namespace Brodun.Presentation
             if(node.Type==RoomType.Start)return "입구";
             if(node.Type==RoomType.Boss)return "보스";
             if(node.Type==RoomType.Puzzle)return "퍼즐";
-            if(node.Type==RoomType.Event)return node.Event==EventKind.Shop?"상점":node.Event==EventKind.Altar?"성소":"휴식처";
+            if(node.IsBossSanctuary)return "성소";
+            if(node.Type==RoomType.Event)return node.Event==EventKind.Shop?"상점":node.Event==EventKind.Altar?"제단":"휴식처";
             return node.Encounter==EnemyType.Elite?"엘리트":"전투";
         }
         private RectTransform Rect(Transform parent,string name,Vector2 min,Vector2 max)

@@ -75,7 +75,7 @@ namespace Brodun
             if(!CanAdvanceArea||HasVisitedTheme(themeId)||!DungeonThemes.IsAvailable(definitions,themeId))return false;
             visitedThemes.Add(themeId);
             CurrentArea++;
-            SetMap(LayeredMapGenerator.Generate(AreaSeed));
+            SetMap(LayeredMapGenerator.Generate(AreaSeed,MapGenerationConfig.Campaign));
             CurrentNode="start";Floor=1;
             priorClearedNodes+=completed.Count;
             completed.Clear();resolved.Clear();visits.Clear();results.Clear();

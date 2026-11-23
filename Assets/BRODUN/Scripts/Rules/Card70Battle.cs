@@ -10,7 +10,8 @@ public sealed partial class BattleRuntime {
  public int TemporaryStrength {get;internal set;}
  public int IceRetention {get;private set;}
  public int SpentResonance {get;private set;}
- public bool PendingDiscard {get;private set;}
+ int pendingDraw,pendingItemDraw;
+ public bool PendingDiscard=>pendingDraw>0;
  public IReadOnlyDictionary<string,int> Powers => powers;
  public int InstalledPowerCount => activePowers.Count;
  // The dictionary counts copies; each installation owns its upgrade and trigger state.
@@ -61,7 +62,7 @@ public sealed partial class BattleRuntime {
   Deck.BeginUse(instance.InstanceId);
   // Non-poison elements are Mage-only. Shared poison works for every class.
   bool mageElement=Run.SelectedCharacter==CharacterId.Mage&&d.Owner==CharacterId.Mage;
-  BeforeItemCard(d,mageElement);
+  BeforeItemCard(d);
   if(mageElement&&d.Element==ElementType.Fire)Strength++;
   if(mageElement&&d.Element==ElementType.Ice){Block+=3;IceRetention+=3;}
   if(Run.SelectedCharacter==CharacterId.Mage&&IsElemental(d.Element)) {
@@ -78,7 +79,7 @@ public sealed partial class BattleRuntime {
    case "W03":Hit70(v(5,7));Strength++;break;
    case "W04":Hit70(v(5,8)+Block*v(25,28)/100);break;
    case "W05":Block+=v(8,11);retainBlock=Math.Max(retainBlock,v(4,6));break;
-   case "W06":DrawCards(trace,v(2,3));PendingDiscard=Deck.Hand.Count>0;if(Strength+TemporaryStrength>=3)Refund(1);break;
+   case "W06":QueueDiscardDraw(v(2,3));if(Strength+TemporaryStrength>=3)Refund(1);break;
    case "W07":Block+=v(5,8);Strength++;break;
    case "W08":PayHealth(3);Strength+=v(2,3);break;
    case "W09":n=Block/2;Block-=n;Hit70(v(8,12)+n*2);break;
@@ -114,7 +115,7 @@ public sealed partial class BattleRuntime {
    case "P16":n=Grace;Grace=0;Hit70(10+n*4);Heal70(n);break;
    case "P17":if(Brand==0)Mark(2);else SetBrand(Math.Min(8,Brand*2));break;
    case "P18":DrawCards(trace,v(2,3));if(healed)Refund(1);break;
-   case "N01":DrawCards(trace,2);if(up)Block+=3;break;
+   case "N01":QueueDiscardDraw(2);if(up)Block+=3;break;
    case "N02":Block+=v(6,9);retainBlock=Math.Max(retainBlock,v(6,9));break;
    case "N03":Hit70(v(5,8)+cardsUsed*2);break;
    case "N04":Heal70(v(3,5)+Deck.ExhaustPile.Count);break;
@@ -133,7 +134,6 @@ public sealed partial class BattleRuntime {
   if(mageElement&&d.Element==ElementType.Water)scheduledEnergy++;
   if(mageElement&&d.Element==ElementType.Wind)DrawCards(trace,1);
   if(!d.Owner.HasValue&&d.Element==ElementType.Poison)ApplyEnemyStatus(trace,target70,StatusEffectType.Poison,2,CombatCause.Card);
-  if(d.Id=="N01"||d.Id=="W06")PendingDiscard=Deck.Hand.Count>0;
   if(d.Type==CardType.Attack&&Run.SelectedCharacter==CharacterId.Priest&&!allBrand&&brandBefore>0&&target70.IsAlive){SetBrand(Brand-1);consumedBrand=1;StatusHit(4);}
   if(d.Id=="P03")Mark(1);
   if(consumedBrand>0) {
@@ -149,8 +149,7 @@ public sealed partial class BattleRuntime {
   if(paid>=2)foreach(var p in Trigger("N14"))AP(1);
   // Existing powers may react to this card, but a new installation cannot trigger itself.
   if(d.Type==CardType.Power)Install(d);
-  AfterItemCard(d,preBlock,preStrength,consumedBrand);
-  if(d.Id=="N01"||d.Id=="W06")PendingDiscard=Deck.Hand.Count>0;
+  AfterItemCard(d,preBlock,preStrength);
   if(Block!=preBlock)RecordBlock(preBlock);
   if(Strength!=preStrength)trace.Add(CombatEventKind.Status,CombatCause.Card,CombatTrace.PlayerId,CombatTrace.PlayerId,preStrength,Strength,status:StatusEffectType.Strength);
   cardsUsed++;
@@ -158,13 +157,29 @@ public sealed partial class BattleRuntime {
   trace.Add(d.Exhausts?CombatEventKind.CardExhausted:CombatEventKind.CardDiscarded,CombatCause.Card,CombatTrace.PlayerId,CombatTrace.PlayerId,effectId:instance.InstanceId);
   trace.Complete(Enemies);
   LastCardResult=new CardResult(d,trace,instance.InstanceId,paid,d.RequiresEnemyTarget?target70.TargetId:null,conditional);
-  if(Enemies.All(enemy=>!enemy.IsAlive)){PendingDiscard=false;Win();}
+  if(Enemies.All(enemy=>!enemy.IsAlive)){pendingDraw=0;pendingItemDraw=0;Win();}
   return true;
  }
- public bool ResolveDiscard(string instanceId) {if(!PendingDiscard||!Deck.Discard(instanceId))return false;PendingDiscard=false;return true;}
+ void QueueDiscardDraw(int count)
+ {
+  if(Deck.Hand.Count==0){DrawCards(trace,count);return;}
+  pendingDraw=count;
+ }
+ public bool ResolveDiscard(string instanceId)
+ {
+  if(!PendingDiscard||!Deck.Discard(instanceId))return false;
+  trace.Add(CombatEventKind.CardDiscarded,CombatCause.Card,CombatTrace.PlayerId,CombatTrace.PlayerId,effectId:instanceId);
+  int drawCount=pendingDraw;
+  pendingDraw=0;
+  var drawn=DrawCards(trace,drawCount);
+  if(pendingItemDraw>0){ItemDraw(pendingItemDraw);pendingItemDraw=0;}
+  if(drawn.Count>0&&IF("I27"))ItemDraw(1);
+  trace.Complete(Enemies);
+  return true;
+ }
  void Res(int n)=>Resonance=Math.Min(12,Resonance+n);
- void SpendRes(int n){Resonance-=n;SpentResonance+=n;if(IH("I28"))Block+=n;}
- void Mark(int n)=>SetBrand(Math.Min(8,Brand+n+(n>0&&target70!=null&&target70.IsAlive&&IF("I30")?1:0)));
+ void SpendRes(int n){Resonance-=n;SpentResonance+=n;}
+ void Mark(int n)=>SetBrand(Math.Min(8,Brand+n));
  void SetBrand(int value) {
   if(!target70.IsAlive||value==Brand)return;
   trace.Add(CombatEventKind.Status,CombatCause.Brand,CombatTrace.PlayerId,target70.TargetId,Brand,value,status:StatusEffectType.Brand);
@@ -195,7 +210,7 @@ public sealed partial class BattleRuntime {
   for(int i=0;i<hits&&target70.IsAlive;i++) {
    int raw=Math.Max(0,amount+(strength?Strength+TemporaryStrength:0)+(i==0?bonus:0));
    if(twice)raw*=2;
-   if(i==0)raw+=ItemAttackBonus();
+   raw+=ItemAttackBonus(i);
    HitEnemy(trace,target70,raw,CombatCause.DirectAttack,ignoreBlock:pierce);
   }
  }
@@ -204,6 +219,7 @@ public sealed partial class BattleRuntime {
  void End70(CombatTrace turnTrace){
   trace=turnTrace;
   int before=Block;
+  EndItems();
   if(powers.TryGetValue("W17",out int count))Block+=count*Math.Max(0,3+Strength+TemporaryStrength);
   if(Block!=before)RecordBlock(before);
   TemporaryStrength=0;amplify=0;once.Remove("double-ready");
@@ -213,7 +229,7 @@ public sealed partial class BattleRuntime {
   ChangeEnergy(trace,Math.Clamp(MaxEnergy+scheduledEnergy,0,Data.Config.EnergyCap),CombatCause.TurnStart);
   scheduledEnergy=0;
   int before=Block;
-  Block=Has("W13")?Block:Math.Min(Block,Math.Max(Math.Max(retainBlock,IceRetention),IH("I20")?6:0));retainBlock=0;Block+=scheduledBlock;
+  Block=Has("W13")?Block:Math.Min(Block,Math.Max(Math.Max(retainBlock,IceRetention),Math.Max(itemRetention,IH("I20")?6:0)));retainBlock=0;Block+=scheduledBlock;
   if(scheduledBlock>0)GuardTraining();scheduledBlock=0;
   SpentResonance=0;cardsUsed=0;healed=false;
   for(int i=0;i<regens.Count;i++){regens[i]--;Heal70(3);}regens.RemoveAll(turns=>turns==0);

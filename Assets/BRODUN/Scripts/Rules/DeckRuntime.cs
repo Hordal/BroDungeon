@@ -4,6 +4,7 @@ namespace Brodun
 {
     public sealed class DeckRuntime
     {
+        public int TotalDrawn { get; private set; }
         private List<CardInstance> draw;
         private readonly List<CardInstance> hand = new List<CardInstance>(), discard = new List<CardInstance>(), exhaust = new List<CardInstance>();
         private readonly IRandomSource rng;
@@ -45,7 +46,7 @@ namespace Brodun
                 if (data.Cards.Any(c=>c.IsReworked) && hand.Count>=10) break;
                 if (draw.Count==0 && discard.Count>0) { draw=Shuffling.Shuffle(discard,rng); discard.Clear(); }
                 if (draw.Count==0) break;
-                hand.Add(draw[0]);drawn.Add(draw[0]);draw.RemoveAt(0);
+                hand.Add(draw[0]);drawn.Add(draw[0]);draw.RemoveAt(0);TotalDrawn++;
             }
             return drawn.AsReadOnly();
         }

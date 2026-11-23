@@ -156,6 +156,8 @@ namespace Brodun.Tests.PlayMode
                 Assert.IsTrue(visited.Add(run.ThemeId));
                 Assert.AreEqual(chosenThemes[area-1],run.ThemeId);
                 var theme=DungeonThemes.Find(run.ThemeId);
+                Assert.AreEqual(1,run.Map.Count(node=>node.IsBossSanctuary));
+                Assert.IsFalse(run.Map.Any(node=>!node.IsBossSanctuary&&(node.Event==EventKind.Shop||node.Event==EventKind.RestSite)));
                 var mapArt=View.Root.Find("Dungeon background").GetComponent<Image>().sprite;
                 Assert.AreEqual(theme.BackgroundKey+"_normal",mapArt.name);
 
@@ -186,15 +188,18 @@ namespace Brodun.Tests.PlayMode
                 Assert.AreEqual(area,run.CurrentArea);
                 rooms++;
                 Assert.AreEqual(rooms,run.TotalClearedNodes);
-                Assert.AreEqual(53,run.CurrentHP);
-                Assert.Greater(run.Gold,23);
+                Assert.AreEqual(73,run.CurrentHP);
+                Assert.GreaterOrEqual(run.Gold,23+area*120);
+                Assert.IsNull(run.LastItemReward);
+                Assert.IsEmpty(run.Items,"Boss victory should not grant relics.");
                 Assert.Contains(extra,run.Deck.ToArray());
                 if(area<3)
                 {
                     var options=View.Root.GetComponentsInChildren<StyledButton>()
-                        .Where(button=>button.name.StartsWith("Theme_")).Select(button=>button.name);
+                        .Where(button=>button.name.StartsWith("Theme_")&&button.interactable).Select(button=>button.name);
                     CollectionAssert.AreEquivalent(DungeonThemes.All.Where(theme=>!visited.Contains(theme.Id))
                         .Select(theme=>"Theme_"+theme.Id),options);
+                    Assert.IsFalse(Button("Theme_"+run.ThemeId).interactable);
                     Assert.IsFalse(Flow.ChooseTheme(run.ThemeId));
                     Assert.IsFalse(Flow.ReturnToCharacterSelect());
                     Click("Theme_"+chosenThemes[area]);
@@ -319,7 +324,7 @@ namespace Brodun.Tests.PlayMode
             Assert.AreSame(run,Flow.Session.Run);Assert.AreSame(battle,Flow.Session.Battle);
             Assert.IsFalse(Flow.SelectRoom("boss"));Assert.AreEqual(0,run.CompletedNodes.Count);
         }
-        [UnityTest] public IEnumerator TitleCodexShowsOwnershipGroupsAndEmptyItems()
+        [UnityTest] public IEnumerator TitleCodexShowsOwnershipGroupsAndRelics()
         {
             Click("CodexButton");
             Assert.IsTrue(Flow.IsCardLibraryOpen);
@@ -333,12 +338,23 @@ namespace Brodun.Tests.PlayMode
             AssertRows(null);
             Click("Codex_Items");
             Assert.IsEmpty(CatalogRows());
-            Assert.IsTrue(View.Root.GetComponentsInChildren<Text>().Any(t=>t.name=="Item empty state"));
+            var items=View.Root.GetComponentsInChildren<LayoutElement>()
+                .Where(row=>row.name.StartsWith("CodexItem_")).Select(row=>row.name);
+            CollectionAssert.AreEquivalent(Item50Catalog.All.Select(item=>"CodexItem_"+item.Id),items);
             Flow.HandleEscape();
             Assert.IsFalse(Flow.IsCardLibraryOpen);
             Assert.IsTrue(Button("GameStart").IsInteractable());
             Click("AudioSettings");
             Assert.IsTrue(GameAudio.Ensure().IsSettingsOpen);
+            Canvas.ForceUpdateCanvases();
+            var settings=UnityEngine.Object.FindFirstObjectByType<AudioSettingsView>();
+            var settingsText=settings.GetComponentsInChildren<Text>();
+            foreach(string caption in new[]{"전체 음량","배경음악","효과음","닫기"})
+            {
+                var label=settingsText.Single(text=>text.text==caption);
+                Assert.Greater(label.rectTransform.rect.height,label.fontSize,caption);
+            }
+            Assert.AreEqual(3,settings.GetComponentsInChildren<Slider>().Length);
             Flow.HandleEscape();
             Assert.IsFalse(GameAudio.Ensure().IsSettingsOpen);
             yield return null;
@@ -411,16 +427,21 @@ namespace Brodun.Tests.PlayMode
             battle.Deck.Draw(10);
             controller.View.RefreshHand(card=>controller.PlayCard(card.InstanceId));
             var sort=battle.Deck.Hand.Single(card=>card.CardId=="N01");
+            int drawnBefore=battle.Deck.TotalDrawn;
             Assert.IsTrue(controller.PlayCard(sort.InstanceId));
             Assert.IsTrue(battle.PendingDiscard);
+            Assert.AreEqual(drawnBefore,battle.Deck.TotalDrawn);
             Assert.IsFalse(controller.TryEndTurn());
             var discard=battle.Deck.Hand.First(card=>card.CardId=="M02");
-            string choice="Choose "+discard.InstanceId;
-            yield return new WaitUntil(()=>controller.View.Root.Find("Card choice/"+choice)!=null);
-            Click(choice);
+            yield return new WaitUntil(()=>controller.View.Root.Find("Discard prompt")!=null);
+            var discardView=controller.View.Cards.Single(card=>card.InstanceId==discard.InstanceId);
+            ExecuteEvents.Execute(discardView.gameObject,new PointerEventData(EventSystem.current){button=PointerEventData.InputButton.Left},ExecuteEvents.pointerClickHandler);
             yield return new WaitUntil(()=>controller.Context.Phase==BattlePhase.PlayerTurn);
             Assert.IsFalse(battle.PendingDiscard);
-            Assert.Contains(discard,battle.Deck.DiscardPile.ToArray());
+            Assert.AreEqual(drawnBefore+2,battle.Deck.TotalDrawn);
+            var discardEvent=battle.LastCardResult.Events.Single(e=>e.Kind==CombatEventKind.CardDiscarded&&e.EffectId==discard.InstanceId);
+            var drawEvent=battle.LastCardResult.Events.Single(e=>e.Kind==CombatEventKind.Draw);
+            Assert.Less(discardEvent.Index,drawEvent.Index);
 
             var attack=battle.Deck.Hand.Single(card=>card.CardId=="M03");
             battle.Enemy.CurrentHP=1;
@@ -428,6 +449,7 @@ namespace Brodun.Tests.PlayMode
             Assert.AreEqual(1,battle.Resonance);
             Assert.AreEqual(battle.Enemy.TargetId,battle.LastCardResult.HitEvents.Single().TargetId);
             yield return new WaitUntil(()=>controller.Context.Phase==BattlePhase.Reward);
+            Assert.AreEqual(50,battle.Reward.BaseGold);
             var choices=battle.Reward.Candidates.Select(data.Card).ToArray();
             Assert.AreEqual(3,choices.Length);
             Assert.IsTrue(choices.All(card=>!card.StarterOnly&&(!card.Owner.HasValue||card.Owner==CharacterId.Mage)));

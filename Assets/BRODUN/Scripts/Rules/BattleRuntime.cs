@@ -57,13 +57,13 @@ namespace Brodun
             if(room==null || run.Status!=RunStatus.InProgress || run.ActiveRoom!=room.Id ||
                 (room.Type!=RoomType.Battle && room.Type!=RoomType.Boss))throw new InvalidOperationException("Enter a battle room first.");
             Data=data; Run=run; RoomId=room.Id;
-            var primary=new EnemyInstance(IntentResolver.Select(data,run,room),room,data.Config);
+            var primary=new EnemyInstance(IntentResolver.Select(data,run,room),room,data.Config,runArea:run.IsThemedRun?run.CurrentArea:1);
             var lineup=new List<EnemyInstance>{primary};
             companion??=EncounterPool.OpeningCompanion(data,run,room);
-            if(companion!=null)lineup.Add(new EnemyInstance(companion,room,data.Config,"enemy-1"));
+            if(companion!=null)lineup.Add(new EnemyInstance(companion,room,data.Config,"enemy-1",run.IsThemedRun?run.CurrentArea:1));
             if(additionalEnemies!=null)
                 foreach(var enemy in additionalEnemies)
-                    lineup.Add(new EnemyInstance(enemy,room,data.Config,"enemy-"+lineup.Count));
+                    lineup.Add(new EnemyInstance(enemy,room,data.Config,"enemy-"+lineup.Count,run.IsThemedRun?run.CurrentArea:1));
             Enemies=lineup.AsReadOnly();
             Energy=MaxEnergy=data.BaseEnergyFor(run.SelectedCharacter);
             Deck=DeckRuntime.Begin(data,run,room);

@@ -30,21 +30,26 @@ namespace Brodun.Presentation
             var root=(RectTransform)transform;
             var veil=BattleUi.Image(root,"Audio input blocker",null,new Color(.005f,.012f,.02f,.38f),Vector2.zero,Vector2.one);veil.raycastTarget=true;
             // The opaque panel stays between the upper vitals and the lower hand/HUD.
-            var panel=BattleUi.Surface(root,"Audio panel",new Vector2(.33f,.41f),new Vector2(.67f,.78f),BattleChrome.Form.Hud,BattleUi.Bronze);
+            var panel=BattleUi.Surface(root,"Audio panel",new Vector2(.30f,.34f),new Vector2(.70f,.81f),BattleChrome.Form.Hud,BattleUi.Bronze);
             panel.GetComponent<BattleChrome>().raycastTarget=true;
             BattleUi.Text(panel,"Audio title","오디오 설정",art.font,30,BattleUi.Gold,new Vector2(.08f,.84f),new Vector2(.92f,.98f));
-            Row(panel,art,AudioChannel.Master,"전체 음량",.66f);
+            Row(panel,art,AudioChannel.Master,"전체 음량",.65f);
             Row(panel,art,AudioChannel.Music,"배경음악",.44f);
-            Row(panel,art,AudioChannel.Sfx,"효과음",.22f);
-            var close=BattleUi.CommandButton(panel,"Close audio settings","닫기",art,new Vector2(.37f,.035f),new Vector2(.63f,.13f),owner.CloseSettings);
+            Row(panel,art,AudioChannel.Sfx,"효과음",.23f);
+            var close=BattleUi.CommandButton(panel,"Close audio settings","닫기",art,new Vector2(.36f,.035f),new Vector2(.64f,.125f),owner.CloseSettings);
+            close.GetComponentInChildren<Text>().verticalOverflow=VerticalWrapMode.Overflow;
             owner.SettingsChanged+=Refresh;Refresh();
             if(EventSystem.current!=null)EventSystem.current.SetSelectedGameObject(close.gameObject);
         }
         private void Row(RectTransform panel,PresentationAssets art,AudioChannel channel,string caption,float y)
         {
             int index=(int)channel;
-            BattleUi.Text(panel,caption,caption,art.font,24,BattleUi.Pale,new Vector2(.08f,y+.055f),new Vector2(.43f,y+.14f));
-            values[index]=BattleUi.Text(panel,caption+" value","",art.font,23,BattleUi.Teal,new Vector2(.48f,y+.055f),new Vector2(.66f,y+.14f));
+            var channelLabel=BattleUi.Text(panel,caption,caption,art.font,29,BattleUi.Pale,new Vector2(.08f,y+.042f),new Vector2(.44f,y+.135f));
+            channelLabel.alignment=TextAnchor.MiddleLeft;
+            channelLabel.verticalOverflow=VerticalWrapMode.Overflow;
+            values[index]=BattleUi.Text(panel,caption+" value","",art.font,25,BattleUi.Teal,new Vector2(.48f,y+.042f),new Vector2(.66f,y+.135f));
+            values[index].alignment=TextAnchor.MiddleRight;
+            values[index].verticalOverflow=VerticalWrapMode.Overflow;
             var mute=BattleUi.CommandButton(panel,caption+" mute","",art,new Vector2(.73f,y+.015f),new Vector2(.93f,y+.135f),()=>owner.SetMuted(channel,!owner.Muted(channel)));
             muteLabels[index]=mute.GetComponentInChildren<Text>();muteLabels[index].fontSize=21;
             var track=BattleUi.Image(panel,caption+" slider",null,new Color(.05f,.085f,.11f),new Vector2(.08f,y-.035f),new Vector2(.66f,y+.025f));track.raycastTarget=true;

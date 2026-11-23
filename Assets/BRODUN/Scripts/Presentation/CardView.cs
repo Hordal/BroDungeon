@@ -257,7 +257,26 @@ namespace Brodun.Presentation
             dragging=false;
             if(data.button==PointerEventData.InputButton.Left&&battleController!=null)battleController.EndTargetDrag(this,data);
         }
-        public IEnumerator PresentUse(bool exhaust)
+        public void SetClickHandler(Action<CardView> click)=>selected=click;
+
+        public IEnumerator PresentDraw()
+        {
+            presenting=true;
+            const float duration=.24f;
+            for(float elapsed=0;elapsed<duration;elapsed+=Time.unscaledDeltaTime)
+            {
+                float progress=Mathf.SmoothStep(0,1,elapsed/duration);
+                visual.anchoredPosition=new Vector2(0,-128*(1-progress));
+                visual.localScale=Vector3.one*Mathf.Lerp(.77f,1,progress);
+                ink.alpha=progress;
+                yield return null;
+            }
+            visual.anchoredPosition=Vector2.zero;
+            visual.localScale=Vector3.one;
+            presenting=false;
+            SetAvailable(CanPlay);
+        }
+        public IEnumerator PresentUse(bool exhaust,bool discard=false)
         {
             presenting=true;handOwner?.BeginUse(this);Hovered=false;
             if(hoverInput!=null)hoverInput.gameObject.SetActive(false);transform.SetAsLastSibling();
@@ -266,6 +285,7 @@ namespace Brodun.Presentation
             var release=BattleVfx.CreateCardRelease(visual,"Card use effect");
             var tint=Definition.Element!=ElementType.None?ElementTint(Definition.Element):
                 Definition.Type==CardType.Guard?BattleUi.Steel:Definition.Type==CardType.Attack?BattleUi.Gold:BattleUi.Teal;
+            if(discard)tint=new Color(1,.43f,.28f);
             const float duration=.32f;
             float direction=exhaust?0:canvasSurface!=null&&transform.position.x>canvasSurface.position.x?-1:1;
             for(float t=0;t<duration;t+=Time.unscaledDeltaTime)
@@ -274,7 +294,7 @@ namespace Brodun.Presentation
                 float lift=Mathf.SmoothStep(0,1,Mathf.InverseLerp(0,.72f,phase));
                 float dissolve=Mathf.SmoothStep(0,1,Mathf.InverseLerp(.27f,.96f,phase));
                 float kick=1+.075f*Mathf.Sin(Mathf.Clamp01(phase/.35f)*Mathf.PI);
-                visual.anchoredPosition=origin+new Vector2(direction*46,88)*lift;
+                visual.anchoredPosition=origin+new Vector2(direction*(discard?117:46),discard?-92:88)*lift;
                 visual.localScale=Vector3.one*Mathf.Lerp(originalScale*kick,.58f,dissolve);
                 visual.localRotation=Quaternion.Euler(0,0,-direction*10*dissolve);
                 ink.alpha=1-dissolve;

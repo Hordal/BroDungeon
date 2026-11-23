@@ -294,10 +294,20 @@ namespace Brodun.Presentation
                     card=Instantiate(art.cardPrefab,hand,false);card.name="Hand_"+id;
                     card.Bind(context.Runtime.Definition(entries[i]),id,art,context.Runtime.Data,click);
                 }
+                card.SetClickHandler(click);
                 cards.Add(card);
             }
             foreach(var removed in existing.Values){removed.gameObject.SetActive(false);Destroy(removed.gameObject);}
             HandLayout=new HandPresentation(Root,hand,art.common,cards,scroll);
+        }
+        public GameObject BeginDiscardSelection(Action<CardView> choose)
+        {
+            HandLayout?.SetInput(true);
+            foreach(var card in cards){card.SetClickHandler(choose);card.SetAvailable(true);}
+            var prompt=BattleUi.Surface(Root,"Discard prompt",new Vector2(.30f,.35f),new Vector2(.70f,.411f),BattleChrome.Form.Hud,BattleUi.Gold);
+            BattleUi.Text(prompt,"Discard instruction","버릴 카드 1장을 현재 손패에서 선택",art.common.font,26,
+                BattleUi.Gold,new Vector2(.04f,.10f),new Vector2(.96f,.90f)).verticalOverflow=VerticalWrapMode.Overflow;
+            return prompt.gameObject;
         }
         public void Announce(string message){turnBanner.Show(message);}
         public void HideHandForEnemyTurn(){HandLayout?.SetVisible(false);foreach(var card in cards)card.gameObject.SetActive(false);}
@@ -727,7 +737,7 @@ namespace Brodun.Presentation
             string choice=reward.IsOpeningReward?"고른 카드는 다음 전투의 첫 손패에 들어갑니다.":"카드 1장 또는 추가 골드를 선택하세요.";
             string instructions=reward.Formal?$"기본 골드 +{reward.BaseGold}G 지급 완료 · 보유 {context.Run.Gold}G\n{choice}":
                 "카드 1장 또는 골드를 선택하세요. 원하지 않으면 스킵할 수 있습니다.";
-            if(context.Run.LastItemReward!=null)instructions+="\n유물 획득: "+Item40Catalog.Find(context.Run.LastItemReward).Name;
+            if(context.Run.LastItemReward!=null)instructions+="\n유물 획득: "+Item50Catalog.Find(context.Run.LastItemReward).Name;
             BattleUi.Text(panel,"Reward instructions",instructions,art.common.font,22,BattleUi.Pale,new Vector2(.05f,.77f),new Vector2(.95f,.85f));
             var row=BattleUi.Rect(panel,"Reward cards",new Vector2(.045f,.245f),new Vector2(.955f,.755f));
             for(int i=0;i<reward.Candidates.Count;i++)

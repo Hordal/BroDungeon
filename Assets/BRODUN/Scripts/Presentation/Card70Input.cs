@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 namespace Brodun.Presentation {
 public sealed partial class BattleController {
  bool selecting;
@@ -27,9 +28,32 @@ public sealed partial class BattleController {
   selecting=false;if(!CommitCard(id,View.Cards.FirstOrDefault(c=>c.InstanceId==id),d,target,options:options))View.SetInput(true);
  }
  IEnumerator ChooseDiscard() {
-  bool done=false;var b=Context.Runtime;
-  CardChoicePanel.Show(View.Root,flow.Assets,b.Data,b.Deck.Hand,"뽑은 뒤 버릴 카드 1장 선택",id=>{done=b.ResolveDiscard(id);},false);
-  while(!done)yield return null;
+  var battle=Context.Runtime;
+  selecting=true;
+  CardView chosen=null;
+  var prompt=View.BeginDiscardSelection(card=>{if(chosen==null)chosen=card;});
+  while(chosen==null)yield return null;
+  Destroy(prompt);
+  View.SetInput(false);
+  int previousEventCount=battle.LastCardResult.Events.Count;
+  View.Announce("카드 버림");
+  yield return chosen.PresentUse(false,discard:true);
+  if(battle.ResolveDiscard(chosen.InstanceId))
+  {
+   View.RefreshHand(CardClicked);
+   View.SetInput(false);
+   var drawn=new HashSet<string>(battle.LastCardResult.Events.Skip(previousEventCount)
+     .Where(e=>e.Kind==CombatEventKind.Draw).SelectMany(e=>e.CardInstances));
+   var incoming=View.Cards.Where(card=>drawn.Contains(card.InstanceId)).ToArray();
+   if(incoming.Length>0)
+   {
+    View.Announce("카드 "+incoming.Length+"장 뽑기");
+    View.Sounds.Play(BattleSound.CardDraw);
+    var animations=incoming.Select(card=>StartCoroutine(card.PresentDraw())).ToArray();
+    foreach(var animation in animations)yield return animation;
+   }
+  }
+  selecting=false;
  }
  IEnumerator ResumeDiscard() {View.SetInput(false);yield return ChooseDiscard();Context.FinishActionPresentation();View.RefreshHand(CardClicked);View.Refresh();View.SetInput(true);}
 }

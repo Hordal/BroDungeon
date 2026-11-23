@@ -10,6 +10,7 @@ namespace Brodun
         public bool IsAlive => CurrentHP>0;
         public int CurrentHP { get; internal set; }
         public int MaxHP { get; }
+        internal int AttackPercent { get; }
         public int Block { get; internal set; }
         public StatusState Status { get; } = new StatusState();
         public ElementType Element { get; internal set; } = ElementType.None;
@@ -17,12 +18,15 @@ namespace Brodun
         internal int ReactionTurn,ReactionsThisTurn;
         public int PatternIndex { get; internal set; }
         public IntentData CurrentIntent { get; internal set; }
-        public EnemyInstance(EnemyDefinition definition,RoomNode room,BattleConfig config,string targetId="enemy-0")
+        public EnemyInstance(EnemyDefinition definition,RoomNode room,BattleConfig config,string targetId="enemy-0",int runArea=1)
         {
             Definition=definition;
             TargetId=targetId;
-            CurrentHP=MaxHP=definition.BaseHP+(definition.Area-1)*definition.AreaHPStep+
+            int baseline=definition.BaseHP+(definition.Area-1)*definition.AreaHPStep+
                 (definition.Type==EnemyType.Boss?0:(room.Floor-1)*config.FloorHPStep);
+            int hpPercent=runArea>=3?165:runArea==2?130:100;
+            AttackPercent=runArea>=3?145:runArea==2?120:100;
+            CurrentHP=MaxHP=(baseline*hpPercent+99)/100;
         }
     }
     public sealed class EnemyActionResult
@@ -44,7 +48,8 @@ namespace Brodun
         public static IntentData Decide(EnemyInstance enemy)
         {
             var pattern=enemy.Definition.Pattern[enemy.PatternIndex%enemy.Definition.Pattern.Count];
-            return enemy.CurrentIntent=new IntentData(pattern.Type,pattern.Amount,pattern.Hits,enemy.PatternIndex);
+            int amount=pattern.Type==IntentType.Attack?(pattern.Amount*enemy.AttackPercent+99)/100:pattern.Amount;
+            return enemy.CurrentIntent=new IntentData(pattern.Type,amount,pattern.Hits,enemy.PatternIndex);
         }
         public static IntentData Preview(EnemyInstance enemy,BattleConfig config)
         {

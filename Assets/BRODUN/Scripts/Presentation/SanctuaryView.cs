@@ -7,12 +7,14 @@ public sealed partial class RoomView {
  RectTransform tradeList;
  int tradeTab;
  void BuildSanctuary(){
-  string[] tabs=IsAltar?new[]{"아이템 구매","아이템 판매","카드 구매","카드 판매","성소 거래"}:new[]{"아이템 구매","아이템 판매","카드 구매","카드 판매"};
+  string[] tabs=IsAltar
+   ?new[]{"아이템 구매","아이템 판매","카드 구매","카드 판매","제단 거래"}
+   :new[]{"아이템 구매","아이템 판매","카드 구매","카드 판매","정비"};
   for(int i=0;i<tabs.Length;i++){
    int index=i;float x=.10f+i*.80f/tabs.Length;
    BattleUi.Button(root,"TradeTab_"+i,tabs[i],Art,new Vector2(x,.71f),new Vector2(x+.80f/tabs.Length-.008f,.77f),()=>{
     if(flow.Session.IsTransitioning||revealingSwap)return;
-    if(room.Visit.PendingAltarCards.Count>0&&index!=4){room.Visit.Feedback="받을 성소 카드를 먼저 선택하세요.";Refresh();return;}
+    if(room.Visit.PendingAltarCards.Count>0&&index!=4){feedback.text="받을 제단 카드를 먼저 선택하세요.";return;}
     ShowTradeTab(index);
    });
   }
@@ -24,7 +26,7 @@ public sealed partial class RoomView {
   tradeTab=tab;
   if(tradeList!=null){tradeList.gameObject.SetActive(false);Destroy(tradeList.gameObject);tradeList=null;}
   if(altarPanel!=null){altarPanel.gameObject.SetActive(false);Destroy(altarPanel.gameObject);altarPanel=null;}
-  if(tab==4){BuildAltar();Refresh();return;}
+  if(tab==4&&IsAltar){BuildAltar();Refresh();return;}
   tradeList=BattleUi.Rect(root,"Trade list",new Vector2(.10f,.205f),new Vector2(.90f,.64f));
   var viewport=BattleUi.Image(tradeList,"Viewport",null,BattleUi.Ink,Vector2.zero,Vector2.one);
   viewport.gameObject.AddComponent<RectMask2D>();viewport.raycastTarget=true;
@@ -34,11 +36,11 @@ public sealed partial class RoomView {
   content.gameObject.AddComponent<ContentSizeFitter>().verticalFit=ContentSizeFitter.FitMode.PreferredSize;
   int count=0;
   if(tab==0)for(int i=0;i<room.Visit.ItemOffers.Count;i++){
-   int index=i;var offer=room.Visit.ItemOffers[i];var item=Item40Catalog.Find(offer.ItemId);
+   int index=i;var offer=room.Visit.ItemOffers[i];var item=Item50Catalog.Find(offer.ItemId);
    TradeRow(content,item.Name+" · "+ItemOwner(item)+" · "+item.Tier+"등급",item.Description,offer.Purchased?"구매 완료":room.Run.Gold<offer.Price?"골드 부족 / "+offer.Price:offer.Price+" GOLD / 구매",room.CanBuyItem(index),()=>Transact(()=>room.BuyItem(index)),"ItemBuy_"+index);count++;
   }
   if(tab==1)foreach(var owned in room.Run.Items.ToArray()){
-   var item=Item40Catalog.Find(owned.ItemId);string id=owned.ItemId;
+   var item=Item50Catalog.Find(owned.ItemId);string id=owned.ItemId;
    TradeRow(content,item.Name+" · "+ItemOwner(item)+(item.GrowthCap>0?" · 성장 "+owned.Progress+"/"+item.GrowthCap:""),item.Description,item.SellPrice+" GOLD / 판매",room.CanSellItem(id),()=>Transact(()=>room.SellItem(id)),"ItemSell_"+id);count++;
   }
   if(tab==2)for(int i=0;i<room.Visit.Offers.Count;i++){
@@ -49,10 +51,29 @@ public sealed partial class RoomView {
    string id=instance.InstanceId;var card=room.Data.CardVersion(instance.CardId,instance.UpgradeLevel);
    TradeRow(content,card.Name,card.Description,room.CardSalePrice(id)+" GOLD / 판매",room.CanSellCard(id),()=>Transact(()=>room.SellCard(id)),"CardSell_"+id);count++;
   }
+  if(tab==4){BuildServices(content);count=1;}
   if(count==0)TradeRow(content,"목록이 비어 있습니다","다른 탭을 선택하거나 다음 성소에서 다시 확인하세요.","",false,()=>{});
   Refresh();
  }
- string ItemOwner(ItemDefinition item)=>!item.Owner.HasValue?"범용":room.Data.Character(item.Owner.Value).Name+" 전용";
+ string ItemOwner(ItemDefinition item)=>item.ThemeId==null?"범용":DungeonThemes.Find(item.ThemeId).Name+" 테마";
+ void BuildServices(Transform content){
+  TradeRow(content,"카드 강화","카드 1장을 강화합니다. 방문당 1회.",RoomRuntime.UpgradePrice+" GOLD",room.CanUpgrade,
+   ()=>ChooseServiceCard("강화할 카드",true),"SanctuaryUpgrade");
+  TradeRow(content,"카드 제거","카드 1장을 덱에서 제거합니다. 방문당 1회.",RoomRuntime.RemovalPrice+" GOLD",room.CanRemove,
+   ()=>ChooseServiceCard("제거할 카드",false),"SanctuaryRemove");
+  if(!room.Node.IsBossSanctuary)return;
+  TradeRow(content,"회복","HP 최대 "+room.Data.Config.EventHeal+" 회복. 회복과 희생 중 1회 선택.",
+   RoomRuntime.PrayerPrice+" GOLD",room.CanRecover,()=>Transact(room.RecoverAtSanctuary),"SanctuaryHeal");
+  TradeRow(content,"희생","HP "+RoomRuntime.SacrificeHealth+" 소모 후 GOLD "+room.Data.Config.EventGold+" 획득.",
+   "선택",room.CanSacrifice,()=>Transact(room.SacrificeAtSanctuary),"SanctuarySacrifice");
+ }
+ void ChooseServiceCard(string title,bool upgrade){
+  if(!room.CanUseServices)return;
+  var cards=room.Run.Deck.Where(c=>!upgrade||c.UpgradeLevel==0&&room.Data.Card(c.CardId).IsReworked);
+  CardChoicePanel.Show(root,Art,room.Data,cards,title,id=>{
+   if(id!=null)Transact(()=>upgrade?room.Upgrade(id):room.Remove(id));
+  });
+ }
  void Transact(Func<bool> action){if(flow.Session.IsTransitioning||revealingSwap)return;action();ShowTradeTab(tradeTab);}
  void TradeRow(Transform parent,string title,string description,string label,bool enabled,Action action,string actionId="TradeAction"){
   var row=BattleUi.Image(parent,actionId+"Row",null,new Color(.07f,.11f,.14f,.98f),Vector2.zero,Vector2.one);

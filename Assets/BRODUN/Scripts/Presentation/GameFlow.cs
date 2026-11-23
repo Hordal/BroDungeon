@@ -56,7 +56,7 @@ namespace Brodun.Presentation
         public static string SceneName(FlowScreen screen) => "Brodun"+(screen==FlowScreen.ThemeSelect?"CharacterSelect":screen==FlowScreen.Room||screen==FlowScreen.RunResult?"DungeonMap":screen.ToString());
         public static void LoadBoot() { SceneManager.LoadScene(SceneName(FlowScreen.Boot)); }
         private static GeneratedDungeon GenerateRunMap(uint seed) =>
-            LayeredMapGenerator.Generate(seed,new MapGenerationConfig(openingEncounters:true));
+            LayeredMapGenerator.Generate(seed,MapGenerationConfig.Campaign);
 
         private FlowSession CreateProductionSession() =>
             new FlowSession(Card70Catalog.Apply(DungeonThemes.WithThemeEnemies(catalog.ToDefinitions())),GenerateRunMap,chooseTheme:true);

@@ -120,29 +120,39 @@ namespace Brodun
                     else
                     {
                         room.Type=RoomType.Event;
-                        room.Event=new[]{EventKind.Shop,EventKind.Altar,EventKind.RestSite}[(int)(rng.Next()*3)];
+                        room.Event=config.SanctuaryRoutes?EventKind.Altar:new[]{EventKind.Shop,EventKind.Altar,EventKind.RestSite}[(int)(rng.Next()*3)];
                         if(node.Previous.Any(p=>rooms[p].Type==RoomType.Event && rooms[p].Event==room.Event))
                         {room.Type=RoomType.Battle;room.Event=EventKind.None;}
                     }
                 }
                 rooms.Add(node.Id,room);
             }
-            // Give every route a respite halfway through. Adjacent lanes offer different activities.
-            var pause=graph.Nodes.Where(n=>n.Layer==(graph.IntermediateLayers+1)/2).ToArray();
-            int restLane=(int)(rng.Next()*pause.Length);
-            foreach(var node in pause)
+            if(config.SanctuaryRoutes)
             {
-                rooms[node.Id]=node.Lane==restLane
-                    ?new Assignment{Type=RoomType.Event,Event=EventKind.RestSite}
-                    :new Assignment{Type=RoomType.Puzzle};
+                var middle=graph.Nodes.Where(n=>n.Layer==(graph.IntermediateLayers+1)/2)
+                    .Where(n=>!n.Previous.Any(id=>rooms[id].Event==EventKind.Altar)).ToArray();
+                if(middle.Length>0)
+                    rooms[middle[(int)(rng.Next()*middle.Length)].Id]=new Assignment{Type=RoomType.Event,Event=EventKind.Altar};
             }
-            // The main run buys time for a second battle by moving the early shop to the break.
-            var shop=config.OpeningEncounters?pause.First(n=>n.Lane!=restLane):graph.Nodes.First(n=>n.Layer==2);
-            rooms[shop.Id]=new Assignment{Type=RoomType.Event,Event=EventKind.Shop};
-            foreach(var previous in shop.Previous)
-                if(rooms[previous].Type==RoomType.Event&&rooms[previous].Event==EventKind.Shop)
-                    rooms[previous]=new Assignment{Type=RoomType.Puzzle};
-            // Keep the elite/normal choice on the approach to the shop.
+            else
+            {
+                // Give every route a respite halfway through. Adjacent lanes offer different activities.
+                var pause=graph.Nodes.Where(n=>n.Layer==(graph.IntermediateLayers+1)/2).ToArray();
+                int restLane=(int)(rng.Next()*pause.Length);
+                foreach(var node in pause)
+                {
+                    rooms[node.Id]=node.Lane==restLane
+                        ?new Assignment{Type=RoomType.Event,Event=EventKind.RestSite}
+                        :new Assignment{Type=RoomType.Puzzle};
+                }
+                // The main run buys time for a second battle by moving the early shop to the break.
+                var shop=config.OpeningEncounters?pause.First(n=>n.Lane!=restLane):graph.Nodes.First(n=>n.Layer==2);
+                rooms[shop.Id]=new Assignment{Type=RoomType.Event,Event=EventKind.Shop};
+                foreach(var previous in shop.Previous)
+                    if(rooms[previous].Type==RoomType.Event&&rooms[previous].Event==EventKind.Shop)
+                        rooms[previous]=new Assignment{Type=RoomType.Puzzle};
+            }
+            // Keep the elite/normal choice before the guaranteed sanctuary.
             var merchant=graph.Nodes.Single(n=>n.Layer==graph.IntermediateLayers);
             rooms[merchant.Id]=new Assignment{Type=RoomType.Event,Event=EventKind.Shop};
             var final=graph.Nodes.Where(n=>n.Layer==graph.IntermediateLayers-1).ToArray();
@@ -152,7 +162,7 @@ namespace Brodun
             // Prevent adjacent same altar/rest/shop, including the guaranteed shop override.
             foreach(var node in graph.Nodes.Where(n=>n.Layer>1))
                 if(rooms[node.Id].Type==RoomType.Event && node.Previous.Any(p=>rooms[p].Type==RoomType.Event && rooms[p].Event==rooms[node.Id].Event))
-                    rooms[node.Id]=new Assignment{Type=RoomType.Puzzle};
+                    rooms[node.Id]=new Assignment{Type=config.SanctuaryRoutes?RoomType.Battle:RoomType.Puzzle};
             var result=new List<RoomNode>();
             foreach(var node in graph.Nodes)
             {

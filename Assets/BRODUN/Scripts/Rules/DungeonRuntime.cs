@@ -15,6 +15,7 @@ namespace Brodun
         public IReadOnlyList<string> Next { get; }
         public IReadOnlyList<string> Previous { get; }
         public int Layer => Column;
+        public bool IsBossSanctuary => Type==RoomType.Event&&Event==EventKind.Shop&&Next.Contains("boss");
         internal RoomNode(string id, RoomType type, int column, double y, IEnumerable<string> next, EventKind kind,
             double? normalizedX = null,int? floor = null,EnemyType? encounter = null,IEnumerable<string> previous = null)
         {

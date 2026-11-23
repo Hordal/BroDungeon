@@ -205,7 +205,8 @@ namespace Brodun.Presentation
         {
             GameAudio.Ensure().BattleComplete();
             View.SetInput(false);AudioCue?.Invoke("death");yield return View.PresentDeaths();
-            View.Announce("VICTORY");AudioCue?.Invoke("victory");yield return new WaitForSecondsRealtime(.75f);
+            View.Announce("VICTORY");
+            AudioCue?.Invoke("victory");yield return new WaitForSecondsRealtime(.75f);
             if(Context.Room.Type==RoomType.Boss)flow.FinishRun();
             else if(Context.OpenReward())View.ShowReward(ChooseReward);
         }

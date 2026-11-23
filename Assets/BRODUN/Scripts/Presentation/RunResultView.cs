@@ -12,7 +12,7 @@ namespace Brodun.Presentation
             BattleUi.Text(root,"RunResultCharacter",flow.Session.Definitions.Character(result.Character).Name+" · "+(clear?DungeonThemes.Find(result.ThemeId).Name+" 돌파":"여정 종료"),art.font,34,BattleUi.Pale,new Vector2(.2f,.61f),new Vector2(.8f,.70f));
             string stats="도달: "+result.Area+"구역 "+result.Floor+"층\n최종 HP: "+result.HP+" / "+result.MaxHP+
                 "\nGOLD: "+result.Gold+"    덱: "+result.DeckSize+"장\n완료한 방: "+result.ClearedNodes;
-            BattleUi.Text(root,"RunResultStats",stats,art.font,32,BattleUi.Pale,new Vector2(.25f,.31f),new Vector2(.75f,.59f));
+            BattleUi.Text(root,"RunResultStats",stats,art.font,32,BattleUi.Pale,new Vector2(.25f,.36f),new Vector2(.75f,.59f));
             BattleUi.Button(root,"ResultNewRun","NEW RUN / 새로운 여정",art,new Vector2(.22f,.18f),new Vector2(.49f,.28f),()=>flow.StartNewRun());
             BattleUi.Button(root,clear?"ResultTitle":"DefeatTitle","TITLE / 시작 화면",art,new Vector2(.53f,.18f),new Vector2(.78f,.28f),()=>flow.ReturnToTitle());
         }

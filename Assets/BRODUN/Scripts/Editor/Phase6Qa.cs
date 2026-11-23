@@ -68,7 +68,11 @@ namespace Brodun.Editor
                     }
                     Debug.Log("GUIDE "+id+" "+battle.Runtime.Enemy.Definition.Id+" "+node.Encounter+" HP="+run.CurrentHP+" turns="+battle.Runtime.Turn+" "+battle.Phase);
                     if(battle.Phase!=BattlePhase.Victory)throw new InvalidOperationException("Guide cannot win unchanged combat "+id);
-                    if(node.Type==RoomType.Boss){battle.CompleteBoss();continue;}
+                    if(node.Type==RoomType.Boss)
+                    {
+                        if(!battle.CompleteBoss())throw new InvalidOperationException("Guide cannot complete boss "+id);
+                        continue;
+                    }
                     battle.OpenReward();
                     if(node.Layer==1){battle.ResolveReward(RewardType.Gold);Debug.Log("GUIDE reward Gold 50");}
                     else

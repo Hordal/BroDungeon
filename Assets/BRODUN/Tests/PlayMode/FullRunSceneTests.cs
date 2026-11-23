@@ -173,7 +173,7 @@ namespace Brodun.Tests.PlayMode
             yield return StartFixture(map:Map);var run=Flow.Session.Run;run.AddGold(500);
             Click("Node_altar");yield return Ready(FlowScreen.Room);var room=Flow.Session.Room;
             for(int i=0;i<5;i++)Assert.NotNull(Button("TradeTab_"+i));
-            var offer=room.Visit.ItemOffers[0];int itemBuy=offer.Price,itemSell=Item40Catalog.Find(offer.ItemId).SellPrice;
+            var offer=room.Visit.ItemOffers[0];int itemBuy=offer.Price,itemSell=Item50Catalog.Find(offer.ItemId).SellPrice;
             Click("ItemBuy_0");yield return null;Assert.IsTrue(run.HasItem(offer.ItemId));Assert.AreEqual(500-itemBuy,run.Gold);
             Click("TradeTab_1");yield return null;Click("ItemSell_"+offer.ItemId);yield return null;Assert.IsFalse(run.HasItem(offer.ItemId));
             Click("TradeTab_2");yield return null;var before=new HashSet<string>(run.Deck.Select(c=>c.InstanceId));int cardBuy=room.Visit.Offers[0].Price;
@@ -183,6 +183,34 @@ namespace Brodun.Tests.PlayMode
             Assert.IsTrue(Flow.ReloadRoom());yield return Ready(FlowScreen.Room);Assert.IsFalse(Button("ItemBuy_0").IsInteractable());
             Click("TradeTab_2");yield return null;Assert.IsFalse(Button("ShopBuy_0").IsInteractable());Assert.AreEqual(1,Flow.Session.Room.Visit.CardsSold);
             Click("TradeTab_4");yield return null;Assert.AreEqual(3,Flow.Session.Room.Visit.AltarTrades.Count);
+        }
+
+        [UnityTest] public IEnumerator BossApproachSanctuaryUpgradesCardsAndHealsOnce()
+        {
+            GeneratedDungeon Map(uint seed)=>new GeneratedDungeon(null,new[]{
+                new RoomNode("start",RoomType.Start,0,50,new[]{"merchant"},EventKind.None),
+                new RoomNode("merchant",RoomType.Event,1,50,new[]{"boss"},EventKind.Shop,previous:new[]{"start"}),
+                new RoomNode("boss",RoomType.Boss,2,50,Array.Empty<string>(),EventKind.None,previous:new[]{"merchant"})
+            });
+            yield return StartFixture(map:Map);
+            var run=Flow.Session.Run;
+            run.AddGold(100);run.CurrentHP-=10;
+            Click("Node_merchant");yield return Ready(FlowScreen.Room);
+            Assert.IsTrue(Flow.Session.Room.Node.IsBossSanctuary);
+            Click("TradeTab_4");yield return null;
+            var starter=run.Deck[0];
+            Click("SanctuaryUpgrade");yield return null;
+            Click("Choose "+starter.InstanceId);yield return null;
+            Assert.AreEqual(1,starter.UpgradeLevel);
+            Assert.AreEqual(70,run.Gold);
+            Assert.IsFalse(Button("SanctuaryUpgrade").IsInteractable());
+            Click("SanctuaryHeal");yield return null;
+            Assert.AreEqual(60,run.Gold);
+            Assert.AreEqual(run.MaxHP-10+Flow.Session.Definitions.Config.EventHeal,run.CurrentHP);
+            Assert.IsFalse(Button("SanctuaryHeal").IsInteractable());
+            Assert.IsFalse(Button("SanctuarySacrifice").IsInteractable());
+            Click("RoomLeave");yield return Ready(FlowScreen.DungeonMap);
+            Assert.IsTrue(DungeonRuntime.Available(run).Contains("boss"));
         }
 
         [UnityTest] public IEnumerator AllRoomTypesResultResetAndResolutionScreensUseRealUi()

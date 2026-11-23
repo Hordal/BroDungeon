@@ -14,6 +14,8 @@ namespace Brodun.Presentation
             var panel=BattleUi.Surface(parent,"Turn banner",new Vector2(.39f,.85f),new Vector2(.61f,.90f),BattleChrome.Form.Command,BattleUi.Bronze);
             group=panel.gameObject.AddComponent<CanvasGroup>();group.blocksRaycasts=false;group.alpha=0;
             label=BattleUi.Text(panel.transform,"Announcement","",art.font,25,BattleUi.Gold,Vector2.zero,Vector2.one);
+            label.resizeTextForBestFit=true;label.resizeTextMinSize=16;label.resizeTextMaxSize=25;
+            label.verticalOverflow=VerticalWrapMode.Overflow;
         }
         public void Show(string text)
         {if(bannerRoutine!=null)StopCoroutine(bannerRoutine);label.text=text;bannerRoutine=StartCoroutine(Animate());}
