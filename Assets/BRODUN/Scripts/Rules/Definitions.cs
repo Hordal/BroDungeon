@@ -45,7 +45,6 @@ namespace Brodun
         public bool Retains { get; private set; }
         public bool XCost { get; private set; }
         public int UpgradeLevel { get; private set; }
-        public int CopyLimit => Rarity==CardRarity.Basic?3:Exhausts?1:2;
         public CardType Type => reworkedType ?? InferredType;
         private CardType InferredType => Effects.Any(e => e.Type == EffectType.Damage) ? CardType.Attack :
             Effects.Any(e => e.Type == EffectType.Block) ? CardType.Guard : CardType.Skill;

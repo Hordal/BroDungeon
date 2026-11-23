@@ -11,21 +11,32 @@ public sealed partial class BattleRuntime {
  public int SpentResonance {get;private set;}
  public bool PendingDiscard {get;private set;}
  public IReadOnlyDictionary<string,int> Powers => powers;
+ public int InstalledPowerCount => activePowers.Count;
+ // The dictionary counts copies; each installation owns its upgrade and trigger state.
  readonly Dictionary<string,int> powers=new Dictionary<string,int>();
+ sealed class InstalledPower {
+  public string Id; public int Upgrade,Training,GuardTraining;
+  public readonly HashSet<string> Used=new HashSet<string>();
+ }
+ readonly List<InstalledPower> activePowers=new List<InstalledPower>();
+ readonly List<int> regens=new List<int>();
  readonly HashSet<string> once=new HashSet<string>();
- int scheduledEnergy,scheduledBlock,retainBlock,regen,attackCount,cardsUsed,training,guardTraining,amplify;
+ int scheduledEnergy,scheduledBlock,retainBlock,cardsUsed,amplify;
  bool healed; ElementType? lastElement;
  CardDefinition resolving; CardResult trace; int paid; CardPlayOptions selection;
  bool Has(string id)=>powers.ContainsKey(id);
- bool First(string id)=>once.Add(id);
- int U(string id)=>powers[id];
+ InstalledPower[] Trigger(string id,string channel="main")=>activePowers.Where(p=>p.Id==id&&p.Used.Add(channel)).ToArray();
+ void Install(CardDefinition d) {
+  activePowers.Add(new InstalledPower{Id=d.Id,Upgrade=d.UpgradeLevel});
+  powers[d.Id]=powers.TryGetValue(d.Id,out int count)?count+1:1;
+ }
+ void GuardTraining() {foreach(var p in Trigger("N07")){Block+=(p.Upgrade>0?3:2)+p.GuardTraining;p.GuardTraining++;}}
  public CardDefinition Definition(CardInstance c)=>Data.Card(c.CardId,c.UpgradeLevel);
  public int EffectiveCost(CardInstance c) {var d=Definition(c);return d.XCost?Energy:d.Cost;}
  public bool CanPlayCard(string id) {
   var c=Deck.Hand.FirstOrDefault(x=>x.InstanceId==id);if(c==null||Result!=BattleResult.Active||PendingDiscard)return false;
   var d=Definition(c);if(!d.IsReworked)return Energy>=d.Cost;
   if(Energy<(d.XCost?1:d.Cost))return false;
-  if(d.Type==CardType.Power&&Has(d.Id))return false;
   int hp=d.Id=="W08"?3:d.Id=="P07"?(d.UpgradeLevel>0?3:4):d.Id=="P11"?(d.UpgradeLevel>0?3:5):0;
   if(hp>0&&Run.CurrentHP<=hp)return false;
   int res=d.Id=="M10"?(d.UpgradeLevel>0?1:2):d.Id=="M12"?(d.UpgradeLevel>0?3:4):d.Id=="M16"?(d.UpgradeLevel>0?1:2):0;
@@ -48,9 +59,9 @@ public sealed partial class BattleRuntime {
   bool crossing=false;
   if(Run.SelectedCharacter==CharacterId.Mage&&d.Type==CardType.Attack&&IsResonant(d.Element)) {
    crossing=!lastElement.HasValue||lastElement.Value!=d.Element;lastElement=d.Element;
-   if(crossing){int before=Resonance;Res(1);if(Has("M08")&&First("M08"))Res(U("M08")>0?2:1);if(Has("M15")&&Resonance>before&&First("M15")){AP(1);Deck.Draw(1);}}
+   if(crossing){int before=Resonance;Res(1);foreach(var p in Trigger("M08"))Res(p.Upgrade>0?2:1);if(Resonance>before)foreach(var p in Trigger("M15")){AP(1);Deck.Draw(1);}}
   }
-  if(d.Type==CardType.Attack&&Has("W14")&&First("W14"))Strength++;
+  if(d.Type==CardType.Attack)Strength+=Trigger("W14").Length;
   int brandBefore=Brand;bool allBrand=d.Id=="P15";int consumedBrand=0;
   bool up=d.UpgradeLevel>0;Func<int,int,int> v=(a,b)=>up?b:a;
   int n;
@@ -91,7 +102,7 @@ public sealed partial class BattleRuntime {
    case "P10":Mark(v(2,3));Enemy.Status.Weak++;break;
    case "P11":Run.CurrentHP-=v(5,3);AP(2);break;
    case "P12":Heal70(v(3,5)+Grace/2);break;
-   case "P13":regen=3;break;
+   case "P13":regens.Add(3);break;
    case "P15":n=Brand;Brand=0;consumedBrand=n;Hit70(8+n*6);break;
    case "P16":n=Grace;Grace=0;Hit70(10+n*4);Heal70(n);break;
    case "P17":Brand=Brand==0?2:Math.Min(8,Brand*2);break;
@@ -114,18 +125,18 @@ public sealed partial class BattleRuntime {
   if(d.Type==CardType.Attack&&Run.SelectedCharacter==CharacterId.Priest&&!allBrand&&brandBefore>0){Brand--;consumedBrand=1;StatusHit(4);}
   if(d.Id=="P03")Mark(1);
   if(consumedBrand>0) {
-   if(Has("P09")&&First("P09")){Mark(1);Block+=U("P09")>0?5:3;}
-   if(Has("P14")&&First("P14-brand"))Heal70(2);
+   foreach(var p in Trigger("P09")){Mark(1);Block+=p.Upgrade>0?5:3;}
+   foreach(var p in Trigger("P14","brand"))Heal70(2);
   }
-  if(d.Type==CardType.Power) powers.Add(d.Id,d.UpgradeLevel);
   bool cardBlock=d.Type==CardType.Guard||d.Id=="W10"||d.Id=="M04"||(up&&(d.Id=="N01"||d.Id=="N10"));
-  if(cardBlock&&Block>preBlock&&Has("N07")&&d.Id!="N07"&&First("N07")){Block+=(U("N07")>0?3:2)+guardTraining;guardTraining++;}
+  if(cardBlock&&Block>preBlock)GuardTraining();
   if(d.Type==CardType.Attack) {
-   attackCount++;
-   if(Has("N06")&&++training>=3){training-=3;Strength++;}
-   if(Has("M14")&&paid>=2&&First("M14"))Res(U("M14")>0?3:2);
+   foreach(var p in activePowers.Where(p=>p.Id=="N06"))if(++p.Training>=3){p.Training-=3;Strength++;}
+   if(paid>=2)foreach(var p in Trigger("M14"))Res(p.Upgrade>0?3:2);
   }
-  if(Has("N14")&&d.Id!="N14"&&paid>=2&&First("N14"))AP(1);
+  if(paid>=2)foreach(var p in Trigger("N14"))AP(1);
+  // Existing powers may react to this card, but a new installation cannot trigger itself.
+  if(d.Type==CardType.Power)Install(d);
   cardsUsed++;Deck.FinishUse(instance,d.Exhausts);LastCardResult=trace;
   if(Enemy.CurrentHP<=0){PendingDiscard=false;Win();}
   return true;
@@ -139,8 +150,8 @@ public sealed partial class BattleRuntime {
  void Heal70(int amount) {
   int before=Run.CurrentHP;Run.Heal(Math.Max(0,amount));if(Run.CurrentHP==before)return;
   if(!healed&&Run.SelectedCharacter==CharacterId.Priest){Grace=Math.Min(10,Grace+1);}healed=true;
-  if(Has("P08")&&First("P08")){Grace=Math.Min(10,Grace+1);Deck.Draw(1);}
-  if(Has("P14")&&First("P14-heal"))Block+=3;
+  foreach(var p in Trigger("P08")){Grace=Math.Min(10,Grace+1);Deck.Draw(1);}
+  Block+=Trigger("P14","heal").Length*3;
  }
  void Hit70(int amount,int hits=1,bool pierce=false,bool strength=true) {
   int bonus=0;if(amplify>0&&paid>=2){bonus=amplify*paid;amplify=0;}
@@ -155,13 +166,14 @@ public sealed partial class BattleRuntime {
  }
  void StatusHit(int amount){int hp=Enemy.CurrentHP,b=Enemy.Block;var hit=DamageCalculator.Hit(amount,ref hp,ref b);Enemy.CurrentHP=hp;Enemy.Block=b;trace.Damage+=hit.HPDamage;trace.Blocked+=hit.Blocked;trace.RecordHit(hit);}
  static bool IsResonant(ElementType e)=>e==ElementType.Fire||e==ElementType.Ice||e==ElementType.Lightning||e==ElementType.Water||e==ElementType.Wind||e==ElementType.Poison;
- void End70(){if(Has("W17"))Block+=Math.Max(0,3+Strength+TemporaryStrength);TemporaryStrength=0;amplify=0;once.Remove("double-ready");}
+ void End70(){if(powers.TryGetValue("W17",out int count))Block+=count*Math.Max(0,3+Strength+TemporaryStrength);TemporaryStrength=0;amplify=0;once.Remove("double-ready");}
  void Start70(){
-  Turn++;once.Clear();Energy=Math.Max(0,Math.Min(6,MaxEnergy+scheduledEnergy));scheduledEnergy=0;
+  Turn++;once.Clear();foreach(var p in activePowers)p.Used.Clear();Energy=Math.Max(0,Math.Min(6,MaxEnergy+scheduledEnergy));scheduledEnergy=0;
   Block=Has("W13")?Block:Math.Min(Block,retainBlock);retainBlock=0;Block+=scheduledBlock;
-  if(scheduledBlock>0&&Has("N07")&&First("N07")){Block+=(U("N07")>0?3:2)+guardTraining;guardTraining++;}scheduledBlock=0;
-  SpentResonance=0;cardsUsed=attackCount=0;healed=false;
-  if(regen>0){regen--;Heal70(3);}Deck.Draw(Data.Config.HandSize+(Has("N13")?1:0));
+  if(scheduledBlock>0)GuardTraining();scheduledBlock=0;
+  SpentResonance=0;cardsUsed=0;healed=false;
+  for(int i=0;i<regens.Count;i++){regens[i]--;Heal70(3);}regens.RemoveAll(turns=>turns==0);
+  Deck.Draw(Data.Config.HandSize+(powers.TryGetValue("N13",out int draws)?draws:0));
  }
 }
 }

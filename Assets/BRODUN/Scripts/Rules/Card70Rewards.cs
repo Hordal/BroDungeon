@@ -4,7 +4,8 @@ using System.Linq;
 namespace Brodun {
 public static class Card70Rewards {
  public static bool CanAcquire(GameDefinitions data,RunState run,string id) {
-  var c=data.Card(id);return !c.IsReworked || c.Rarity!=CardRarity.Basic&&(!c.Owner.HasValue||c.Owner==run.SelectedCharacter)&&run.Deck.Count(x=>x.CardId==id)<c.CopyLimit;
+  // Ownership does not remove a card from future rewards or shop stock.
+  var c=data.Card(id);return !c.IsReworked || c.Rarity!=CardRarity.Basic&&(!c.Owner.HasValue||c.Owner==run.SelectedCharacter);
  }
  public static IEnumerable<CardDefinition> Eligible(GameDefinitions data,RunState run)=>data.Cards.Where(c=>CanAcquire(data,run,c.Id));
  public static PendingReward Create(GameDefinitions data,RunState run) {
