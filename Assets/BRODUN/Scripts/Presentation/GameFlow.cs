@@ -22,6 +22,8 @@ namespace Brodun.Presentation
         public Sprite CardArtwork(CardDefinition card)
         {
             if(!card.IsReworked)return CardArtwork(card.Id);
+            var generated=Resources.Load<Sprite>("Card70Illustrations/"+card.Id);
+            if(generated!=null)return generated;
             if(!card.Owner.HasValue)return card.Type==CardType.Guard?assets.altar:assets.battle;
             string existing=card.Id switch
             {

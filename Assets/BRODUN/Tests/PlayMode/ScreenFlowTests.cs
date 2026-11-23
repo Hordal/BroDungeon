@@ -341,6 +341,17 @@ namespace Brodun.Tests.PlayMode
             var items=View.Root.GetComponentsInChildren<LayoutElement>()
                 .Where(row=>row.name.StartsWith("CodexItem_")).Select(row=>row.name);
             CollectionAssert.AreEquivalent(Item50Catalog.All.Select(item=>"CodexItem_"+item.Id),items);
+            Canvas.ForceUpdateCanvases();
+            foreach(var item in Item50Catalog.All)
+            {
+                var image=View.Root.GetComponentsInChildren<Image>()
+                    .SingleOrDefault(candidate=>candidate.name=="RelicArt_"+item.Id);
+                Assert.NotNull(image,item.Id+" codex image");
+                Assert.AreSame(RelicArt.Find(item.Id),image.sprite,item.Id);
+                Assert.IsTrue(image.preserveAspect,item.Id);
+                Assert.Greater(image.rectTransform.rect.width,0,item.Id);
+                Assert.Greater(image.rectTransform.rect.height,0,item.Id);
+            }
             Flow.HandleEscape();
             Assert.IsFalse(Flow.IsCardLibraryOpen);
             Assert.IsTrue(Button("GameStart").IsInteractable());

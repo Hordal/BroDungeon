@@ -134,11 +134,13 @@ namespace Brodun.Presentation
             foreach(var item in Item50Catalog.All)
             {
                 var row=BattleUi.Image(list,"CodexItem_"+item.Id,null,new Color(.063f,.083f,.112f,.98f),Vector2.zero,Vector2.one);
-                row.gameObject.AddComponent<LayoutElement>().preferredHeight=112;
-                Text(row.transform,"Item name",item.Name,26,BattleUi.Gold,.04f,.57f,.57f,.94f,TextAnchor.MiddleLeft);
+                row.gameObject.AddComponent<LayoutElement>().preferredHeight=128;
+                RelicArt.Add(row.transform,item.Id,new Vector2(.017f,.06f),new Vector2(.151f,.94f));
+                Text(row.transform,"Item name",item.Name,26,BattleUi.Gold,.17f,.57f,.57f,.94f,TextAnchor.MiddleLeft);
                 string category=item.ThemeId==null?"범용":DungeonThemes.Find(item.ThemeId).Name;
                 Text(row.transform,"Item category",category,20,BattleUi.Teal,.57f,.57f,.96f,.94f,TextAnchor.MiddleRight);
-                Text(row.transform,"Item effect",item.Description,21,BattleUi.Pale,.04f,.08f,.96f,.56f,TextAnchor.MiddleLeft);
+                var effect=Text(row.transform,"Item effect",item.Description,21,BattleUi.Pale,.17f,.08f,.96f,.56f,TextAnchor.MiddleLeft);
+                effect.resizeTextForBestFit=true;effect.resizeTextMinSize=17;effect.resizeTextMaxSize=21;
             }
             RefreshScroll();
         }
