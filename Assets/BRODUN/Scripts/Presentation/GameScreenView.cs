@@ -52,6 +52,7 @@ namespace Brodun.Presentation
             {
                 gameObject.AddComponent<RoomView>().Build(flow,Root);
                 Button(Root,"CodexButton","도감",new Vector2(.08f,.055f),new Vector2(.165f,.115f),()=>Flow.OpenCardLibrary(Root));
+                Button(Root,"RoomItems","유물",new Vector2(.185f,.055f),new Vector2(.30f,.115f),()=>ItemInventoryPanel.Show(Root,Art,Flow.Session.Run));
                 Button(Root,"DeckButton","현재 덱",new Vector2(.845f,.145f),new Vector2(.92f,.20f),()=>Flow.OpenCardLibrary(Root,true));
             }
             else if(screen==FlowScreen.RunResult)RunResultView.Build(flow,Root);
@@ -155,6 +156,7 @@ namespace Brodun.Presentation
             hpHud=Label(hud,"",29,Pale,new Vector2(.265f,.12f),new Vector2(.42f,.88f));
             goldHud=Label(hud,"",29,Gold,new Vector2(.43f,.12f),new Vector2(.58f,.88f));
             areaHud=Label(hud,"",26,Muted,new Vector2(.59f,.12f),new Vector2(.77f,.88f));
+            Button(Root,"MapItems","보유 유물",new Vector2(.835f,.055f),new Vector2(.975f,.115f),()=>ItemInventoryPanel.Show(Root,Art,run));
             var deckButton=Button(hud,"DeckButton","현재 덱",new Vector2(.79f,.15f),new Vector2(.975f,.85f),OpenDeck);
             deckHud=deckButton.GetComponentInChildren<Text>();
             Label(Root,run.IsThemedRun?DungeonThemes.Find(run.ThemeId).Name:"THE FORGOTTEN PATH",40,Gold,new Vector2(.2f,.77f),new Vector2(.8f,.85f));
@@ -281,7 +283,7 @@ namespace Brodun.Presentation
             if(node.Type==RoomType.Start)return "입구";
             if(node.Type==RoomType.Boss)return "보스";
             if(node.Type==RoomType.Puzzle)return "퍼즐";
-            if(node.Type==RoomType.Event)return node.Event==EventKind.Shop?"상점":node.Event==EventKind.Altar?"제단":"휴식처";
+            if(node.Type==RoomType.Event)return node.Event==EventKind.Shop?"상점":node.Event==EventKind.Altar?"성소":"휴식처";
             return node.Encounter==EnemyType.Elite?"엘리트":"전투";
         }
         private RectTransform Rect(Transform parent,string name,Vector2 min,Vector2 max)

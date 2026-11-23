@@ -61,6 +61,7 @@ public sealed partial class BattleRuntime {
   Deck.BeginUse(instance.InstanceId);
   // Non-poison elements are Mage-only. Shared poison works for every class.
   bool mageElement=Run.SelectedCharacter==CharacterId.Mage&&d.Owner==CharacterId.Mage;
+  BeforeItemCard(d,mageElement);
   if(mageElement&&d.Element==ElementType.Fire)Strength++;
   if(mageElement&&d.Element==ElementType.Ice){Block+=3;IceRetention+=3;}
   if(Run.SelectedCharacter==CharacterId.Mage&&IsElemental(d.Element)) {
@@ -111,7 +112,7 @@ public sealed partial class BattleRuntime {
    case "P13":regens.Add(3);break;
    case "P15":n=Brand;SetBrand(0);consumedBrand=n;Hit70(8+n*6);break;
    case "P16":n=Grace;Grace=0;Hit70(10+n*4);Heal70(n);break;
-   case "P17":SetBrand(Brand==0?2:Math.Min(8,Brand*2));break;
+   case "P17":if(Brand==0)Mark(2);else SetBrand(Math.Min(8,Brand*2));break;
    case "P18":DrawCards(trace,v(2,3));if(healed)Refund(1);break;
    case "N01":DrawCards(trace,2);if(up)Block+=3;break;
    case "N02":Block+=v(6,9);retainBlock=Math.Max(retainBlock,v(6,9));break;
@@ -148,6 +149,8 @@ public sealed partial class BattleRuntime {
   if(paid>=2)foreach(var p in Trigger("N14"))AP(1);
   // Existing powers may react to this card, but a new installation cannot trigger itself.
   if(d.Type==CardType.Power)Install(d);
+  AfterItemCard(d,preBlock,preStrength,consumedBrand);
+  if(d.Id=="N01"||d.Id=="W06")PendingDiscard=Deck.Hand.Count>0;
   if(Block!=preBlock)RecordBlock(preBlock);
   if(Strength!=preStrength)trace.Add(CombatEventKind.Status,CombatCause.Card,CombatTrace.PlayerId,CombatTrace.PlayerId,preStrength,Strength,status:StatusEffectType.Strength);
   cardsUsed++;
@@ -160,8 +163,8 @@ public sealed partial class BattleRuntime {
  }
  public bool ResolveDiscard(string instanceId) {if(!PendingDiscard||!Deck.Discard(instanceId))return false;PendingDiscard=false;return true;}
  void Res(int n)=>Resonance=Math.Min(12,Resonance+n);
- void SpendRes(int n){Resonance-=n;SpentResonance+=n;}
- void Mark(int n)=>SetBrand(Math.Min(8,Brand+n));
+ void SpendRes(int n){Resonance-=n;SpentResonance+=n;if(IH("I28"))Block+=n;}
+ void Mark(int n)=>SetBrand(Math.Min(8,Brand+n+(n>0&&target70!=null&&target70.IsAlive&&IF("I30")?1:0)));
  void SetBrand(int value) {
   if(!target70.IsAlive||value==Brand)return;
   trace.Add(CombatEventKind.Status,CombatCause.Brand,CombatTrace.PlayerId,target70.TargetId,Brand,value,status:StatusEffectType.Brand);
@@ -184,6 +187,7 @@ public sealed partial class BattleRuntime {
   if(!healed&&Run.SelectedCharacter==CharacterId.Priest){Grace=Math.Min(10,Grace+1);}healed=true;
   foreach(var p in Trigger("P08")){Grace=Math.Min(10,Grace+1);DrawCards(trace,1);}
   Block+=Trigger("P14","heal").Length*3;
+  ItemOnActualHeal();
  }
  void Hit70(int amount,int hits=1,bool pierce=false,bool strength=true) {
   int bonus=0;if(amplify>0&&paid>=2){bonus=amplify*paid;amplify=0;}
@@ -191,6 +195,7 @@ public sealed partial class BattleRuntime {
   for(int i=0;i<hits&&target70.IsAlive;i++) {
    int raw=Math.Max(0,amount+(strength?Strength+TemporaryStrength:0)+(i==0?bonus:0));
    if(twice)raw*=2;
+   if(i==0)raw+=ItemAttackBonus();
    HitEnemy(trace,target70,raw,CombatCause.DirectAttack,ignoreBlock:pierce);
   }
  }
@@ -204,11 +209,11 @@ public sealed partial class BattleRuntime {
   TemporaryStrength=0;amplify=0;once.Remove("double-ready");
  }
  void Start70(){
-  Turn++;once.Clear();foreach(var p in activePowers)p.Used.Clear();
+  Turn++;once.Clear();BeginItemTurn();foreach(var p in activePowers)p.Used.Clear();
   ChangeEnergy(trace,Math.Clamp(MaxEnergy+scheduledEnergy,0,Data.Config.EnergyCap),CombatCause.TurnStart);
   scheduledEnergy=0;
   int before=Block;
-  Block=Has("W13")?Block:Math.Min(Block,Math.Max(retainBlock,IceRetention));retainBlock=0;Block+=scheduledBlock;
+  Block=Has("W13")?Block:Math.Min(Block,Math.Max(Math.Max(retainBlock,IceRetention),IH("I20")?6:0));retainBlock=0;Block+=scheduledBlock;
   if(scheduledBlock>0)GuardTraining();scheduledBlock=0;
   SpentResonance=0;cardsUsed=0;healed=false;
   for(int i=0;i<regens.Count;i++){regens[i]--;Heal70(3);}regens.RemoveAll(turns=>turns==0);

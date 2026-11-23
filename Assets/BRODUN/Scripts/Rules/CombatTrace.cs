@@ -8,7 +8,7 @@ namespace Brodun
     public enum CombatCause
     {
         Card, DirectAttack, Conditional, EnemyAction, PoisonTick, Reaction, Spread, Counter,
-        BlockGain, BlockSpent, BlockAbsorbed, BlockRestored, BlockRetained, BlockReset, TurnStart, CardCost, Brand, FirstHeal, Death, Enhancement, Cleanse, KillRefund, Resonance, Recovery
+        BlockGain, BlockSpent, BlockAbsorbed, BlockRestored, BlockRetained, BlockReset, TurnStart, CardCost, Brand, FirstHeal, Death, Enhancement, Cleanse, KillRefund, Resonance, Recovery, Item
     }
     public enum CombatCue { None, Hit, Heal, Block, Status, ElementMark, Reaction }
 

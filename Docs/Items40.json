@@ -1,0 +1,432 @@
+{
+  "version": 1,
+  "status": "implemented_pending_unity_playtest",
+  "count": 40,
+  "kind": "passive relics",
+  "uniqueOwnedIds": true,
+  "reacquireResetsGrowth": true,
+  "references": [
+    {
+      "title": "Morimens 공식 개발 공지: 조건 발동·누적 성장과 세트",
+      "url": "https://steamcommunity.com/app/3052450/allnews/"
+    },
+    {
+      "title": "Limbus 거울 던전 공지 보관본: 기프트 구매·판매·강화",
+      "url": "https://lcna.whosmalikx.com/notices/2026-02-18-feb-19th-new-content-mirror-of-names-and-spiders/"
+    }
+  ],
+  "items": [
+    {
+      "id": "I01",
+      "name": "철의 맹세",
+      "tier": 1,
+      "buyPrice": 65,
+      "sellPrice": 32,
+      "owner": null,
+      "effect": "전투 시작 시 힘 1.",
+      "growthCap": 0
+    },
+    {
+      "id": "I02",
+      "name": "바위의 심장",
+      "tier": 1,
+      "buyPrice": 45,
+      "sellPrice": 22,
+      "owner": null,
+      "effect": "전투 시작 시 방어도 6.",
+      "growthCap": 0
+    },
+    {
+      "id": "I03",
+      "name": "바람깃",
+      "tier": 2,
+      "buyPrice": 75,
+      "sellPrice": 37,
+      "owner": null,
+      "effect": "전투 첫 손패를 1장 더 뽑는다. 손패 상한 10.",
+      "growthCap": 0
+    },
+    {
+      "id": "I04",
+      "name": "새벽 등불",
+      "tier": 2,
+      "buyPrice": 90,
+      "sellPrice": 45,
+      "owner": null,
+      "effect": "전투 첫 턴 활동력 +1. 상한 적용.",
+      "growthCap": 0
+    },
+    {
+      "id": "I05",
+      "name": "이끼 목걸이",
+      "tier": 1,
+      "buyPrice": 55,
+      "sellPrice": 27,
+      "owner": null,
+      "effect": "전투 승리 시 HP 3 회복. 전투 중 회복 판정 아님.",
+      "growthCap": 0
+    },
+    {
+      "id": "I06",
+      "name": "행운의 주화",
+      "tier": 1,
+      "buyPrice": 60,
+      "sellPrice": 30,
+      "owner": null,
+      "effect": "전투 승리 시 골드 8 추가.",
+      "growthCap": 0
+    },
+    {
+      "id": "I07",
+      "name": "균열의 쐐기",
+      "tier": 2,
+      "buyPrice": 70,
+      "sellPrice": 35,
+      "owner": null,
+      "effect": "매 내 턴 첫 공격 카드의 첫 직접 타격 피해 +3. 공격 증폭 후 추가.",
+      "growthCap": 0
+    },
+    {
+      "id": "I08",
+      "name": "수호의 가죽덧댐",
+      "tier": 1,
+      "buyPrice": 50,
+      "sellPrice": 25,
+      "owner": null,
+      "effect": "매 내 턴 처음 카드로 방어도를 얻은 뒤 방어도 3 추가.",
+      "growthCap": 0
+    },
+    {
+      "id": "I09",
+      "name": "전술 나침반",
+      "tier": 1,
+      "buyPrice": 58,
+      "sellPrice": 29,
+      "owner": null,
+      "effect": "매 내 턴 첫 기술 카드 사용 후 방어도 4.",
+      "growthCap": 0
+    },
+    {
+      "id": "I10",
+      "name": "전투 기록",
+      "tier": 3,
+      "buyPrice": 105,
+      "sellPrice": 52,
+      "owner": null,
+      "effect": "공격 카드 3장 사용을 누적할 때마다 힘 1. 누적은 전투 동안 유지.",
+      "growthCap": 0
+    },
+    {
+      "id": "I11",
+      "name": "단단한 매듭",
+      "tier": 2,
+      "buyPrice": 80,
+      "sellPrice": 40,
+      "owner": null,
+      "effect": "카드 3장 사용을 누적할 때마다 방어도 4. 누적은 전투 동안 유지.",
+      "growthCap": 0
+    },
+    {
+      "id": "I12",
+      "name": "잿빛 약초",
+      "tier": 2,
+      "buyPrice": 68,
+      "sellPrice": 34,
+      "owner": null,
+      "effect": "매 내 턴 첫 자체 소멸 카드 사용 후 HP 3 회복. 실제 회복만 사제 효과 발동.",
+      "growthCap": 0
+    },
+    {
+      "id": "I13",
+      "name": "서약의 촛대",
+      "tier": 2,
+      "buyPrice": 88,
+      "sellPrice": 44,
+      "owner": null,
+      "effect": "지속 카드 설치 후 방어도 5. 다른 방어 획득 엔진을 재발동하지 않음.",
+      "growthCap": 0
+    },
+    {
+      "id": "I14",
+      "name": "태엽 회중시계",
+      "tier": 4,
+      "buyPrice": 145,
+      "sellPrice": 72,
+      "owner": null,
+      "effect": "매 내 턴 실제 활동력 2 이상 지불한 첫 카드 사용 후 활동력 1 획득. 상한 적용.",
+      "growthCap": 0
+    },
+    {
+      "id": "I15",
+      "name": "오래된 책갈피",
+      "tier": 3,
+      "buyPrice": 110,
+      "sellPrice": 55,
+      "owner": null,
+      "effect": "매 내 턴 세 번째 기술 카드 사용 후 1장 뽑기.",
+      "growthCap": 0
+    },
+    {
+      "id": "I16",
+      "name": "독사의 송곳니",
+      "tier": 2,
+      "buyPrice": 82,
+      "sellPrice": 41,
+      "owner": null,
+      "effect": "독 카드 사용 후 그 대상에게 독 1 추가. 매 타격이 아니라 카드당 1회.",
+      "growthCap": 0
+    },
+    {
+      "id": "I17",
+      "name": "검사의 숫돌",
+      "tier": 3,
+      "buyPrice": 120,
+      "sellPrice": 60,
+      "owner": "warrior",
+      "effect": "보유 중 승리마다 성장 +1, 최대 4. 전투 시작 시 성장만큼 힘.",
+      "growthCap": 4
+    },
+    {
+      "id": "I18",
+      "name": "철혈의 완장",
+      "tier": 2,
+      "buyPrice": 95,
+      "sellPrice": 47,
+      "owner": "warrior",
+      "effect": "매 내 턴 처음 힘이 증가한 카드 사용 후 방어도 3.",
+      "growthCap": 0
+    },
+    {
+      "id": "I19",
+      "name": "성채의 쐐기",
+      "tier": 3,
+      "buyPrice": 108,
+      "sellPrice": 54,
+      "owner": "warrior",
+      "effect": "매 내 턴 처음 W09·W16으로 방어도 소비 시 소비량의 25%를 복구. 버림, 최대 6.",
+      "growthCap": 0
+    },
+    {
+      "id": "I20",
+      "name": "보루의 봉인",
+      "tier": 3,
+      "buyPrice": 115,
+      "sellPrice": 57,
+      "owner": "warrior",
+      "effect": "다음 내 턴 시작에 피격·소비 후 남은 방어도를 최대 6 유지. 다른 유지 한도와 최댓값 적용.",
+      "growthCap": 0
+    },
+    {
+      "id": "I21",
+      "name": "압축 철판",
+      "tier": 3,
+      "buyPrice": 105,
+      "sellPrice": 52,
+      "owner": "warrior",
+      "effect": "카드 사용 직전 방어도 12 이상일 때 매 내 턴 처음 공격한 카드의 첫 직접 타격 피해 +5.",
+      "growthCap": 0
+    },
+    {
+      "id": "I22",
+      "name": "수호 일지",
+      "tier": 3,
+      "buyPrice": 100,
+      "sellPrice": 50,
+      "owner": "warrior",
+      "effect": "보유 중 승리마다 성장 +2, 최대 20. 전투 시작 시 성장만큼 방어도.",
+      "growthCap": 20
+    },
+    {
+      "id": "I23",
+      "name": "불씨 향로",
+      "tier": 3,
+      "buyPrice": 125,
+      "sellPrice": 62,
+      "owner": "mage",
+      "effect": "매 내 턴 첫 마법사 불 카드 사용 전에 힘 1 추가.",
+      "growthCap": 0
+    },
+    {
+      "id": "I24",
+      "name": "서리 거울",
+      "tier": 2,
+      "buyPrice": 98,
+      "sellPrice": 49,
+      "owner": "mage",
+      "effect": "매 내 턴 첫 얼음 카드 사용 시 선택한 살아 있는 적에게 약화 1.",
+      "growthCap": 0
+    },
+    {
+      "id": "I25",
+      "name": "폭풍 코일",
+      "tier": 3,
+      "buyPrice": 135,
+      "sellPrice": 67,
+      "owner": "mage",
+      "effect": "번개 카드 사용 후 그 대상에게 고정 추가 피해 2. 힘·공격 증폭 미적용.",
+      "growthCap": 0
+    },
+    {
+      "id": "I26",
+      "name": "조수의 소라",
+      "tier": 3,
+      "buyPrice": 115,
+      "sellPrice": 57,
+      "owner": "mage",
+      "effect": "매 내 턴 첫 물 카드 사용 후 다음 내 턴 활동력 +1 추가 예약.",
+      "growthCap": 0
+    },
+    {
+      "id": "I27",
+      "name": "순풍의 풍경",
+      "tier": 3,
+      "buyPrice": 130,
+      "sellPrice": 65,
+      "owner": "mage",
+      "effect": "매 내 턴 첫 바람 카드 사용 후 1장 추가 뽑기. 손패 상한 적용.",
+      "growthCap": 0
+    },
+    {
+      "id": "I28",
+      "name": "비전 축전기",
+      "tier": 3,
+      "buyPrice": 120,
+      "sellPrice": 60,
+      "owner": "mage",
+      "effect": "카드로 실제 공명을 소비할 때 소비량만큼 방어도 획득.",
+      "growthCap": 0
+    },
+    {
+      "id": "I29",
+      "name": "낙인의 성배",
+      "tier": 2,
+      "buyPrice": 100,
+      "sellPrice": 50,
+      "owner": "priest",
+      "effect": "매 내 턴 처음 카드로 낙인을 소비한 뒤 HP 2 회복.",
+      "growthCap": 0
+    },
+    {
+      "id": "I30",
+      "name": "심문의 향",
+      "tier": 3,
+      "buyPrice": 110,
+      "sellPrice": 55,
+      "owner": "priest",
+      "effect": "매 내 턴 처음 낙인을 부여하는 카드 효과의 부여량 +1. 낙인 상한 8.",
+      "growthCap": 0
+    },
+    {
+      "id": "I31",
+      "name": "은총 묵주",
+      "tier": 3,
+      "buyPrice": 115,
+      "sellPrice": 57,
+      "owner": "priest",
+      "effect": "매 내 턴 첫 실제 HP 회복 후 은총 1 추가. 은총 상한 10.",
+      "growthCap": 0
+    },
+    {
+      "id": "I32",
+      "name": "자비의 천",
+      "tier": 2,
+      "buyPrice": 85,
+      "sellPrice": 42,
+      "owner": "priest",
+      "effect": "매 내 턴 첫 실제 HP 회복 후 방어도 4. HP가 차지 않으면 발동하지 않음.",
+      "growthCap": 0
+    },
+    {
+      "id": "I33",
+      "name": "판결의 인장",
+      "tier": 2,
+      "buyPrice": 90,
+      "sellPrice": 45,
+      "owner": "priest",
+      "effect": "전투 시작 시 모든 적에게 낙인 2. 낙인은 적마다 따로 관리.",
+      "growthCap": 0
+    },
+    {
+      "id": "I34",
+      "name": "새벽의 성서",
+      "tier": 2,
+      "buyPrice": 98,
+      "sellPrice": 49,
+      "owner": "priest",
+      "effect": "전투 시작 시 은총 2.",
+      "growthCap": 0
+    },
+    {
+      "id": "I35",
+      "name": "원정 훈장",
+      "tier": 4,
+      "buyPrice": 150,
+      "sellPrice": 75,
+      "owner": null,
+      "effect": "보유 중 승리마다 성장 +1, 최대 6. 전투 시작 시 성장의 절반만큼 힘. 소수점 버림.",
+      "growthCap": 6
+    },
+    {
+      "id": "I36",
+      "name": "가벼운 배낭",
+      "tier": 2,
+      "buyPrice": 80,
+      "sellPrice": 40,
+      "owner": null,
+      "effect": "덱이 12장 이하이면 전투 첫 손패를 1장 더 뽑는다.",
+      "growthCap": 0
+    },
+    {
+      "id": "I37",
+      "name": "여행자의 금고",
+      "tier": 2,
+      "buyPrice": 90,
+      "sellPrice": 45,
+      "owner": null,
+      "effect": "승리 시 현재 골드의 5%를 추가 획득. 버림, 최대 6.",
+      "growthCap": 0
+    },
+    {
+      "id": "I38",
+      "name": "긴 여정의 망토",
+      "tier": 2,
+      "buyPrice": 70,
+      "sellPrice": 35,
+      "owner": null,
+      "effect": "덱이 18장 이상이면 전투 시작 시 방어도 10.",
+      "growthCap": 0
+    },
+    {
+      "id": "I39",
+      "name": "절박한 부적",
+      "tier": 1,
+      "buyPrice": 60,
+      "sellPrice": 30,
+      "owner": null,
+      "effect": "전투 시작 시 HP가 최대의 절반 이하이면 방어도 8.",
+      "growthCap": 0
+    },
+    {
+      "id": "I40",
+      "name": "침식 유리병",
+      "tier": 3,
+      "buyPrice": 118,
+      "sellPrice": 59,
+      "owner": null,
+      "effect": "매 내 턴 첫 독 카드 사용 후 그 대상에게 독 2 추가.",
+      "growthCap": 0
+    }
+  ],
+  "baseBranch": "Paul",
+  "baseCommit": "22c6ca036053228eb27e2d6fee6c88aa42c80822",
+  "validation": {
+    "ruleTestsPassed": 36,
+    "ruleTestsFailed": 0,
+    "allItemSmokeCases": 40,
+    "cardUpgradeInteractionCases": 140,
+    "fullRuntimeEditorPlayModeSourceCompile": "passed; 0 warnings/errors",
+    "unityPlayModeExecuted": false,
+    "economyBalancePlaytested": false,
+    "playModeSmokeTest": "FullRunSceneTests.SanctuaryItemAndCardBuySellTabsPreserveTransactionsOnReload; compiled, not executed"
+  }
+}

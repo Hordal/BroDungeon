@@ -23,7 +23,7 @@ namespace Brodun
         internal ShopOffer(string id,int price){CardId=id;Price=price;}
     }
     // Serializable-shaped domain state: only values/IDs, never Unity Scene objects.
-    public sealed class RoomVisit
+    public sealed partial class RoomVisit
     {
         public string NodeId { get; }
         public bool Resolved { get; internal set; }
@@ -41,7 +41,7 @@ namespace Brodun
     public enum RoomChoice { Rest, Explore, Leave }
     public enum AltarTrade { GoldForHealth, DraftForHealth, RemoveForHealth, Coin, BlindDoubleDraft, BlindSwap }
     public enum CoinFace { Heads, Tails }
-    public sealed class RoomRuntime
+    public sealed partial class RoomRuntime
     {
         public RunState Run { get; }
         public RoomNode Node { get; }
@@ -57,8 +57,9 @@ namespace Brodun
             {
                 var rng=new SeededRandom(EncounterPool.NodeSeed(run.AreaSeed,node.Id,0x82D311u));
                 var candidates=Shuffling.Shuffle(data.Cards.Where(c=>c.IsReworked?Card70Rewards.CanAcquire(data,run,c.Id):!data.Character(run.SelectedCharacter).StartingDeck.Contains(c.Id)),rng);
-                visit=new RoomVisit(node.Id,rng.Next()<.65,Node.Event==EventKind.Shop?
-                    candidates.Take(Rules.ShopStock).Select(c=>new ShopOffer(c.Id,Rules.ShopPrice)):Enumerable.Empty<ShopOffer>());
+                visit=new RoomVisit(node.Id,rng.Next()<.65,IsSanctuary?
+                    candidates.Take(Rules.ShopStock).Select(c=>new ShopOffer(c.Id,c.IsReworked?SanctuaryPrices.CardBuy(c):Rules.ShopPrice)):Enumerable.Empty<ShopOffer>());
+                if(IsSanctuary)PopulateItemStock(visit);
                 if(node.Event==EventKind.Altar)
                     visit.AltarTrades=Shuffling.Shuffle(Enum.GetValues(typeof(AltarTrade)).Cast<AltarTrade>(),
                         AltarRandom(0xA17A0001u)).Take(3).ToList().AsReadOnly();
@@ -66,8 +67,9 @@ namespace Brodun
             }
             Visit=visit;
         }
-        public bool CanBuy(int index)=>CanInteract && Node.Event==EventKind.Shop && index>=0 && index<Visit.Offers.Count &&
-            !Visit.Offers[index].Purchased && Run.Gold>=Visit.Offers[index].Price;
+        public bool CanBuy(int index)=>CanInteract && IsSanctuary && Visit.PendingAltarCards.Count==0 && index>=0 && index<Visit.Offers.Count &&
+            !Visit.Offers[index].Purchased && Run.Gold>=Visit.Offers[index].Price &&
+            (!Data.Card(Visit.Offers[index].CardId).IsReworked||Card70Rewards.CanAcquire(Data,Run,Visit.Offers[index].CardId));
         public bool Buy(int index)
         {
             if(!CanBuy(index))return false;

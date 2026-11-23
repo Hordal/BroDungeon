@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace Brodun.Presentation
 {
     // A shared noncombat screen. Offers/choices live in RunState, not in these buttons.
-    public sealed class RoomView : MonoBehaviour
+    public sealed partial class RoomView : MonoBehaviour
     {
         private GameFlow flow;
         private RoomRuntime room;
@@ -34,6 +34,7 @@ namespace Brodun.Presentation
             Label("RoomTitle",GameScreenView.RoomName(room.Node),48,BattleUi.Gold,.87f,.95f);
             hud=Label("RoomHUD","",28,BattleUi.Pale,.79f,.85f);
             feedback=Label("RoomFeedback","",27,BattleUi.Gold,.145f,.195f);
+            if(room.IsSanctuary){BuildSanctuary();return;}
             bool shop=room.Node.Type==RoomType.Event&&room.Node.Event==EventKind.Shop;
             if(shop)BuildShop();else if(!IsAltar)BuildChoice();
             leave=BattleUi.Button(root,"RoomLeave","던전 맵으로",Art,new Vector2(.68f,.055f),new Vector2(.88f,.135f),()=>
@@ -88,7 +89,7 @@ namespace Brodun.Presentation
         private void BuildAltar(bool animateSwap=false)
         {
             if(altarPanel!=null){altarPanel.gameObject.SetActive(false);Destroy(altarPanel.gameObject);}
-            altarPanel=BattleUi.Rect(root,"Altar trades",new Vector2(.13f,.21f),new Vector2(.87f,.77f));
+            altarPanel=BattleUi.Rect(root,"Altar trades",new Vector2(.13f,.21f),new Vector2(.87f,room.IsSanctuary?.68f:.77f));
             if(room.Visit.PendingAltarCards.Count>0)
             {
                 AltarText("받을 카드 한 장을 선택하면 거래가 끝납니다.",.87f,1);
@@ -271,7 +272,7 @@ namespace Brodun.Presentation
         }
         private void Refresh()
         {
-            var r=room.Run;hud.text=room.Data.Character(r.SelectedCharacter).Name+"    HP "+r.CurrentHP+" / "+r.MaxHP+"    GOLD "+r.Gold+"    덱 "+r.Deck.Count+"    "+r.CurrentArea+"구역 "+r.Floor+"층";
+            var r=room.Run;hud.text=room.Data.Character(r.SelectedCharacter).Name+"    HP "+r.CurrentHP+" / "+r.MaxHP+"    GOLD "+r.Gold+"    유물 "+r.Items.Count+"    덱 "+r.Deck.Count+"    "+r.CurrentArea+"구역 "+r.Floor+"층";
             feedback.text=room.Visit.Feedback??"";
             foreach(var choice in choices)
             {

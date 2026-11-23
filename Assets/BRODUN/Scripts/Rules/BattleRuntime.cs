@@ -67,6 +67,7 @@ namespace Brodun
             Enemies=lineup.AsReadOnly();
             Energy=MaxEnergy=data.BaseEnergyFor(run.SelectedCharacter);
             Deck=DeckRuntime.Begin(data,run,room);
+            InitializeItems();
             foreach(var enemy in Enemies)IntentResolver.Decide(enemy);
         }
         public EnemyInstance ResolveEnemyTarget(string targetId)
@@ -439,6 +440,7 @@ namespace Brodun
         {
             if(Result!=BattleResult.Active)return;
             Result=BattleResult.Won;Reward=RewardResolver.Create(Data,Run);RewardResolver.GrantVictory(this);
+            ItemVictory();
             ClearBattleEffects();
             // Regular rooms stay pending until the optional card/additional-gold choice; bosses use the existing clear flow.
         }
