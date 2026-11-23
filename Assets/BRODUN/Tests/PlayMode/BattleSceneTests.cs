@@ -33,7 +33,17 @@ namespace Brodun.Tests.PlayMode
         {ExecuteEvents.Execute(target,new PointerEventData(EventSystem.current){button=PointerEventData.InputButton.Left},ExecuteEvents.pointerClickHandler);}
         private void Button(string name)=>Click(UnityEngine.Object.FindObjectsByType<StyledButton>(FindObjectsSortMode.None).Single(b=>b.name==name).gameObject);
         private IEnumerator Map(uint seed=17)
-        {Assert.IsTrue(Flow.StartNewRun(seed));yield return Ready(FlowScreen.CharacterSelect);Button("Character_Warrior");yield return Ready(FlowScreen.DungeonMap);}
+        {
+#if UNITY_EDITOR
+            // Frozen legacy VFX fixtures; production Boot uses the separate 70-card catalog.
+            var s=JsonUtility.FromJson<Brodun.Data.WebSnapshot>(File.ReadAllText("Assets/BRODUN/Data/WebRulesSnapshot.json"));
+            var legacy=new GameDefinitions(s.cards.Select(c=>c.ToDefinition()),s.characters.Select(c=>c.ToDefinition()),s.enemies.Select(c=>c.ToDefinition()),s.config.ToDefinition(),new RewardDefinition(s.config.gold_reward,3),s.elements.Select(e=>new ElementDefinition(Brodun.Data.Ids.Parse<ElementType>(e.id),e.name)));
+            Assert.IsTrue(Flow.StartEditorPreviewRun(legacy,seed));
+#else
+            Assert.Ignore("Frozen legacy VFX fixtures require the editor preview catalog.");yield break;
+#endif
+            yield return Ready(FlowScreen.CharacterSelect);Button("Character_Warrior");yield return Ready(FlowScreen.DungeonMap);
+        }
         private IEnumerator Enter(string node)
         {Button("Node_"+node);yield return Ready(FlowScreen.Battle);Assert.NotNull(Controller);Assert.AreEqual(node,Context.Room.Id);}
         private IEnumerator Settled()

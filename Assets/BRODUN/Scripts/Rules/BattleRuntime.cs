@@ -3,7 +3,7 @@ using System.Linq;
 namespace Brodun
 {
     // Synchronous rules only. PHASE 4 will schedule visuals around these operations.
-    public sealed class BattleRuntime
+    public sealed partial class BattleRuntime
     {
         public GameDefinitions Data { get; }
         public RunState Run { get; }
@@ -29,12 +29,14 @@ namespace Brodun
             Energy=MaxEnergy=data.Character(run.SelectedCharacter).Energy;
             Deck=DeckRuntime.Begin(data,run,room); IntentResolver.Decide(Enemy);
         }
-        public bool PlayCard(string instanceId)
+        public bool PlayCard(string instanceId) => PlayCard(instanceId,null);
+        public bool PlayCard(string instanceId,CardPlayOptions options)
         {
-            if(Result!=BattleResult.Active||Run.ActiveRoom!=RoomId)return false;
+            if(Result!=BattleResult.Active||Run.ActiveRoom!=RoomId||PendingDiscard)return false;
             var instance=Deck.Hand.FirstOrDefault(c=>c.InstanceId==instanceId);
             if(instance==null)return false;
-            var card=Data.Card(instance.CardId);
+            var card=Data.Card(instance.CardId,instance.UpgradeLevel);
+            if(card.IsReworked)return Play70(instance,card,options);
             if(Energy<card.Cost)return false;
             Energy-=card.Cost; Deck.Use(instanceId);
             LastCardResult=CardEffectResolver.Resolve(this,card);
@@ -43,15 +45,18 @@ namespace Brodun
         }
         public bool EndTurn()
         {
-            if(Result!=BattleResult.Active||Run.ActiveRoom!=RoomId)return false;
+            if(Result!=BattleResult.Active||Run.ActiveRoom!=RoomId||PendingDiscard)return false;
             // Capture before poison/other resolution; the action preview is never re-rolled.
             var snapshot=CurrentIntent;
+            if(Data.Cards.Any(c=>c.IsReworked)) End70();
             Deck.EndTurn();
             Enemy.CurrentHP-=Enemy.Status.TickPoison(Enemy.CurrentHP);
             if(Enemy.CurrentHP<=0){Win();return true;}
             LastEnemyAction=IntentResolver.Execute(Run,this,snapshot);
             if(Run.CurrentHP<=0){Result=BattleResult.Lost;Run.Status=RunStatus.Failed;return true;}
-            Block=0; Energy=MaxEnergy; Turn++; Deck.NextTurn(); IntentResolver.Decide(Enemy);
+            if(Data.Cards.Any(c=>c.IsReworked)) Start70();
+            else {Block=0; Energy=MaxEnergy;Turn++;Deck.NextTurn();}
+            IntentResolver.Decide(Enemy);
             return true;
         }
         private void Win()

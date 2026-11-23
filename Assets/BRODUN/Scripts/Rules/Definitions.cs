@@ -7,8 +7,8 @@ namespace Brodun
     public enum CharacterId { Warrior, Mage, Priest }
     public enum ElementType { None, Earth, Stone, Wind, Water, Ice, Poison, Fire, Lightning, Explosion }
     // Presentation classification only; the web has no rarity or type-based gameplay filters.
-    public enum CardType { Attack, Guard, Skill }
-    public enum CardRarity { Unspecified }
+    public enum CardType { Attack, Guard, Skill, Power }
+    public enum CardRarity { Unspecified, Basic, Low, Mid, High }
     public enum EnemyType { Normal, Elite, Boss }
     public enum RoomType { Start, Battle, Puzzle, Event, Boss }
     public enum EventKind { None, Shop, Altar, RestSite }
@@ -37,10 +37,22 @@ namespace Brodun
         public int Cost { get; }
         public ElementType Element { get; }
         public IReadOnlyList<CardEffect> Effects { get; }
-        public CardType Type => Effects.Any(e => e.Type == EffectType.Damage) ? CardType.Attack :
+        public bool IsReworked { get; private set; }
+        public CharacterId? Owner { get; private set; }
+        private CardType? reworkedType;
+        private CardRarity reworkedRarity;
+        private bool selfExhaust;
+        public bool Retains { get; private set; }
+        public bool XCost { get; private set; }
+        public int UpgradeLevel { get; private set; }
+        public int CopyLimit => Rarity==CardRarity.Basic?3:Exhausts?1:2;
+        public CardType Type => reworkedType ?? InferredType;
+        private CardType InferredType => Effects.Any(e => e.Type == EffectType.Damage) ? CardType.Attack :
             Effects.Any(e => e.Type == EffectType.Block) ? CardType.Guard : CardType.Skill;
-        public CardRarity Rarity => CardRarity.Unspecified;
-        public bool Exhausts => Effects.Any(e => e.Type == EffectType.Exhaust);
+        public CardRarity Rarity => reworkedRarity;
+        public CardDefinition Configure(CharacterId? owner, CardType type, CardRarity rarity, bool exhaust, bool retain, bool x, int upgrade)
+        {IsReworked=true;Owner=owner;reworkedType=type;reworkedRarity=rarity;selfExhaust=exhaust;Retains=retain;XCost=x;UpgradeLevel=upgrade;return this;}
+        public bool Exhausts => selfExhaust || Effects.Any(e => e.Type == EffectType.Exhaust);
         public int BaseDamage => Effects.Where(e => e.Type == EffectType.Damage).Sum(e => e.Amount * e.Hits);
         public int Block => Effects.Where(e => e.Type == EffectType.Block).Sum(e => e.Amount);
         public CardDefinition(string id, string name, string description, int cost, ElementType element, IEnumerable<CardEffect> effects)
@@ -116,6 +128,7 @@ namespace Brodun
         public GameDefinitions(IEnumerable<CardDefinition> c, IEnumerable<CharacterDefinition> h, IEnumerable<EnemyDefinition> e, BattleConfig config, RewardDefinition reward, IEnumerable<ElementDefinition> elements)
         { Cards = Array.AsReadOnly(c.ToArray()); Characters = Array.AsReadOnly(h.ToArray()); Enemies = Array.AsReadOnly(e.ToArray()); Config = config; Reward = reward; cards = Cards.ToDictionary(x => x.Id); Elements = Array.AsReadOnly(elements.ToArray()); }
         public CardDefinition Card(string id) => cards[id];
+        public CardDefinition Card(string id,int upgrade) => upgrade>0 && cards[id].IsReworked?Card70Catalog.Card(id,true):cards[id];
         public CharacterDefinition Character(CharacterId id) => Characters.Single(x => x.Id == id);
         public EnemyDefinition Enemy(string id) => Enemies.Single(x => x.Id == id);
     }

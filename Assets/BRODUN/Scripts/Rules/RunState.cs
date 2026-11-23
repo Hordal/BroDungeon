@@ -6,7 +6,7 @@ namespace Brodun
     {
         public string InstanceId { get; }
         public string CardId { get; }
-        public int UpgradeLevel { get; } // Web currently always 0.
+        public int UpgradeLevel { get; internal set; } // One upgrade per instance, copied into battle decks.
         public CardInstance(string instanceId, string cardId, int upgradeLevel = 0)
         { InstanceId = instanceId; CardId = cardId; UpgradeLevel = upgradeLevel; }
     }
@@ -59,6 +59,8 @@ namespace Brodun
             var card = new CardInstance("card-" + nextSerial++, id);
             deck.Add(card); acquired.Add(card.InstanceId); return card;
         }
+        public bool UpgradeCard(string instanceId) {var c=deck.Find(x=>x.InstanceId==instanceId);if(c==null||c.UpgradeLevel>0||!definitions.Card(c.CardId).IsReworked)return false;c.UpgradeLevel=1;return true;}
+        public bool RemoveCard(string instanceId) {var c=deck.Find(x=>x.InstanceId==instanceId);return c!=null&&deck.Count>1&&deck.Remove(c);}
         public void AddGold(int amount)
         { if (amount < 0) throw new ArgumentOutOfRangeException(nameof(amount)); Gold = checked(Gold + amount); }
         public bool SpendGold(int amount)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Brodun.Flow;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,6 +28,16 @@ namespace Brodun.Presentation
             feedback=Label("RoomFeedback","",27,BattleUi.Gold,.145f,.195f);
             bool shop=room.Node.Type==RoomType.Event&&room.Node.Event==EventKind.Shop;
             if(shop)BuildShop();else BuildChoice();
+            if(room.Data.Cards.Any(c=>c.IsReworked)&&(shop||room.Node.Event==EventKind.RestSite)) {
+                BattleUi.Button(root,"Upgrade card",shop?"강화 / 30 GOLD":"회복 대신 카드 강화",Art,new Vector2(.10f,.055f),new Vector2(.37f,.135f),()=>{
+                    if(!room.CanInteract||room.Visit.Upgraded||!shop&&room.Visit.ChoiceMade)return;
+                    CardChoicePanel.Show(root,Art,room.Data,room.Run.Deck.Where(c=>c.UpgradeLevel==0),"강화할 카드",id=>{if(id!=null)room.Upgrade(id);Refresh();});
+                });
+                if(shop)BattleUi.Button(root,"Remove card","제거 / 40 GOLD",Art,new Vector2(.39f,.055f),new Vector2(.66f,.135f),()=>{
+                    if(!room.CanInteract||room.Visit.Removed)return;
+                    CardChoicePanel.Show(root,Art,room.Data,room.Run.Deck,"제거할 카드",id=>{if(id!=null)room.Remove(id);Refresh();});
+                });
+            }
             leave=BattleUi.Button(root,"RoomLeave","던전 맵으로",Art,new Vector2(.68f,.055f),new Vector2(.88f,.135f),()=>
             {if(!flow.Session.IsTransitioning)flow.ReturnFromRoom();});
             Refresh();

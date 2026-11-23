@@ -31,8 +31,8 @@ namespace Brodun.Presentation
         public void Bind(CardDefinition card,string id,BattlePresentationAssets art,GameDefinitions data,Action<CardView> click)
         {
             Definition=card;InstanceId=id;selected=click;restingIndex=transform.GetSiblingIndex();
-            title.text=card.Name;cost.text=card.Cost.ToString();element.text=data.Elements.Single(e=>e.Id==card.Element).Name;
-            kind.text=card.Type==CardType.Attack?"공격":card.Type==CardType.Guard?"방어":"기술";
+            title.text=card.Name;cost.text=(card.XCost?"X":card.Cost.ToString());element.text=data.Elements.Single(e=>e.Id==card.Element).Name;
+            kind.text=card.Type==CardType.Power?"지속":card.Type==CardType.Attack?"공격":card.Type==CardType.Guard?"방어":"기술";
             effect.text=(card.BaseDamage>0?"피해 "+card.BaseDamage+"   ":"")+(card.Block>0?"방어 "+card.Block:"");
             description.text=card.Description;
             // One shared layout for the prefab, generated cards and reward cards.
@@ -41,7 +41,7 @@ namespace Brodun.Presentation
             canvasSurface=canvas!=null?(RectTransform)canvas.rootCanvas.transform:null;
             ((RectTransform)transform).sizeDelta=new Vector2(236,354);
             var hue=ElementTint(card.Element);
-            element.color=hue;kind.color=hue;cost.color=Color.white;
+            element.color=hue;kind.color=hue;kind.text+=" · "+(card.Rarity==CardRarity.High?"상급":card.Rarity==CardRarity.Mid?"중급":card.Rarity==CardRarity.Low?"하급":"기본");cost.color=Color.white;
             frame.sprite=card.Type==CardType.Attack?art.attackFrame:card.Type==CardType.Guard?art.guardFrame:art.skillFrame;
             var illustration=GameFlow.Instance!=null?GameFlow.Instance.CardArtwork(card.Id):null;
             artwork.sprite=illustration!=null?illustration:card.Type==CardType.Guard?art.common.altar:art.common.battle;
@@ -66,7 +66,7 @@ namespace Brodun.Presentation
             costSeal.color=Color.clear;
             Slot(costSeal.rectTransform,.13f,.915f,.13f,.915f);costSeal.rectTransform.sizeDelta=new Vector2(56,56);
             cost.transform.SetParent(costSeal.transform,false);Slot(cost.rectTransform,0,0,1,1);
-            cost.gameObject.SetActive(true);cost.enabled=true;cost.text=card.Cost.ToString();
+            cost.gameObject.SetActive(true);cost.enabled=true;cost.text=(card.XCost?"X":card.Cost.ToString());
             cost.fontSize=38;cost.fontStyle=FontStyle.Bold;cost.resizeTextForBestFit=false;
             cost.alignment=TextAnchor.MiddleCenter;cost.lineSpacing=1;
             cost.horizontalOverflow=HorizontalWrapMode.Overflow;cost.verticalOverflow=VerticalWrapMode.Overflow;
@@ -86,7 +86,7 @@ namespace Brodun.Presentation
                 ((RectTransform)transform).sizeDelta=new Vector2(HandPresentation.CardWidth,HandPresentation.CardHeight);
                 Slot(textBed.rectTransform,.065f,.025f,.935f,.35f);
                 Slot(description.rectTransform,.085f,.105f,.915f,.34f);
-                description.fontSize=21;description.resizeTextMinSize=18;description.resizeTextMaxSize=21;description.lineSpacing=1.10f;
+                description.fontSize=21;description.resizeTextMinSize=12;description.resizeTextMaxSize=20;description.lineSpacing=1.10f;
                 Slot(elementRule.rectTransform,.075f,.35f,.925f,.357f);
                 // Quiet backing keeps the priority name readable above the full-color art.
                 if(nameBed==null)nameBed=BattleUi.Image(visual,"Hand name backing",null,new Color(.025f,.037f,.047f,.96f),new Vector2(.23f,.88f),new Vector2(.94f,.98f));
@@ -142,9 +142,9 @@ namespace Brodun.Presentation
             CanPlay=value;ink.alpha=value?1:Hovered?.94f:.74f;
             frame.color=value?Color.white:new Color(.69f,.72f,.77f);
             var battle=GameFlow.Instance?.Session?.Battle?.Runtime;
-            bool lacking=battleHand&&battle!=null&&Definition!=null&&battle.Energy<Definition.Cost;
+            bool lacking=battleHand&&battle!=null&&Definition!=null&&battle.Energy<(Definition.XCost?1:Definition.Cost);
             cost.color=Color.white;
-            bool free=Definition!=null&&Definition.Cost==0;
+            bool free=Definition!=null&&!Definition.XCost&&Definition.Cost==0;
             if(costRim!=null)costRim.color=lacking?new Color(1,.36f,.24f):free?BattleUi.Teal:BattleUi.Gold;
             if(costGem!=null)costGem.color=lacking?new Color(.26f,.035f,.025f):free?new Color(.015f,.14f,.10f):new Color(.025f,.055f,.07f);
         }

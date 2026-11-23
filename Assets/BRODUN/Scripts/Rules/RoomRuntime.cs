@@ -30,6 +30,7 @@ namespace Brodun
         public string NodeId { get; }
         public bool Resolved { get; internal set; }
         public bool ChoiceMade { get; internal set; }
+        public bool Upgraded {get;internal set;} public bool Removed {get;internal set;}
         public string Feedback { get; internal set; }
         public bool PuzzleTreasure { get; }
         public IReadOnlyList<ShopOffer> Offers { get; }
@@ -52,7 +53,7 @@ namespace Brodun
             if(!run.visits.TryGetValue(node.Id,out var visit))
             {
                 var rng=new SeededRandom(EncounterPool.NodeSeed(run.Seed,node.Id,0x82D311u));
-                var candidates=Shuffling.Shuffle(data.Cards.Where(c=>!data.Character(run.SelectedCharacter).StartingDeck.Contains(c.Id)),rng);
+                var candidates=Shuffling.Shuffle(data.Cards.Where(c=>c.IsReworked?Card70Rewards.CanAcquire(data,run,c.Id):!data.Character(run.SelectedCharacter).StartingDeck.Contains(c.Id)),rng);
                 visit=new RoomVisit(node.Id,rng.Next()<.65,Node.Event==EventKind.Shop?
                     candidates.Take(Rules.ShopStock).Select(c=>new ShopOffer(c.Id,Rules.ShopPrice)):Enumerable.Empty<ShopOffer>());
                 run.visits.Add(node.Id,visit);
@@ -60,13 +61,23 @@ namespace Brodun
             Visit=visit;
         }
         public bool CanBuy(int index)=>CanInteract && Node.Event==EventKind.Shop && index>=0 && index<Visit.Offers.Count &&
-            !Visit.Offers[index].Purchased && Run.Gold>=Visit.Offers[index].Price;
+            !Visit.Offers[index].Purchased && Run.Gold>=Visit.Offers[index].Price && Card70Rewards.CanAcquire(Data,Run,Visit.Offers[index].CardId);
         public bool Buy(int index)
         {
             if(!CanBuy(index))return false;
             var offer=Visit.Offers[index];Data.Card(offer.CardId);
             if(!Run.SpendGold(offer.Price))return false;
             Run.AddCard(offer.CardId);offer.Purchased=true;Visit.Feedback=Data.Card(offer.CardId).Name+" 획득 · GOLD −"+offer.Price;return true;
+        }
+        public bool Upgrade(string id) {
+            bool rest=Node.Event==EventKind.RestSite,shop=Node.Event==EventKind.Shop;
+            var card=Run.Deck.FirstOrDefault(c=>c.InstanceId==id);
+            if(!CanInteract||Visit.Upgraded||!(rest||shop)||rest&&Visit.ChoiceMade||card==null||card.UpgradeLevel>0||!Data.Card(card.CardId).IsReworked||shop&&Run.Gold<30)return false;
+            if(shop)Run.SpendGold(30);Run.UpgradeCard(id);Visit.Upgraded=true;if(rest)Visit.ChoiceMade=true;Visit.Feedback=Data.Card(card.CardId).Name+" 강화 완료";return true;
+        }
+        public bool Remove(string id) {
+            if(!CanInteract||Node.Event!=EventKind.Shop||Visit.Removed||Run.Gold<40||Run.Deck.Count<=1||!Run.Deck.Any(c=>c.InstanceId==id))return false;
+            Run.SpendGold(40);Run.RemoveCard(id);Visit.Removed=true;Visit.Feedback="카드 제거 완료";return true;
         }
         public bool Choose(RoomChoice choice)
         {

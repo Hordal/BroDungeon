@@ -62,7 +62,7 @@ namespace Brodun.Presentation
             hp.verticalOverflow=VerticalWrapMode.Overflow;hp.horizontalOverflow=HorizontalWrapMode.Overflow;
             BattleUi.Glyph(Root,"Player shield",BattleHudGlyph.Symbol.Shield,BattleUi.Teal,new Vector2(.14f,.790f),new Vector2(.157f,.825f));
             block=BattleUi.Text(Root,"Player block","",common.font,25,BattleUi.Teal,new Vector2(.16f,.790f),new Vector2(.25f,.825f));
-            status=BattleUi.Text(Root,"Player status","",common.font,20,BattleUi.Teal,new Vector2(.25f,.790f),new Vector2(.36f,.825f));
+            status=BattleUi.Text(Root,"Player status","",common.font,20,BattleUi.Teal,new Vector2(.25f,.780f),new Vector2(.45f,.825f));
             player=BattleUi.Image(stage,"Player sprite",common.Portrait(context.Run.SelectedCharacter),Color.white,new Vector2(.25f,.44f),new Vector2(.25f,.44f));player.preserveAspect=true;
             player.rectTransform.sizeDelta=new Vector2(342,368);player.rectTransform.pivot=new Vector2(.5f,0);
             actor=player.gameObject.AddComponent<PlayerBattleActor>();actor.Bind(player,context.Run.SelectedCharacter);
@@ -89,8 +89,8 @@ namespace Brodun.Presentation
         public void Refresh(IntentData intentOverride=null,bool holdIntent=false)
         {
             var b=context.Runtime;if(!holdPlayerHealth)hp.text=context.Run.CurrentHP+" / "+context.Run.MaxHP;
-            if(!holdPlayerBlock)block.text=b.Block.ToString();status.text=b.Strength>0?"힘 +"+b.Strength:"";
-            EnergyLabel.text=b.Energy+" / "+b.MaxEnergy;
+            if(!holdPlayerBlock)block.text=b.Block.ToString();status.text=b.Run.SelectedCharacter==CharacterId.Mage?"공명 "+b.Resonance+"/12 · 지속 "+b.Powers.Count:b.Run.SelectedCharacter==CharacterId.Priest?"은총 "+b.Grace+"/10 · 낙인 "+b.Brand+"/8\n지속 "+b.Powers.Count:"힘 "+b.Strength+" · 지속 "+b.Powers.Count;
+            EnergyLabel.text=b.Energy+" / "+(b.Data.Cards.Any(c=>c.IsReworked)?b.Data.Config.EnergyCap:b.MaxEnergy);
             int pipCount=Mathf.Min(energyPips.Count,Mathf.Max(b.Energy,b.MaxEnergy));
             for(int i=0;i<energyPips.Count;i++)
             {
@@ -120,7 +120,7 @@ namespace Brodun.Presentation
                 else
                 {
                     card=Instantiate(art.cardPrefab,hand,false);card.name="Hand_"+id;
-                    card.Bind(context.Runtime.Data.Card(entries[i].CardId),id,art,context.Runtime.Data,click);
+                    card.Bind(context.Runtime.Data.Card(entries[i].CardId,entries[i].UpgradeLevel),id,art,context.Runtime.Data,click);
                 }
                 cards.Add(card);
             }

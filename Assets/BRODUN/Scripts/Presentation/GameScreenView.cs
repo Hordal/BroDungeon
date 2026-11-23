@@ -232,7 +232,7 @@ namespace Brodun.Presentation
             scroll.content=list;scroll.viewport=(RectTransform)viewport.transform;
             foreach(var instance in Flow.Session.Run.Deck)
             {
-                var card=Flow.Session.Definitions.Card(instance.CardId);
+                var card=Flow.Session.Definitions.Card(instance.CardId,instance.UpgradeLevel);
                 string element=Flow.Session.Definitions.Elements.Single(e=>e.Id==card.Element).Name;
                 var row=Image(list,"DeckCard_"+instance.InstanceId,null,new Color(.09f,.13f,.16f,.95f),Vector2.zero,Vector2.one);
                 row.gameObject.AddComponent<LayoutElement>().preferredHeight=144;

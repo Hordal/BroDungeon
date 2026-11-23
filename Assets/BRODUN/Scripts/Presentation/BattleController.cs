@@ -5,7 +5,7 @@ using Brodun.Flow;
 using UnityEngine;
 namespace Brodun.Presentation
 {
-    public sealed class BattleController : MonoBehaviour
+    public sealed partial class BattleController : MonoBehaviour
     {
         public BattleContext Context { get; private set; }
         public BattleView View { get; private set; }
@@ -23,21 +23,23 @@ namespace Brodun.Presentation
             ready=true;
             // A scene reload reattaches to the resolved model; it never replays the effect or rerolls.
             Context.FinishActionPresentation();
+            if(Context.Runtime.PendingDiscard){StartCoroutine(ResumeDiscard());return;}
             if(Context.Phase==BattlePhase.Victory)StartCoroutine(FinishBattle());
             else if(Context.Phase==BattlePhase.Reward){View.ShowReward(ChooseReward);View.SetInput(false);}
             else if(Context.Phase==BattlePhase.Defeat){View.SetInput(false);flow.FinishRun();}
             else if(Context.Phase==BattlePhase.Finished){if(Context.Run.Status==RunStatus.Complete)flow.FinishRun();else flow.ReturnFromBattle();}
             else {View.Refresh();View.SetInput(true);View.Announce("PLAYER TURN");}
         }
-        private void CardClicked(CardView card){PlayCard(card.InstanceId);}
-        public bool PlayCard(string id)
+        private void CardClicked(CardView card){StartCoroutine(SelectAndPlay(card.InstanceId));}
+        public bool PlayCard(string id) => PlaySelected(id,null);
+        private bool PlaySelected(string id,CardPlayOptions options)
         {
             if(!ready||flow.Session.IsTransitioning||!Context.CanPlay(id)){View.Message("지금은 사용할 수 없습니다");return false;}
             var card=View.Cards.FirstOrDefault(c=>c.InstanceId==id);
-            var definition=Context.Runtime.Data.Card(Context.Runtime.Deck.Hand.Single(c=>c.InstanceId==id).CardId);
+            var definition=Context.Runtime.Definition(Context.Runtime.Deck.Hand.Single(c=>c.InstanceId==id));
             View.Enemy.HoldHealth(true);
             if(definition.Id=="stone_guard")View.HoldPlayerBlock(true);
-            if(!Context.Play(id,Context.EnemyTargetId)){View.Enemy.HoldHealth(false);if(definition.Id=="stone_guard")View.HoldPlayerBlock(false);return false;}
+            if(!Context.Play(id,Context.EnemyTargetId,options)){View.Enemy.HoldHealth(false);if(definition.Id=="stone_guard")View.HoldPlayerBlock(false);return false;}
             AudioCue?.Invoke("card");View.Refresh();View.SetInput(false);
             StartCoroutine(ResolveCard(card,definition));return true;
         }
@@ -56,6 +58,7 @@ namespace Brodun.Presentation
             else View.Message(definition.Name+(definition.Exhausts?" · 소멸":" · 버림"));
             // Let hit reaction / multi-hit numbers settle, including the lethal hit, before Death.
             yield return new WaitForSecondsRealtime(Mathf.Max(.18f,result.Hits.Count*.13f));
+            if(Context.Runtime.PendingDiscard)yield return ChooseDiscard();
             if(!handDelivered)View.RefreshHand(CardClicked);Context.FinishActionPresentation();View.Refresh();
             if(Context.Phase==BattlePhase.Victory)yield return FinishBattle();else View.SetInput(true);
         }
@@ -105,7 +108,7 @@ namespace Brodun.Presentation
         {
             View.SetInput(false);AudioCue?.Invoke("death");yield return View.Enemy.Play(SpriteMotion.Death);
             View.Message("VICTORY");View.Announce("VICTORY");AudioCue?.Invoke("victory");yield return new WaitForSecondsRealtime(.75f);
-            if(Context.Room.Type==RoomType.Boss)flow.FinishRun();
+            if(Context.Room.Type==RoomType.Boss&&!Context.Runtime.Data.Cards.Any(c=>c.IsReworked))flow.FinishRun();
             else if(Context.OpenReward())View.ShowReward(ChooseReward);
         }
         public void ChooseReward(RewardType type,string cardId){TryChooseReward(type,cardId);}
@@ -118,7 +121,7 @@ namespace Brodun.Presentation
         private IEnumerator RewardFeedback(RewardType type,string card)
         {
             string feedback=type==RewardType.Gold?"+"+Context.Runtime.Reward.Gold+" GOLD":type==RewardType.Card?Context.Runtime.Data.Card(card).Name+" 획득":"보상을 건너뛰었습니다";
-            View.Message(feedback);yield return View.RewardConfirmation(feedback);flow.ReturnFromBattle();
+            View.Message(feedback);yield return View.RewardConfirmation(feedback);if(Context.Run.Status==RunStatus.Complete)flow.FinishRun();else flow.ReturnFromBattle();
         }
         private void Start(){if(GameFlow.Instance==null)GameFlow.LoadBoot();}
     }
