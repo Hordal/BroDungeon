@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 10,
+  "schemaVersion": 11,
   "status": "implemented_rules_pending_unity_playtest",
   "title": "BRODUN 직업별 두 빌드 카드 70종 개편안",
   "date": "2026-11-23",
-  "supersedes": "70-card two-build design v9 element tag cleanup",
+  "supersedes": "v10 card-specific element roles and resonance crossing",
   "counts": {
     "warrior": 18,
     "mage": 18,
@@ -57,7 +57,8 @@
       "pickWhen": "기본 공격",
       "buildLane": "basic",
       "implementedUpgradeEffect": "피해 8.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "W02",
@@ -80,7 +81,8 @@
       "pickWhen": "기본 방어",
       "buildLane": "basic",
       "implementedUpgradeEffect": "방어도 8.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "W03",
@@ -102,7 +104,8 @@
       "pickWhen": "공격하며 힘 축적",
       "buildLane": "A",
       "implementedUpgradeEffect": "피해 7를 준 뒤 전투 지속 힘 1 획득.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "W04",
@@ -124,7 +127,8 @@
       "pickWhen": "방어 보존 공격",
       "buildLane": "B",
       "implementedUpgradeEffect": "피해 8 + 현재 방어도 ×0.28. 방어도 소모 없음.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "W05",
@@ -147,7 +151,8 @@
       "pickWhen": "초기 방어·부분 축적",
       "buildLane": "B",
       "implementedUpgradeEffect": "방어도 11. 다음 내 턴에 남은 방어도 최대 6 유지.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "W06",
@@ -169,7 +174,8 @@
       "pickWhen": "힘 덱 손패 확장",
       "buildLane": "A",
       "implementedUpgradeEffect": "3장 뽑고 다른 손패 1장 버리기. 현재 힘 3 이상이면 AP 1 환급. 소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": ""
     },
     {
       "id": "W07",
@@ -192,7 +198,8 @@
       "pickWhen": "두 직업 빌드의 공격·방어·자원 연결",
       "buildLane": "shared",
       "implementedUpgradeEffect": "방어도 8, 전투 지속 힘 1 획득. 소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": ""
     },
     {
       "id": "W08",
@@ -201,8 +208,8 @@
       "rarity": "하급",
       "cost": 1,
       "element": "불",
-      "effect": "HP 3 지불 → 전투 지속 힘 2 획득. 소멸.",
-      "upgrade": "힘 3.",
+      "effect": "HP 3 지불 → 힘 1 획득. 소멸.",
+      "upgrade": "카드 효과의 힘 2.",
       "type": "Skill",
       "role": "힘 증폭의 초기 재료",
       "rewardEligible": true,
@@ -213,8 +220,9 @@
       ],
       "pickWhen": "힘 증폭의 초기 재료",
       "buildLane": "A",
-      "implementedUpgradeEffect": "HP 3 지불 → 전투 지속 힘 3 획득. 소멸.",
-      "selfExhaust": true
+      "implementedUpgradeEffect": "HP 3 지불 → 힘 2 획득. 소멸.",
+      "selfExhaust": true,
+      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
     },
     {
       "id": "W09",
@@ -236,7 +244,8 @@
       "pickWhen": "방어도 일부를 쓰는 반복 공격",
       "buildLane": "B",
       "implementedUpgradeEffect": "현재 방어도의 절반(소수점 버림)을 소모 → 피해 12 + 소모량 ×2.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "W10",
@@ -259,7 +268,8 @@
       "pickWhen": "두 직업 빌드의 공격·방어·자원 연결",
       "buildLane": "shared",
       "implementedUpgradeEffect": "피해 6를 준 뒤 방어도 6 + 현재 힘 획득.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "W11",
@@ -281,7 +291,8 @@
       "pickWhen": "방어 증폭",
       "buildLane": "B",
       "implementedUpgradeEffect": "방어도 8 획득 후 현재 방어도 2배. 소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": ""
     },
     {
       "id": "W12",
@@ -304,7 +315,8 @@
       "pickWhen": "두 직업 빌드의 공격·방어·자원 연결",
       "buildLane": "shared",
       "implementedUpgradeEffect": "방어도 9 + 현재 힘 ×2.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "W13",
@@ -326,7 +338,8 @@
       "pickWhen": "방어도 축적",
       "buildLane": "B",
       "implementedUpgradeEffect": "지속. 피격·소비 후 남은 방어도를 다음 내 턴에도 전부 유지.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": ""
     },
     {
       "id": "W14",
@@ -348,7 +361,8 @@
       "pickWhen": "장기전 힘 성장",
       "buildLane": "A",
       "implementedUpgradeEffect": "지속. 매 내 턴 첫 공격의 피해 처리 전에 전투 지속 힘 1 획득.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": ""
     },
     {
       "id": "W15",
@@ -370,7 +384,8 @@
       "pickWhen": "힘 증폭",
       "buildLane": "A",
       "implementedUpgradeEffect": "양수인 전투 지속 힘을 2배. 해당 힘이 0 이하이면 대신 힘 1 획득. 소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
     },
     {
       "id": "W16",
@@ -392,7 +407,8 @@
       "pickWhen": "축적 방어도 결정타",
       "buildLane": "B",
       "implementedUpgradeEffect": "방어도 전부 소모 → 피해 8 + 소모량 ×2. 보류·소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": ""
     },
     {
       "id": "W17",
@@ -415,7 +431,8 @@
       "pickWhen": "두 직업 빌드의 공격·방어·자원 연결",
       "buildLane": "shared",
       "implementedUpgradeEffect": "지속. 매 내 턴 종료 시 방어도 3 + 현재 힘 획득.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": ""
     },
     {
       "id": "W18",
@@ -437,7 +454,8 @@
       "pickWhen": "축적 힘 궁극기",
       "buildLane": "A",
       "implementedUpgradeEffect": "양수인 전투 지속 힘 전부 소모 → 피해 12 + 소모량 ×10. 적 방어도 무시. 일반 힘 보너스 미적용. 보류·소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": ""
     },
     {
       "id": "M01",
@@ -460,7 +478,8 @@
       "pickWhen": "기본 공격",
       "buildLane": "basic",
       "implementedUpgradeEffect": "피해 8.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "M02",
@@ -483,7 +502,8 @@
       "pickWhen": "기본 방어",
       "buildLane": "basic",
       "implementedUpgradeEffect": "방어도 8.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "M03",
@@ -492,10 +512,10 @@
       "rarity": "하급",
       "cost": 1,
       "element": "불",
-      "effect": "피해 6. 이번 사용이 원소 교차라면 피해 3 추가.",
+      "effect": "피해 6.",
       "upgrade": "기본 피해 9.",
       "type": "Attack",
-      "role": "원소 교차 공격",
+      "role": "원소 원소 사용 공격",
       "rewardEligible": true,
       "maxCopies": null,
       "upgradeLevels": 1,
@@ -503,10 +523,11 @@
         "MA",
         "MB"
       ],
-      "pickWhen": "원소 교차 공격",
+      "pickWhen": "원소 사용 공격",
       "buildLane": "A",
-      "implementedUpgradeEffect": "피해 9. 이번 사용이 원소 교차라면 피해 3 추가.",
-      "selfExhaust": false
+      "implementedUpgradeEffect": "피해 9.",
+      "selfExhaust": false,
+      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
     },
     {
       "id": "M04",
@@ -515,8 +536,8 @@
       "rarity": "하급",
       "cost": 1,
       "element": "얼음",
-      "effect": "피해 4, 방어도 5.",
-      "upgrade": "방어도 8.",
+      "effect": "피해 4, 방어도 2.",
+      "upgrade": "카드 효과의 방어도 5.",
       "type": "Attack",
       "role": "공격 중 방어",
       "rewardEligible": true,
@@ -528,8 +549,9 @@
       ],
       "pickWhen": "공격 중 방어",
       "buildLane": "A",
-      "implementedUpgradeEffect": "피해 4, 방어도 8.",
-      "selfExhaust": false
+      "implementedUpgradeEffect": "피해 4, 방어도 5.",
+      "selfExhaust": false,
+      "elementEffect": "방어도 3 획득. 이번 전투의 방어도 유지 한도 +3. 피격·소비 후 남은 만큼만 유지."
     },
     {
       "id": "M05",
@@ -551,7 +573,8 @@
       "pickWhen": "공명 유지 보상",
       "buildLane": "A",
       "implementedUpgradeEffect": "피해 4을 2회. 피해 계산 시 공명 6 이상이면 1회 추가.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": "카드 효과 처리 후 추가 피해 3. 적 방어도 적용, 힘·공격 증폭 미적용."
     },
     {
       "id": "M06",
@@ -574,7 +597,8 @@
       "pickWhen": "두 직업 빌드의 공격·방어·자원 연결",
       "buildLane": "shared",
       "implementedUpgradeEffect": "공명 2 획득, 방어도 7.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "M07",
@@ -597,7 +621,8 @@
       "pickWhen": "두 직업 빌드의 공격·방어·자원 연결",
       "buildLane": "shared",
       "implementedUpgradeEffect": "방어도 8 + 현재 공명.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "M08",
@@ -606,20 +631,21 @@
       "rarity": "중급",
       "cost": 1,
       "element": "바람",
-      "effect": "지속. 매 내 턴 첫 원소 교차에 공명 1 추가 획득.",
+      "effect": "지속. 설치 후 매 내 턴 첫 원소 카드 사용 시 공명 1 추가 획득.",
       "upgrade": "추가 공명 2.",
       "type": "Power",
-      "role": "교차 성장 가속",
+      "role": "원소 사용 성장 가속",
       "rewardEligible": true,
       "maxCopies": null,
       "upgradeLevels": 1,
       "fitBuilds": [
         "MA"
       ],
-      "pickWhen": "교차 성장 가속",
+      "pickWhen": "원소 성장 가속",
       "buildLane": "A",
-      "implementedUpgradeEffect": "지속. 매 내 턴 첫 원소 교차에 공명 2 추가 획득.",
-      "selfExhaust": true
+      "implementedUpgradeEffect": "지속. 설치 후 매 내 턴 첫 원소 카드 사용 시 공명 2 추가 획득.",
+      "selfExhaust": true,
+      "elementEffect": "카드 효과 처리 후 1장 추가 뽑기. 손패 상한 10."
     },
     {
       "id": "M09",
@@ -641,7 +667,8 @@
       "pickWhen": "공명 궁극기",
       "buildLane": "A",
       "implementedUpgradeEffect": "공명 전부 소모 → 피해 10 + 소모량 ×4. 보류·소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
     },
     {
       "id": "M10",
@@ -650,7 +677,7 @@
       "rarity": "중급",
       "cost": 1,
       "element": "물",
-      "effect": "공명 2 지불 → 다음 내 턴 AP +2. 소멸.",
+      "effect": "공명 2 지불 → 다음 내 턴 AP +1. 소멸.",
       "upgrade": "공명 지불 1.",
       "type": "Skill",
       "role": "다음 턴 고비용 준비",
@@ -662,8 +689,9 @@
       ],
       "pickWhen": "다음 턴 고비용 준비",
       "buildLane": "B",
-      "implementedUpgradeEffect": "공명 1 지불 → 다음 내 턴 AP +2. 소멸.",
-      "selfExhaust": true
+      "implementedUpgradeEffect": "공명 1 지불 → 다음 내 턴 AP +1. 소멸.",
+      "selfExhaust": true,
+      "elementEffect": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용."
     },
     {
       "id": "M11",
@@ -685,7 +713,8 @@
       "pickWhen": "추가 AP 투자 공격",
       "buildLane": "B",
       "implementedUpgradeEffect": "적 방어도 무시 피해 17. 사용 확정 시 AP 2를 추가 지불하면 같은 타격 1회 추가.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "M12",
@@ -707,7 +736,8 @@
       "pickWhen": "공명을 즉시 행동으로 전환",
       "buildLane": "B",
       "implementedUpgradeEffect": "공명 3 지불 → AP 2 획득. 소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "카드 효과 처리 후 추가 피해 3. 적 방어도 적용, 힘·공격 증폭 미적용."
     },
     {
       "id": "M13",
@@ -729,7 +759,8 @@
       "pickWhen": "고비용 투자 증폭",
       "buildLane": "B",
       "implementedUpgradeEffect": "이번 턴 다음 실제 AP 2 이상을 지불한 공격 카드에 지불 AP ×6의 직접 피해 추가. 첫 타격에 한 번 적용. 소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "카드 효과 처리 후 1장 추가 뽑기. 손패 상한 10."
     },
     {
       "id": "M14",
@@ -751,7 +782,8 @@
       "pickWhen": "고비용을 공명으로 연결",
       "buildLane": "B",
       "implementedUpgradeEffect": "지속. 매 내 턴 처음 실제 AP를 2 이상 지불한 공격 카드 처리 후 공명 3 획득.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": ""
     },
     {
       "id": "M15",
@@ -760,20 +792,21 @@
       "rarity": "상급",
       "cost": 2,
       "element": "번개",
-      "effect": "지속. 매 내 턴 첫 원소 교차에서 공명을 실제 획득하면 AP 1 획득·1장 뽑기.",
+      "effect": "지속. 설치 후 매 내 턴 첫 원소 카드 사용에서 공명을 실제 획득하면 AP 1 획득·1장 뽑기.",
       "upgrade": "AP 1.",
       "type": "Power",
-      "role": "교차 행동 엔진",
+      "role": "원소 사용 행동 엔진",
       "rewardEligible": true,
       "maxCopies": null,
       "upgradeLevels": 1,
       "fitBuilds": [
         "MA"
       ],
-      "pickWhen": "교차 행동 엔진",
+      "pickWhen": "원소 행동 엔진",
       "buildLane": "A",
-      "implementedUpgradeEffect": "지속. 매 내 턴 첫 원소 교차에서 공명을 실제 획득하면 AP 1 획득·1장 뽑기.",
-      "selfExhaust": true
+      "implementedUpgradeEffect": "지속. 설치 후 매 내 턴 첫 원소 카드 사용에서 공명을 실제 획득하면 AP 1 획득·1장 뽑기.",
+      "selfExhaust": true,
+      "elementEffect": "카드 효과 처리 후 추가 피해 3. 적 방어도 적용, 힘·공격 증폭 미적용."
     },
     {
       "id": "M16",
@@ -782,7 +815,7 @@
       "rarity": "상급",
       "cost": 0,
       "element": "바람",
-      "effect": "공명 2 지불 → 2장 뽑기. 소멸.",
+      "effect": "공명 2 지불 → 1장 뽑기. 소멸.",
       "upgrade": "공명 지불 1.",
       "type": "Skill",
       "role": "공명을 손패로 전환",
@@ -795,8 +828,9 @@
       ],
       "pickWhen": "두 직업 빌드의 공격·방어·자원 연결",
       "buildLane": "shared",
-      "implementedUpgradeEffect": "공명 1 지불 → 2장 뽑기. 소멸.",
-      "selfExhaust": true
+      "implementedUpgradeEffect": "공명 1 지불 → 1장 뽑기. 소멸.",
+      "selfExhaust": true,
+      "elementEffect": "카드 효과 처리 후 1장 추가 뽑기. 손패 상한 10."
     },
     {
       "id": "M17",
@@ -818,7 +852,8 @@
       "pickWhen": "활동력 집중 궁극기",
       "buildLane": "B",
       "implementedUpgradeEffect": "현재 AP 전부 지불 → 피해 11 × 지불 AP. 보류·소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": ""
     },
     {
       "id": "M18",
@@ -841,7 +876,8 @@
       "pickWhen": "두 직업 빌드의 공격·방어·자원 연결",
       "buildLane": "shared",
       "implementedUpgradeEffect": "방어도 9 + 이번 내 턴 카드로 지불·소모한 공명 총량.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "P01",
@@ -864,7 +900,8 @@
       "pickWhen": "기본 공격",
       "buildLane": "basic",
       "implementedUpgradeEffect": "피해 8.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "P02",
@@ -887,7 +924,8 @@
       "pickWhen": "기본 방어",
       "buildLane": "basic",
       "implementedUpgradeEffect": "방어도 8.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "P03",
@@ -910,7 +948,8 @@
       "pickWhen": "공격과 낙인 공급",
       "buildLane": "A",
       "implementedUpgradeEffect": "피해 7 처리 후 낙인 1 부여.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
     },
     {
       "id": "P04",
@@ -932,7 +971,8 @@
       "pickWhen": "낙인 유지 중 주력 공격",
       "buildLane": "A",
       "implementedUpgradeEffect": "피해 8 + 피해 계산 전 대상의 낙인 수 ×2. 이후 일반 낙인 소비 적용.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
     },
     {
       "id": "P05",
@@ -954,7 +994,8 @@
       "pickWhen": "회복과 방어",
       "buildLane": "B",
       "implementedUpgradeEffect": "HP 6 회복, 방어도 4. 소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용."
     },
     {
       "id": "P06",
@@ -976,7 +1017,8 @@
       "pickWhen": "은총 보존 방어",
       "buildLane": "B",
       "implementedUpgradeEffect": "방어도 8 + 현재 은총.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "P07",
@@ -999,7 +1041,8 @@
       "pickWhen": "두 직업 빌드의 공격·방어·자원 연결",
       "buildLane": "shared",
       "implementedUpgradeEffect": "HP 3 지불 → 은총 3 획득, 낙인 1 부여.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
     },
     {
       "id": "P08",
@@ -1021,7 +1064,8 @@
       "pickWhen": "회복 성장·드로우 엔진",
       "buildLane": "B",
       "implementedUpgradeEffect": "지속. 매 내 턴 첫 실제 회복 뒤 은총 1 추가 획득·1장 뽑기.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용."
     },
     {
       "id": "P09",
@@ -1043,7 +1087,8 @@
       "pickWhen": "낙인 순환",
       "buildLane": "A",
       "implementedUpgradeEffect": "지속. 매 내 턴 처음 카드로 낙인을 소비한 뒤 낙인 1 부여·방어도 5.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
     },
     {
       "id": "P10",
@@ -1065,7 +1110,8 @@
       "pickWhen": "낙인 축적·생존",
       "buildLane": "A",
       "implementedUpgradeEffect": "낙인 3 부여, 적 약화 1.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": "방어도 3 획득. 이번 전투의 방어도 유지 한도 +3. 피격·소비 후 남은 만큼만 유지."
     },
     {
       "id": "P11",
@@ -1088,7 +1134,8 @@
       "pickWhen": "두 직업 빌드의 공격·방어·자원 연결",
       "buildLane": "shared",
       "implementedUpgradeEffect": "HP 3 지불 → AP 2 획득. 소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
     },
     {
       "id": "P12",
@@ -1110,7 +1157,8 @@
       "pickWhen": "축적 은총으로 반복 회복",
       "buildLane": "B",
       "implementedUpgradeEffect": "HP 5 + 회복 직전 은총 ×0.5 회복. 소수점 버림. 은총 소모 없음.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용."
     },
     {
       "id": "P13",
@@ -1132,7 +1180,8 @@
       "pickWhen": "지속 회복으로 은총 축적",
       "buildLane": "B",
       "implementedUpgradeEffect": "다음 내 턴부터 3번의 내 턴 시작에 HP 3씩 회복. 소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용."
     },
     {
       "id": "P14",
@@ -1155,7 +1204,8 @@
       "pickWhen": "두 직업 빌드의 공격·방어·자원 연결",
       "buildLane": "shared",
       "implementedUpgradeEffect": "지속. 매 내 턴 처음 낙인을 소비한 뒤 HP 2 회복. 매 내 턴 첫 실제 회복 뒤 방어도 3.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
     },
     {
       "id": "P15",
@@ -1177,7 +1227,8 @@
       "pickWhen": "낙인 궁극기",
       "buildLane": "A",
       "implementedUpgradeEffect": "기존 낙인 전부 소모 → 피해 8 + 소모량 ×6. 일반 낙인 1개 소비 대신 적용. 보류·소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
     },
     {
       "id": "P16",
@@ -1199,7 +1250,8 @@
       "pickWhen": "은총 궁극기·회복",
       "buildLane": "B",
       "implementedUpgradeEffect": "은총 전부 소모 → 피해 10 + 소모량 ×4를 준 뒤 소모량만큼 HP 회복. 보류·소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용."
     },
     {
       "id": "P17",
@@ -1221,7 +1273,8 @@
       "pickWhen": "낙인 축적 증폭",
       "buildLane": "A",
       "implementedUpgradeEffect": "대상의 낙인을 2배(최대 8). 낙인이 없으면 대신 2 부여. 소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
     },
     {
       "id": "P18",
@@ -1244,7 +1297,8 @@
       "pickWhen": "두 직업 빌드의 공격·방어·자원 연결",
       "buildLane": "shared",
       "implementedUpgradeEffect": "3장 뽑기. 이번 내 턴에 이미 실제 회복했다면 AP 1 환급. 소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용."
     },
     {
       "id": "N01",
@@ -1253,7 +1307,7 @@
       "rarity": "하급",
       "cost": 1,
       "element": "바람",
-      "effect": "2장 뽑고 다른 손패 1장 버리기.",
+      "effect": "1장 뽑기. 원소 드로우 후 다른 손패 1장 버리기.",
       "upgrade": "방어도 3 추가.",
       "type": "Skill",
       "role": "필요한 조각 찾기",
@@ -1270,8 +1324,9 @@
       ],
       "pickWhen": "필요한 조각 찾기",
       "buildLane": "neutral",
-      "implementedUpgradeEffect": "2장 뽑고 다른 손패 1장 버리기. 방어도 3.",
-      "selfExhaust": false
+      "implementedUpgradeEffect": "1장 뽑고 방어도 3. 원소 드로우 후 다른 손패 1장 버리기.",
+      "selfExhaust": false,
+      "elementEffect": "카드 효과 처리 후 1장 추가 뽑기. 손패 상한 10."
     },
     {
       "id": "N02",
@@ -1280,8 +1335,8 @@
       "rarity": "하급",
       "cost": 1,
       "element": "얼음",
-      "effect": "방어도 6. 다음 내 턴에 남은 방어도 최대 6 유지.",
-      "upgrade": "방어도·유지량 9.",
+      "effect": "방어도 3. 다음 내 턴에 남은 방어도 최대 6 유지.",
+      "upgrade": "카드 방어도 6, 부분 유지량 9.",
       "type": "Guard",
       "role": "준비 턴 방어 이월",
       "rewardEligible": true,
@@ -1294,8 +1349,9 @@
       ],
       "pickWhen": "준비 턴 방어 이월",
       "buildLane": "neutral",
-      "implementedUpgradeEffect": "방어도 9. 다음 내 턴에 남은 방어도 최대 9 유지.",
-      "selfExhaust": false
+      "implementedUpgradeEffect": "방어도 6. 다음 내 턴에 남은 방어도 최대 9 유지.",
+      "selfExhaust": false,
+      "elementEffect": "방어도 3 획득. 이번 전투의 방어도 유지 한도 +3. 피격·소비 후 남은 만큼만 유지."
     },
     {
       "id": "N03",
@@ -1319,7 +1375,8 @@
       "pickWhen": "행동 확장의 공격 보상",
       "buildLane": "neutral",
       "implementedUpgradeEffect": "피해 8 + 이번 내 턴에 앞서 사용한 카드 수 ×2.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": "카드 효과 처리 후 1장 추가 뽑기. 손패 상한 10."
     },
     {
       "id": "N04",
@@ -1343,7 +1400,8 @@
       "pickWhen": "설치·소멸이 쌓일수록 커지는 회복",
       "buildLane": "neutral",
       "implementedUpgradeEffect": "HP 5 + 현재 내 소멸 더미 카드 수 회복. 소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용."
     },
     {
       "id": "N05",
@@ -1367,7 +1425,8 @@
       "pickWhen": "자원과 핵심 카드 준비",
       "buildLane": "neutral",
       "implementedUpgradeEffect": "다음 내 턴 AP +1. 다른 손패 1장에 이번 턴 보류 부여. 소멸. 다음 내 턴 방어도 4.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": ""
     },
     {
       "id": "N06",
@@ -1391,7 +1450,8 @@
       "pickWhen": "반복 공격의 전투 성장",
       "buildLane": "neutral",
       "implementedUpgradeEffect": "지속. 설치 후 공격 카드 3장 사용을 누적할 때마다 전투 지속 힘 1 획득. 카운트는 턴을 넘어 유지. 설치 시 힘 1 획득.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": ""
     },
     {
       "id": "N07",
@@ -1415,7 +1475,8 @@
       "pickWhen": "방어의 장기 성장",
       "buildLane": "neutral",
       "implementedUpgradeEffect": "지속. 매 내 턴 처음 카드로 방어도를 실제 획득한 뒤 방어도 3 추가. 이 추가량은 발동할 때마다 전투 동안 1 증가.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": ""
     },
     {
       "id": "N08",
@@ -1424,8 +1485,8 @@
       "rarity": "중급",
       "cost": 1,
       "element": "독",
-      "effect": "피해 4, 독 2 + 현재 설치된 서로 다른 지속 카드 수 부여.",
-      "upgrade": "기본 독 3.",
+      "effect": "피해 4, 현재 설치된 서로 다른 지속 카드 수만큼 독 부여.",
+      "upgrade": "카드 효과의 독 +1.",
       "type": "Attack",
       "role": "지속 설치를 누적 피해로 전환",
       "rewardEligible": true,
@@ -1438,8 +1499,9 @@
       ],
       "pickWhen": "지속 설치를 누적 피해로 전환",
       "buildLane": "neutral",
-      "implementedUpgradeEffect": "피해 4, 독 3 + 현재 설치된 서로 다른 지속 카드 수 부여.",
-      "selfExhaust": false
+      "implementedUpgradeEffect": "피해 4, 독 1 + 현재 설치된 서로 다른 지속 카드 수 부여.",
+      "selfExhaust": false,
+      "elementEffect": "카드 효과 처리 후 독 2 추가. 적 행동 시작 시 방어도 무시 피해 후 독 1 감소."
     },
     {
       "id": "N09",
@@ -1448,8 +1510,8 @@
       "rarity": "중급",
       "cost": 1,
       "element": "얼음",
-      "effect": "방어도 5 + 현재 설치된 서로 다른 지속 카드 수 ×3.",
-      "upgrade": "기본 방어도 8.",
+      "effect": "방어도 2 + 현재 설치된 서로 다른 지속 카드 수 ×3.",
+      "upgrade": "기본 방어도 5.",
       "type": "Guard",
       "role": "설치 덱 방어 보상",
       "rewardEligible": true,
@@ -1462,8 +1524,9 @@
       ],
       "pickWhen": "설치 덱 방어 보상",
       "buildLane": "neutral",
-      "implementedUpgradeEffect": "방어도 8 + 현재 설치된 서로 다른 지속 카드 수 ×3.",
-      "selfExhaust": false
+      "implementedUpgradeEffect": "방어도 5 + 현재 설치된 서로 다른 지속 카드 수 ×3.",
+      "selfExhaust": false,
+      "elementEffect": "방어도 3 획득. 이번 전투의 방어도 유지 한도 +3. 피격·소비 후 남은 만큼만 유지."
     },
     {
       "id": "N10",
@@ -1487,7 +1550,8 @@
       "pickWhen": "전투 중 덱 압축",
       "buildLane": "neutral",
       "implementedUpgradeEffect": "다른 손패 1장 소멸 후 2장 뽑기. 방어도 3.",
-      "selfExhaust": false
+      "selfExhaust": false,
+      "elementEffect": ""
     },
     {
       "id": "N11",
@@ -1496,7 +1560,7 @@
       "rarity": "상급",
       "cost": 1,
       "element": "바람",
-      "effect": "3장 뽑기. 소멸.",
+      "effect": "2장 뽑기. 소멸.",
       "upgrade": "AP 0.",
       "type": "Skill",
       "role": "다량 드로우",
@@ -1510,8 +1574,9 @@
       ],
       "pickWhen": "다량 드로우",
       "buildLane": "neutral",
-      "implementedUpgradeEffect": "3장 뽑기. 소멸.",
-      "selfExhaust": true
+      "implementedUpgradeEffect": "2장 뽑기. 소멸.",
+      "selfExhaust": true,
+      "elementEffect": "카드 효과 처리 후 1장 추가 뽑기. 손패 상한 10."
     },
     {
       "id": "N12",
@@ -1535,7 +1600,8 @@
       "pickWhen": "즉시 활동력 폭발",
       "buildLane": "neutral",
       "implementedUpgradeEffect": "AP 2 획득. 소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "카드 효과 처리 후 추가 피해 3. 적 방어도 적용, 힘·공격 증폭 미적용."
     },
     {
       "id": "N13",
@@ -1559,7 +1625,8 @@
       "pickWhen": "반복 드로우 엔진",
       "buildLane": "neutral",
       "implementedUpgradeEffect": "지속. 다음 내 턴부터 턴 시작 기본 드로우에 1장 추가.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "카드 효과 처리 후 1장 추가 뽑기. 손패 상한 10."
     },
     {
       "id": "N14",
@@ -1583,7 +1650,8 @@
       "pickWhen": "고비용 행동 엔진",
       "buildLane": "neutral",
       "implementedUpgradeEffect": "지속. 매 내 턴 처음 실제 AP 2 이상을 지불한 카드 처리 후 AP 1 획득.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": ""
     },
     {
       "id": "N15",
@@ -1610,7 +1678,8 @@
       "pickWhen": "축적 결정타 증폭",
       "buildLane": "neutral",
       "implementedUpgradeEffect": "이번 턴 다음 공격 카드의 직접 타격 피해를 2배. 소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": ""
     },
     {
       "id": "N16",
@@ -1634,7 +1703,8 @@
       "pickWhen": "핵심 카드 재사용",
       "buildLane": "neutral",
       "implementedUpgradeEffect": "버림더미의 서로 다른 카드 인스턴스 최대 2장을 손으로 가져오기. 소멸.",
-      "selfExhaust": true
+      "selfExhaust": true,
+      "elementEffect": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용."
     }
   ],
   "generated": [],
@@ -1813,7 +1883,7 @@
       "id": "MA",
       "owner": "mage",
       "name": "원소 공명",
-      "plan": "서로 다른 원소 연결 → 공명 유지로 공격·방어 강화 → 원소 폭주",
+      "plan": "서로 다른 원소 활용 → 공명 유지로 공격·방어 강화 → 원소 폭주",
       "early": [
         "M03",
         "M04",
@@ -2075,7 +2145,7 @@
   "classRules": {
     "installation": "Each installed copy owns upgrade, growth counters and once-per-turn triggers. Effects add per copy within shared AP/hand/resource caps. A newly installed power cannot react to its own installation; older copies can. W13 full retention is boolean; N08/N09 count distinct power IDs. P13 regeneration schedules stack independently for three turns each.",
     "warrior": "Only two archetypes: strength growth and block accumulation. W07 seeds both resources; W10 attacks and blocks based on strength; W17 converts current strength into block at each own turn end. W09 consumes half current block rounded down; no AP refund. Retention keeps only remaining block, never restores spent block. W17 end-turn block resolves before temporary strength expires.",
-    "mage": "Only elemental resonance and expensive arcane spells. Resource caps/crossing remain. No Echo or attack-return class engine. M13 adds AP-paid*4 once to first direct hit of the next >=2-AP-paid attack this turn. M16 pays resonance2 to draw2. M18 uses own-turn actual resonance spending total, not current resonance.",
+    "mage": "No element crossing. Every elemental card use grants resonance1 before main effect, same elements may repeat. Native bonuses apply to all classes once per card. M08/M15 trigger per installed copy once per own turn after installation.",
     "priest": "Only brand and healing/grace. No sacrifice/exhaust archetype. P12 heals based on grace before healing, without spending grace. P14: first brand-consumption per own turn heals2; first actual heal grants block3, both can chain once. P17 doubles brand up to8, none=>2. HP payment skills remain shared support, not an independent deck engine.",
     "neutral": "N06 counts attack cards after installing; N07 tracks first actual card-origin block gain per own turn, additional amount grows1 each activation and cannot retrigger itself. N15 doubles next attack direct card damage including resource formulas and ordinary strength, excludes separate status/relic damage. N16 recalls discard instances, never exhaust. Ongoing power block ticks do not trigger N07. N10 remains generic compression, not a priest-exclusive archetype."
   },
@@ -2132,233 +2202,9 @@
     }
   ],
   "validation": {
-    "scope": "design_data_and_six_declared_hand_arithmetic_only",
+    "scope": "141 runtime rule cases including all 70 base/upgrade uses",
     "status": "passed",
-    "sampleDecks": 6,
-    "neutralCardsCovered": 16,
-    "orphanCards": 0,
-    "cases": [
-      {
-        "id": "WA",
-        "setup": "전투 지속 힘 4, AP 3. 지속·아이템 효과 없음.",
-        "hand": [
-          "W15+",
-          "W12",
-          "N12",
-          "W18"
-        ],
-        "sequence": "투지 폭발+ → 전사의 기백 → 한계 동원 → 패왕참",
-        "ap": [
-          3,
-          3,
-          2,
-          4,
-          1
-        ],
-        "result": {
-          "damage": 76,
-          "block": 22,
-          "strength": 0,
-          "nextTurnAP": 2
-        },
-        "formula": "힘 4×2=8, 방어도 6+8×2=22, 패왕참 12+8×8=76",
-        "note": "N12의 다음 턴 AP -1 적용. 임시 힘은 없음."
-      },
-      {
-        "id": "WB",
-        "setup": "W13 설치, 남은 방어도 12, AP 3. 다른 지속·아이템 효과 없음.",
-        "hand": [
-          "W11",
-          "W04",
-          "W16",
-          "N02"
-        ],
-        "sequence": "강철 담금질 → 철벽 진군 → 적 공격 10 → 다음 내 턴 성채 붕괴",
-        "ap": [
-          3,
-          1,
-          0,
-          3,
-          0
-        ],
-        "result": {
-          "pressureDamage": 13,
-          "finisherDamage": 56,
-          "damage": 69,
-          "block": 0
-        },
-        "formula": "방어도 (12+5)×2=34, 진군 5+⌊34/4⌋=13, 피격 후 24 유지, 붕괴 8+24×2=56",
-        "note": "두 턴 예시. 성채 붕괴는 보류. 다음 턴 기본 드로우의 추가 행동은 생략."
-      },
-      {
-        "id": "MA",
-        "setup": "M08·M15 설치, 공명 3, 직전 공명 원소 번개, AP 3. 다른 지속·아이템 없음.",
-        "hand": [
-          "M03",
-          "M04",
-          "M05",
-          "M09+"
-        ],
-        "sequence": "불씨 투사 → 서리 파편 → 잔류 전류 → 다음 내 턴 원소 폭주+",
-        "ap": [
-          3,
-          3,
-          2,
-          1,
-          3,
-          2
-        ],
-        "result": {
-          "damage": 68,
-          "finisherDamage": 46,
-          "resonance": 0,
-          "draw": 2
-        },
-        "formula": "첫 턴 공명 3→5→6→7, 피해 9+4+9=22. 다음 턴 폭주 자체 교차와 연구로 공명 9, 피해 10+9×4=46",
-        "note": "폭주도 원소 공격이므로 소비 전에 공명을 획득한다. M15의 AP·드로우는 각 턴 1회. 피격 결과는 계산하지 않음."
-      },
-      {
-        "id": "MB",
-        "setup": "공명 4, AP 3. 지속·아이템 효과 없음.",
-        "hand": [
-          "M12",
-          "N12",
-          "N15+",
-          "M17"
-        ],
-        "sequence": "비전 전환 → 한계 동원 → 결정적 순간+ → 초월 비전창",
-        "ap": [
-          3,
-          5,
-          6,
-          6,
-          0
-        ],
-        "result": {
-          "damage": 108,
-          "resonance": 0,
-          "nextTurnAP": 2,
-          "wastedAP": 1
-        },
-        "formula": "AP 3+2+2는 상한 6. X=6, 9×6×2=108",
-        "note": "상한 때문에 AP 1 손실. 준비·증폭·결정타 4장이 모두 필요하며 두 자원 카드는 소멸."
-      },
-      {
-        "id": "PA",
-        "setup": "P09 설치, 기존 낙인 3, AP 3. 힘·아이템 효과 없음.",
-        "hand": [
-          "P10",
-          "P17+",
-          "P15+",
-          "P04"
-        ],
-        "sequence": "심문 → 낙인 증폭+ → 낙인의 심판+",
-        "ap": [
-          3,
-          2,
-          2,
-          0
-        ],
-        "result": {
-          "damage": 56,
-          "brand": 1,
-          "block": 3
-        },
-        "formula": "낙인 3+2=5 → 2배가 상한 8에 제한, 심판 8+8×6=56. P09로 낙인1·방어도3",
-        "note": "낙인 10 대신 상한 8만 적용. 일반 낙인 1개 소비를 중복 정산하지 않음."
-      },
-      {
-        "id": "PB",
-        "setup": "P08·N07 설치, 은총 4, HP 손실 10 이상, AP 3. N07의 이번 추가 방어도는 2.",
-        "hand": [
-          "P05",
-          "P16+",
-          "P06",
-          "N01"
-        ],
-        "sequence": "치유 기도 → 대속의 기적+",
-        "ap": [
-          3,
-          2,
-          0
-        ],
-        "result": {
-          "damage": 34,
-          "heal": 10,
-          "grace": 0,
-          "block": 6,
-          "draw": 1
-        },
-        "formula": "첫 회복으로 은총 4+1+1=6, 방어도 4+2=6, 기적 피해10+6×4=34·회복6",
-        "note": "첫 회복은 4, 두 번째 회복 6. 같은 턴 회복을 두 번 해도 기본 은총·P08은 재발동하지 않음."
-      }
-    ],
-    "boundaries": {
-      "retainedAfterHit": 24,
-      "retainedAfterConsumeAll": 0,
-      "drawFromHand9Request3": 1,
-      "refundWhenPaid0": 0,
-      "basePlusScheduledAP": 4
-    },
-    "caveat": "No randomized acquisition simulation, enemy AI simulation, runtime implementation or win-rate playtest.",
-    "neutralCardsInExampleDecks": 10,
-    "neutralCardsWithFit": 16,
-    "sharedChecks": [
-      {
-        "label": "warrior_bridge",
-        "initialStrength": 3,
-        "hand": [
-          "W07",
-          "W10",
-          "W12"
-        ],
-        "ap": [
-          3,
-          2,
-          1,
-          0
-        ],
-        "result": {
-          "strength": 4,
-          "damage": 8,
-          "block": 27
-        },
-        "formula": "W07 gives block5/strength1; W10 damage4+4 and block4+4; W12 block6+4*2"
-      },
-      {
-        "label": "mage_spend_defense",
-        "initialResonance": 6,
-        "hand": [
-          "M12",
-          "M16",
-          "M18",
-          "M11"
-        ],
-        "extraAPForM11": 2,
-        "ap": [
-          3,
-          5,
-          5,
-          4,
-          0
-        ],
-        "result": {
-          "resonance": 0,
-          "draw": 2,
-          "block": 12,
-          "pierceDamage": 28
-        },
-        "formula": "resonance spent4+2=6; M18 block6+6; M11 paid4 two hits14"
-      },
-      {
-        "label": "priest_grace_heal",
-        "initialGrace": 6,
-        "result": {
-          "heal": 6
-        },
-        "formula": "3+floor(6*0.5)=6; grace not spent"
-      }
-    ]
+    "balancePlaytest": false
   },
   "cardAllocation": {
     "warrior": {
@@ -2437,11 +2283,10 @@
   "buildCountPerClass": 2,
   "implementationEntry": "GameCatalogData.ToPlayableDefinitions -> Card70Catalog.Apply",
   "implementationValidation": {
-    "rulesTests": 132,
+    "rulesTests": 141,
     "failedRulesTests": 0,
     "fullSourceCompile": "passed",
-    "unityPlayModeExecuted": false,
-    "classPoisonGuard": "rejected warrior/mage/priest definitions"
+    "unityPlayModeExecuted": false
   },
   "elementPolicy": {
     "removedTags": [
@@ -2458,52 +2303,22 @@
       "바람",
       "독"
     ],
-    "automaticElementStatus": false,
-    "mageCrossing": "Different tagged attack from previous resonant attack gains 1 resonance; first tagged attack also qualifies. Untagged attacks and non-attacks neither grant resonance nor change the previous resonant element. Wind/poison shared attacks remain eligible.",
-    "effects": "Only the explicit card text applies. Fire does not automatically burn; ice does not automatically freeze; lightning does not automatically shock.",
+    "trigger": "every successful card use; no crossing condition; all classes",
+    "nativeEffects": {
+      "불": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용.",
+      "얼음": "방어도 3 획득. 이번 전투의 방어도 유지 한도 +3. 피격·소비 후 남은 만큼만 유지.",
+      "번개": "카드 효과 처리 후 추가 피해 3. 적 방어도 적용, 힘·공격 증폭 미적용.",
+      "물": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용.",
+      "바람": "카드 효과 처리 후 1장 추가 뽑기. 손패 상한 10.",
+      "독": "카드 효과 처리 후 독 2 추가. 적 행동 시작 시 방어도 무시 피해 후 독 1 감소."
+    },
+    "fireTiming": "before card effect and before its attacks",
+    "mageResonance": "Every tagged card use grants resonance1 before its main effect. Costs and targets must already be payable. First elemental use per installed M08 each own turn grants extra1/2. M15 refunds AP1 and draws1 on first actual elemental resonance gain after installation each own turn.",
     "poisonOwner": "neutral",
     "poisonCardIds": [
       "N08"
     ],
-    "roles": {
-      "불": {
-        "role": "원소 교차 추가 피해와 공명 방출",
-        "cards": [
-          "M03",
-          "M09"
-        ]
-      },
-      "얼음": {
-        "role": "공격과 방어도 확보",
-        "cards": [
-          "M04"
-        ]
-      },
-      "번개": {
-        "role": "다단 공격 중심",
-        "cards": [
-          "M05"
-        ]
-      },
-      "물": {
-        "role": "다음 턴 활동력 확보",
-        "cards": [
-          "M10"
-        ]
-      },
-      "바람": {
-        "role": "카드 뽑기로 손패 확보",
-        "cards": [
-          "M16"
-        ]
-      },
-      "독": {
-        "role": "공용 카드의 누적 피해",
-        "cards": [
-          "N08"
-        ]
-      }
-    },
-    "confirmedRoles": "원소별 대표 카드의 역할은 불=교차 추가 피해·공명 방출, 얼음=피해와 방어도, 번개=다단 공격, 물=다음 턴 활동력, 바람=드로우로 확정한다. 독은 공용 카드 N08 침식의 일격으로만 공급하며 전사·마법사·사제 모두 보상·상점에서 획득할 수 있다. 독은 기본 2(강화 3)+설치된 서로 다른 지속 카드 수만큼 부여하고 적 행동 시작 시 방어도를 무시한 누적 피해를 준 뒤 1 감소한다. 이 역할은 각 카드의 명시 효과로 적용한다."
+    "iceRetention": "Cumulative ice retention cap lasts this battle; remaining block retains up to max(ice cap, partial retention). W13 keeps all remaining block.",
+    "bonusDamage": "Lightning is a separate fixed card-use bonus, no strength, amplification or double attack multipliers; does not count as an attack card."
   }
 }

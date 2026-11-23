@@ -14,10 +14,11 @@ rows=[]
 for c in spec['cards']:
  cost=0 if c['cost']=='X' else c['cost'];upcost=upgrade_cost.get(c['id'],cost)
  owner='null' if c['owner']=='neutral' else 'CharacterId.'+c['owner'].title()
- desc='(up?'+q(c['implementedUpgradeEffect'])+':'+q(c['effect']+'\n강화: '+c['upgrade'])+')'
+ bonus=('\n원소: '+c['elementEffect']) if c['elementEffect'] else ''
+ desc='(up?'+q(c['implementedUpgradeEffect']+bonus)+':'+q(c['effect']+'\n강화: '+c['upgrade']+bonus)+')'
  flags=','.join(str(v).lower() for v in [c['selfExhaust'],c['id'] in retained,c['cost']=='X'])
  rows.append('case '+q(c['id'])+': return new CardDefinition(id,'+q(c['name'])+'+(up?"+":""),'+desc+',up?'+str(upcost)+':'+str(cost)+',ElementType.'+elements[c['element']]+',new CardEffect[0]).Configure('+owner+',CardType.'+c['type']+',CardRarity.'+rarity[c['rarity']]+','+flags+',up?1:0);')
-description={'warrior':'힘을 단련해 패왕참을 쓰거나, 남은 방어도를 축적해 성채 붕괴로 마무리합니다.','mage':'원소를 연결해 공명을 모으거나, 활동력을 집중해 고비용 비전을 사용합니다.','priest':'낙인을 축적해 심판하거나, 실제 회복으로 은총을 쌓아 공격과 방어에 사용합니다.'}
+description={'warrior':'힘을 단련해 패왕참을 쓰거나, 남은 방어도를 축적해 성채 붕괴로 마무리합니다.','mage':'원소 카드를 사용해 공명을 모으거나, 활동력을 집중해 고비용 비전을 사용합니다.','priest':'낙인을 축적해 심판하거나, 실제 회복으로 은총을 쌓아 공격과 방어에 사용합니다.'}
 heroes=[]
 for owner,deck in spec['startingDecks'].items():
  k='CharacterId.'+owner.title();heroes.append('new CharacterDefinition('+k+',legacy.Character('+k+').Name,'+q(description[owner])+',legacy.Character('+k+').MaxHP,3,new[]{'+','.join(map(q,deck))+'})')

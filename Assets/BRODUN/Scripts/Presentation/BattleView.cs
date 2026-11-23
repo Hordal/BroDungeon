@@ -89,7 +89,9 @@ namespace Brodun.Presentation
         public void Refresh(IntentData intentOverride=null,bool holdIntent=false)
         {
             var b=context.Runtime;if(!holdPlayerHealth)hp.text=context.Run.CurrentHP+" / "+context.Run.MaxHP;
-            if(!holdPlayerBlock)block.text=b.Block.ToString();status.text=b.Run.SelectedCharacter==CharacterId.Mage?"공명 "+b.Resonance+"/12 · 지속 "+b.InstalledPowerCount:b.Run.SelectedCharacter==CharacterId.Priest?"은총 "+b.Grace+"/10 · 낙인 "+b.Brand+"/8\n지속 "+b.InstalledPowerCount:"힘 "+b.Strength+" · 지속 "+b.InstalledPowerCount;
+            if(!holdPlayerBlock)block.text=b.Block.ToString();
+            string resource=b.Run.SelectedCharacter==CharacterId.Mage?"공명 "+b.Resonance+"/12":b.Run.SelectedCharacter==CharacterId.Priest?"은총 "+b.Grace+"/10 · 낙인 "+b.Brand+"/8":"힘 "+b.Strength;
+            status.text=resource+"\n"+(b.Run.SelectedCharacter==CharacterId.Warrior?"":"힘 "+b.Strength+" · ")+"지속 "+b.InstalledPowerCount+(b.IceRetention>0?" · 유지 "+b.IceRetention:"");
             EnergyLabel.text=b.Energy+" / "+(b.Data.Cards.Any(c=>c.IsReworked)?b.Data.Config.EnergyCap:b.MaxEnergy);
             int pipCount=Mathf.Min(energyPips.Count,Mathf.Max(b.Energy,b.MaxEnergy));
             for(int i=0;i<energyPips.Count;i++)
