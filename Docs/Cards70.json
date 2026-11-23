@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 11,
+  "schemaVersion": 12,
   "status": "implemented_rules_pending_unity_playtest",
   "title": "BRODUN 직업별 두 빌드 카드 70종 개편안",
   "date": "2026-11-23",
@@ -207,9 +207,9 @@
       "owner": "warrior",
       "rarity": "하급",
       "cost": 1,
-      "element": "불",
-      "effect": "HP 3 지불 → 힘 1 획득. 소멸.",
-      "upgrade": "카드 효과의 힘 2.",
+      "element": null,
+      "effect": "HP 3 지불 → 힘 2 획득. 소멸.",
+      "upgrade": "힘 3.",
       "type": "Skill",
       "role": "힘 증폭의 초기 재료",
       "rewardEligible": true,
@@ -220,9 +220,9 @@
       ],
       "pickWhen": "힘 증폭의 초기 재료",
       "buildLane": "A",
-      "implementedUpgradeEffect": "HP 3 지불 → 힘 2 획득. 소멸.",
+      "implementedUpgradeEffect": "HP 3 지불 → 힘 3 획득. 소멸.",
       "selfExhaust": true,
-      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
+      "elementEffect": ""
     },
     {
       "id": "W09",
@@ -370,7 +370,7 @@
       "owner": "warrior",
       "rarity": "상급",
       "cost": 1,
-      "element": "불",
+      "element": null,
       "effect": "양수인 전투 지속 힘을 2배. 해당 힘이 0 이하이면 대신 힘 1 획득. 소멸.",
       "upgrade": "AP 0.",
       "type": "Skill",
@@ -385,7 +385,7 @@
       "buildLane": "A",
       "implementedUpgradeEffect": "양수인 전투 지속 힘을 2배. 해당 힘이 0 이하이면 대신 힘 1 획득. 소멸.",
       "selfExhaust": true,
-      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
+      "elementEffect": ""
     },
     {
       "id": "W16",
@@ -933,7 +933,7 @@
       "owner": "priest",
       "rarity": "하급",
       "cost": 1,
-      "element": "불",
+      "element": null,
       "effect": "피해 4 처리 후 낙인 1 부여.",
       "upgrade": "기본 피해 7.",
       "type": "Attack",
@@ -949,7 +949,7 @@
       "buildLane": "A",
       "implementedUpgradeEffect": "피해 7 처리 후 낙인 1 부여.",
       "selfExhaust": false,
-      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
+      "elementEffect": ""
     },
     {
       "id": "P04",
@@ -957,7 +957,7 @@
       "owner": "priest",
       "rarity": "하급",
       "cost": 1,
-      "element": "불",
+      "element": null,
       "effect": "피해 5 + 피해 계산 전 대상의 낙인 수 ×2. 이후 일반 낙인 소비 적용.",
       "upgrade": "기본 피해 8.",
       "type": "Attack",
@@ -972,7 +972,7 @@
       "buildLane": "A",
       "implementedUpgradeEffect": "피해 8 + 피해 계산 전 대상의 낙인 수 ×2. 이후 일반 낙인 소비 적용.",
       "selfExhaust": false,
-      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
+      "elementEffect": ""
     },
     {
       "id": "P05",
@@ -980,7 +980,7 @@
       "owner": "priest",
       "rarity": "하급",
       "cost": 1,
-      "element": "물",
+      "element": null,
       "effect": "HP 4 회복, 방어도 4. 소멸.",
       "upgrade": "회복 6.",
       "type": "Guard",
@@ -995,7 +995,7 @@
       "buildLane": "B",
       "implementedUpgradeEffect": "HP 6 회복, 방어도 4. 소멸.",
       "selfExhaust": true,
-      "elementEffect": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용."
+      "elementEffect": ""
     },
     {
       "id": "P06",
@@ -1026,7 +1026,7 @@
       "owner": "priest",
       "rarity": "하급",
       "cost": 1,
-      "element": "불",
+      "element": null,
       "effect": "HP 4 지불 → 은총 3 획득, 낙인 1 부여.",
       "upgrade": "HP 지불 3.",
       "type": "Skill",
@@ -1042,7 +1042,7 @@
       "buildLane": "shared",
       "implementedUpgradeEffect": "HP 3 지불 → 은총 3 획득, 낙인 1 부여.",
       "selfExhaust": false,
-      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
+      "elementEffect": ""
     },
     {
       "id": "P08",
@@ -1050,7 +1050,7 @@
       "owner": "priest",
       "rarity": "상급",
       "cost": 2,
-      "element": "물",
+      "element": null,
       "effect": "지속. 매 내 턴 첫 실제 회복 뒤 은총 1 추가 획득·1장 뽑기.",
       "upgrade": "AP 1.",
       "type": "Power",
@@ -1065,7 +1065,7 @@
       "buildLane": "B",
       "implementedUpgradeEffect": "지속. 매 내 턴 첫 실제 회복 뒤 은총 1 추가 획득·1장 뽑기.",
       "selfExhaust": true,
-      "elementEffect": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용."
+      "elementEffect": ""
     },
     {
       "id": "P09",
@@ -1073,7 +1073,7 @@
       "owner": "priest",
       "rarity": "중급",
       "cost": 1,
-      "element": "불",
+      "element": null,
       "effect": "지속. 매 내 턴 처음 카드로 낙인을 소비한 뒤 낙인 1 부여·방어도 3.",
       "upgrade": "방어도 5.",
       "type": "Power",
@@ -1088,7 +1088,7 @@
       "buildLane": "A",
       "implementedUpgradeEffect": "지속. 매 내 턴 처음 카드로 낙인을 소비한 뒤 낙인 1 부여·방어도 5.",
       "selfExhaust": true,
-      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
+      "elementEffect": ""
     },
     {
       "id": "P10",
@@ -1096,7 +1096,7 @@
       "owner": "priest",
       "rarity": "중급",
       "cost": 1,
-      "element": "얼음",
+      "element": null,
       "effect": "낙인 2 부여, 적 약화 1.",
       "upgrade": "낙인 3.",
       "type": "Skill",
@@ -1111,7 +1111,7 @@
       "buildLane": "A",
       "implementedUpgradeEffect": "낙인 3 부여, 적 약화 1.",
       "selfExhaust": false,
-      "elementEffect": "방어도 3 획득. 이번 전투의 방어도 유지 한도 +3. 피격·소비 후 남은 만큼만 유지."
+      "elementEffect": ""
     },
     {
       "id": "P11",
@@ -1119,7 +1119,7 @@
       "owner": "priest",
       "rarity": "상급",
       "cost": 0,
-      "element": "불",
+      "element": null,
       "effect": "HP 5 지불 → AP 2 획득. 소멸.",
       "upgrade": "HP 지불 3.",
       "type": "Skill",
@@ -1135,7 +1135,7 @@
       "buildLane": "shared",
       "implementedUpgradeEffect": "HP 3 지불 → AP 2 획득. 소멸.",
       "selfExhaust": true,
-      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
+      "elementEffect": ""
     },
     {
       "id": "P12",
@@ -1143,7 +1143,7 @@
       "owner": "priest",
       "rarity": "중급",
       "cost": 1,
-      "element": "물",
+      "element": null,
       "effect": "HP 3 + 회복 직전 은총 ×0.5 회복. 소수점 버림. 은총 소모 없음.",
       "upgrade": "기본 회복 5.",
       "type": "Skill",
@@ -1158,7 +1158,7 @@
       "buildLane": "B",
       "implementedUpgradeEffect": "HP 5 + 회복 직전 은총 ×0.5 회복. 소수점 버림. 은총 소모 없음.",
       "selfExhaust": false,
-      "elementEffect": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용."
+      "elementEffect": ""
     },
     {
       "id": "P13",
@@ -1166,7 +1166,7 @@
       "owner": "priest",
       "rarity": "중급",
       "cost": 2,
-      "element": "물",
+      "element": null,
       "effect": "다음 내 턴부터 3번의 내 턴 시작에 HP 3씩 회복. 소멸.",
       "upgrade": "AP 1.",
       "type": "Skill",
@@ -1181,7 +1181,7 @@
       "buildLane": "B",
       "implementedUpgradeEffect": "다음 내 턴부터 3번의 내 턴 시작에 HP 3씩 회복. 소멸.",
       "selfExhaust": true,
-      "elementEffect": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용."
+      "elementEffect": ""
     },
     {
       "id": "P14",
@@ -1189,7 +1189,7 @@
       "owner": "priest",
       "rarity": "상급",
       "cost": 2,
-      "element": "불",
+      "element": null,
       "effect": "지속. 매 내 턴 처음 낙인을 소비한 뒤 HP 2 회복. 매 내 턴 첫 실제 회복 뒤 방어도 3.",
       "upgrade": "AP 1.",
       "type": "Power",
@@ -1205,7 +1205,7 @@
       "buildLane": "shared",
       "implementedUpgradeEffect": "지속. 매 내 턴 처음 낙인을 소비한 뒤 HP 2 회복. 매 내 턴 첫 실제 회복 뒤 방어도 3.",
       "selfExhaust": true,
-      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
+      "elementEffect": ""
     },
     {
       "id": "P15",
@@ -1213,7 +1213,7 @@
       "owner": "priest",
       "rarity": "상급",
       "cost": 3,
-      "element": "불",
+      "element": null,
       "effect": "기존 낙인 전부 소모 → 피해 8 + 소모량 ×6. 일반 낙인 1개 소비 대신 적용. 보류·소멸.",
       "upgrade": "AP 2.",
       "type": "Attack",
@@ -1228,7 +1228,7 @@
       "buildLane": "A",
       "implementedUpgradeEffect": "기존 낙인 전부 소모 → 피해 8 + 소모량 ×6. 일반 낙인 1개 소비 대신 적용. 보류·소멸.",
       "selfExhaust": true,
-      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
+      "elementEffect": ""
     },
     {
       "id": "P16",
@@ -1236,7 +1236,7 @@
       "owner": "priest",
       "rarity": "상급",
       "cost": 3,
-      "element": "물",
+      "element": null,
       "effect": "은총 전부 소모 → 피해 10 + 소모량 ×4를 준 뒤 소모량만큼 HP 회복. 보류·소멸.",
       "upgrade": "AP 2.",
       "type": "Attack",
@@ -1251,7 +1251,7 @@
       "buildLane": "B",
       "implementedUpgradeEffect": "은총 전부 소모 → 피해 10 + 소모량 ×4를 준 뒤 소모량만큼 HP 회복. 보류·소멸.",
       "selfExhaust": true,
-      "elementEffect": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용."
+      "elementEffect": ""
     },
     {
       "id": "P17",
@@ -1259,7 +1259,7 @@
       "owner": "priest",
       "rarity": "상급",
       "cost": 1,
-      "element": "불",
+      "element": null,
       "effect": "대상의 낙인을 2배(최대 8). 낙인이 없으면 대신 2 부여. 소멸.",
       "upgrade": "AP 0.",
       "type": "Skill",
@@ -1274,7 +1274,7 @@
       "buildLane": "A",
       "implementedUpgradeEffect": "대상의 낙인을 2배(최대 8). 낙인이 없으면 대신 2 부여. 소멸.",
       "selfExhaust": true,
-      "elementEffect": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용."
+      "elementEffect": ""
     },
     {
       "id": "P18",
@@ -1282,7 +1282,7 @@
       "owner": "priest",
       "rarity": "상급",
       "cost": 1,
-      "element": "물",
+      "element": null,
       "effect": "2장 뽑기. 이번 내 턴에 이미 실제 회복했다면 AP 1 환급. 소멸.",
       "upgrade": "뽑기 3장.",
       "type": "Skill",
@@ -1298,7 +1298,7 @@
       "buildLane": "shared",
       "implementedUpgradeEffect": "3장 뽑기. 이번 내 턴에 이미 실제 회복했다면 AP 1 환급. 소멸.",
       "selfExhaust": true,
-      "elementEffect": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용."
+      "elementEffect": ""
     },
     {
       "id": "N01",
@@ -1306,8 +1306,8 @@
       "owner": "neutral",
       "rarity": "하급",
       "cost": 1,
-      "element": "바람",
-      "effect": "1장 뽑기. 원소 드로우 후 다른 손패 1장 버리기.",
+      "element": null,
+      "effect": "2장 뽑고 다른 손패 1장 버리기.",
       "upgrade": "방어도 3 추가.",
       "type": "Skill",
       "role": "필요한 조각 찾기",
@@ -1324,9 +1324,9 @@
       ],
       "pickWhen": "필요한 조각 찾기",
       "buildLane": "neutral",
-      "implementedUpgradeEffect": "1장 뽑고 방어도 3. 원소 드로우 후 다른 손패 1장 버리기.",
+      "implementedUpgradeEffect": "2장 뽑고 다른 손패 1장 버리기. 방어도 3.",
       "selfExhaust": false,
-      "elementEffect": "카드 효과 처리 후 1장 추가 뽑기. 손패 상한 10."
+      "elementEffect": ""
     },
     {
       "id": "N02",
@@ -1334,9 +1334,9 @@
       "owner": "neutral",
       "rarity": "하급",
       "cost": 1,
-      "element": "얼음",
-      "effect": "방어도 3. 다음 내 턴에 남은 방어도 최대 6 유지.",
-      "upgrade": "카드 방어도 6, 부분 유지량 9.",
+      "element": null,
+      "effect": "방어도 6. 다음 내 턴에 남은 방어도 최대 6 유지.",
+      "upgrade": "방어도 9, 유지량 9.",
       "type": "Guard",
       "role": "준비 턴 방어 이월",
       "rewardEligible": true,
@@ -1349,9 +1349,9 @@
       ],
       "pickWhen": "준비 턴 방어 이월",
       "buildLane": "neutral",
-      "implementedUpgradeEffect": "방어도 6. 다음 내 턴에 남은 방어도 최대 9 유지.",
+      "implementedUpgradeEffect": "방어도 9. 다음 내 턴에 남은 방어도 최대 9 유지.",
       "selfExhaust": false,
-      "elementEffect": "방어도 3 획득. 이번 전투의 방어도 유지 한도 +3. 피격·소비 후 남은 만큼만 유지."
+      "elementEffect": ""
     },
     {
       "id": "N03",
@@ -1359,7 +1359,7 @@
       "owner": "neutral",
       "rarity": "하급",
       "cost": 1,
-      "element": "바람",
+      "element": null,
       "effect": "피해 5 + 이번 내 턴에 앞서 사용한 카드 수 ×2.",
       "upgrade": "기본 피해 8.",
       "type": "Attack",
@@ -1376,7 +1376,7 @@
       "buildLane": "neutral",
       "implementedUpgradeEffect": "피해 8 + 이번 내 턴에 앞서 사용한 카드 수 ×2.",
       "selfExhaust": false,
-      "elementEffect": "카드 효과 처리 후 1장 추가 뽑기. 손패 상한 10."
+      "elementEffect": ""
     },
     {
       "id": "N04",
@@ -1384,7 +1384,7 @@
       "owner": "neutral",
       "rarity": "하급",
       "cost": 1,
-      "element": "물",
+      "element": null,
       "effect": "HP 3 + 현재 내 소멸 더미 카드 수 회복. 소멸.",
       "upgrade": "기본 회복 5.",
       "type": "Skill",
@@ -1401,7 +1401,7 @@
       "buildLane": "neutral",
       "implementedUpgradeEffect": "HP 5 + 현재 내 소멸 더미 카드 수 회복. 소멸.",
       "selfExhaust": true,
-      "elementEffect": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용."
+      "elementEffect": ""
     },
     {
       "id": "N05",
@@ -1509,9 +1509,9 @@
       "owner": "neutral",
       "rarity": "중급",
       "cost": 1,
-      "element": "얼음",
-      "effect": "방어도 2 + 현재 설치된 서로 다른 지속 카드 수 ×3.",
-      "upgrade": "기본 방어도 5.",
+      "element": null,
+      "effect": "방어도 5 + 현재 설치된 서로 다른 지속 카드 수 ×3.",
+      "upgrade": "기본 방어도 8.",
       "type": "Guard",
       "role": "설치 덱 방어 보상",
       "rewardEligible": true,
@@ -1524,9 +1524,9 @@
       ],
       "pickWhen": "설치 덱 방어 보상",
       "buildLane": "neutral",
-      "implementedUpgradeEffect": "방어도 5 + 현재 설치된 서로 다른 지속 카드 수 ×3.",
+      "implementedUpgradeEffect": "방어도 8 + 현재 설치된 서로 다른 지속 카드 수 ×3.",
       "selfExhaust": false,
-      "elementEffect": "방어도 3 획득. 이번 전투의 방어도 유지 한도 +3. 피격·소비 후 남은 만큼만 유지."
+      "elementEffect": ""
     },
     {
       "id": "N10",
@@ -1559,8 +1559,8 @@
       "owner": "neutral",
       "rarity": "상급",
       "cost": 1,
-      "element": "바람",
-      "effect": "2장 뽑기. 소멸.",
+      "element": null,
+      "effect": "3장 뽑기. 소멸.",
       "upgrade": "AP 0.",
       "type": "Skill",
       "role": "다량 드로우",
@@ -1574,9 +1574,9 @@
       ],
       "pickWhen": "다량 드로우",
       "buildLane": "neutral",
-      "implementedUpgradeEffect": "2장 뽑기. 소멸.",
+      "implementedUpgradeEffect": "3장 뽑기. 소멸.",
       "selfExhaust": true,
-      "elementEffect": "카드 효과 처리 후 1장 추가 뽑기. 손패 상한 10."
+      "elementEffect": ""
     },
     {
       "id": "N12",
@@ -1584,7 +1584,7 @@
       "owner": "neutral",
       "rarity": "상급",
       "cost": 0,
-      "element": "번개",
+      "element": null,
       "effect": "AP 2 획득. 다음 내 턴 AP -1. 소멸.",
       "upgrade": "다음 턴 AP 감소 없음.",
       "type": "Skill",
@@ -1601,7 +1601,7 @@
       "buildLane": "neutral",
       "implementedUpgradeEffect": "AP 2 획득. 소멸.",
       "selfExhaust": true,
-      "elementEffect": "카드 효과 처리 후 추가 피해 3. 적 방어도 적용, 힘·공격 증폭 미적용."
+      "elementEffect": ""
     },
     {
       "id": "N13",
@@ -1609,7 +1609,7 @@
       "owner": "neutral",
       "rarity": "상급",
       "cost": 2,
-      "element": "바람",
+      "element": null,
       "effect": "지속. 다음 내 턴부터 턴 시작 기본 드로우에 1장 추가.",
       "upgrade": "AP 1.",
       "type": "Power",
@@ -1626,7 +1626,7 @@
       "buildLane": "neutral",
       "implementedUpgradeEffect": "지속. 다음 내 턴부터 턴 시작 기본 드로우에 1장 추가.",
       "selfExhaust": true,
-      "elementEffect": "카드 효과 처리 후 1장 추가 뽑기. 손패 상한 10."
+      "elementEffect": ""
     },
     {
       "id": "N14",
@@ -1687,7 +1687,7 @@
       "owner": "neutral",
       "rarity": "상급",
       "cost": 1,
-      "element": "물",
+      "element": null,
       "effect": "버림더미의 서로 다른 카드 인스턴스 최대 2장을 손으로 가져오기. 소멸.",
       "upgrade": "AP 0.",
       "type": "Skill",
@@ -1704,7 +1704,7 @@
       "buildLane": "neutral",
       "implementedUpgradeEffect": "버림더미의 서로 다른 카드 인스턴스 최대 2장을 손으로 가져오기. 소멸.",
       "selfExhaust": true,
-      "elementEffect": "다음 내 턴 활동력 +1 예약. 합산 후 활동력 상한 6 적용."
+      "elementEffect": ""
     }
   ],
   "generated": [],
@@ -2202,7 +2202,7 @@
     }
   ],
   "validation": {
-    "scope": "141 runtime rule cases including all 70 base/upgrade uses",
+    "scope": "144 runtime cases; ownership checked for base and upgraded cards",
     "status": "passed",
     "balancePlaytest": false
   },
@@ -2283,7 +2283,7 @@
   "buildCountPerClass": 2,
   "implementationEntry": "GameCatalogData.ToPlayableDefinitions -> Card70Catalog.Apply",
   "implementationValidation": {
-    "rulesTests": 141,
+    "rulesTests": 144,
     "failedRulesTests": 0,
     "fullSourceCompile": "passed",
     "unityPlayModeExecuted": false
@@ -2303,7 +2303,7 @@
       "바람",
       "독"
     ],
-    "trigger": "every successful card use; no crossing condition; all classes",
+    "trigger": "Fire/Ice/Lightning/Water/Wind belong exclusively to Mage cards and trigger only when played by Mage. Poison belongs only to shared cards and applies to every class.",
     "nativeEffects": {
       "불": "사용 전에 이번 전투 힘 +1. 현재 공격부터 모든 공격의 타격마다 적용.",
       "얼음": "방어도 3 획득. 이번 전투의 방어도 유지 한도 +3. 피격·소비 후 남은 만큼만 유지.",
@@ -2319,6 +2319,14 @@
       "N08"
     ],
     "iceRetention": "Cumulative ice retention cap lasts this battle; remaining block retains up to max(ice cap, partial retention). W13 keeps all remaining block.",
-    "bonusDamage": "Lightning is a separate fixed card-use bonus, no strength, amplification or double attack multipliers; does not count as an attack card."
+    "bonusDamage": "Lightning is a separate fixed card-use bonus, no strength, amplification or double attack multipliers; does not count as an attack card.",
+    "elementOwners": {
+      "불": "mage",
+      "얼음": "mage",
+      "번개": "mage",
+      "물": "mage",
+      "바람": "mage",
+      "독": "neutral"
+    }
   }
 }

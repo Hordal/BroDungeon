@@ -57,9 +57,10 @@ public sealed partial class BattleRuntime {
   int preBlock=Block;
   // Used card leaves the hand before draws but is not available for shuffle/recall until resolution ends.
   Deck.BeginUse(instance.InstanceId);
-  // Element bonuses apply on every successful use, irrespective of order or card type.
-  if(d.Element==ElementType.Fire)Strength++;
-  if(d.Element==ElementType.Ice){Block+=3;IceRetention+=3;}
+  // Non-poison elements are Mage-only. Shared poison works for every class.
+  bool mageElement=Run.SelectedCharacter==CharacterId.Mage&&d.Owner==CharacterId.Mage;
+  if(mageElement&&d.Element==ElementType.Fire)Strength++;
+  if(mageElement&&d.Element==ElementType.Ice){Block+=3;IceRetention+=3;}
   if(Run.SelectedCharacter==CharacterId.Mage&&IsElemental(d.Element)) {
    int before=Resonance;Res(1);foreach(var p in Trigger("M08"))Res(p.Upgrade>0?2:1);
    if(Resonance>before)foreach(var p in Trigger("M15")){AP(1);Deck.Draw(1);}
@@ -76,7 +77,7 @@ public sealed partial class BattleRuntime {
    case "W05":Block+=v(8,11);retainBlock=Math.Max(retainBlock,v(4,6));break;
    case "W06":Deck.Draw(v(2,3));PendingDiscard=Deck.Hand.Count>0;if(Strength+TemporaryStrength>=3)Refund(1);break;
    case "W07":Block+=v(5,8);Strength++;break;
-   case "W08":Run.CurrentHP-=3;Strength+=v(1,2);break;
+   case "W08":Run.CurrentHP-=3;Strength+=v(2,3);break;
    case "W09":n=Block/2;Block-=n;Hit70(v(8,12)+n*2);break;
    case "W10":Hit70(v(4,6));Block+=v(4,6)+Strength+TemporaryStrength;break;
    case "W11":Block=(Block+v(5,8))*2;break;
@@ -110,25 +111,25 @@ public sealed partial class BattleRuntime {
    case "P16":n=Grace;Grace=0;Hit70(10+n*4);Heal70(n);break;
    case "P17":Brand=Brand==0?2:Math.Min(8,Brand*2);break;
    case "P18":Deck.Draw(v(2,3));if(healed)Refund(1);break;
-   case "N01":Deck.Draw(1);if(up)Block+=3;break;
-   case "N02":Block+=v(3,6);retainBlock=Math.Max(retainBlock,v(6,9));break;
+   case "N01":Deck.Draw(2);if(up)Block+=3;break;
+   case "N02":Block+=v(6,9);retainBlock=Math.Max(retainBlock,v(6,9));break;
    case "N03":Hit70(v(5,8)+cardsUsed*2);break;
    case "N04":Heal70(v(3,5)+Deck.ExhaustPile.Count);break;
    case "N05":scheduledEnergy++;if(up)scheduledBlock+=4;Deck.Retain(selection.SelectedInstance);break;
    case "N06":if(up)Strength++;break;
    case "N08":Hit70(4);Enemy.Status.AddPoison(v(0,1)+powers.Count);break;
-   case "N09":Block+=v(2,5)+powers.Count*3;break;
+   case "N09":Block+=v(5,8)+powers.Count*3;break;
    case "N10":Deck.Exhaust(selection.SelectedInstance);Deck.Draw(2);if(up)Block+=3;break;
-   case "N11":Deck.Draw(2);break;
+   case "N11":Deck.Draw(3);break;
    case "N12":AP(2);if(!up)scheduledEnergy--;break;
    case "N15":once.Add("double-ready");break;
    case "N16":foreach(string id in selection.RecallInstances)Deck.Recall(id);break;
    default:if(d.Type!=CardType.Power)throw new InvalidOperationException("Unimplemented card: "+d.Id);break;
   }
-  if(d.Element==ElementType.Lightning&&Enemy.CurrentHP>0)StatusHit(3);
-  if(d.Element==ElementType.Water)scheduledEnergy++;
-  if(d.Element==ElementType.Wind)Deck.Draw(1);
-  if(d.Element==ElementType.Poison)Enemy.Status.AddPoison(2);
+  if(mageElement&&d.Element==ElementType.Lightning&&Enemy.CurrentHP>0)StatusHit(3);
+  if(mageElement&&d.Element==ElementType.Water)scheduledEnergy++;
+  if(mageElement&&d.Element==ElementType.Wind)Deck.Draw(1);
+  if(!d.Owner.HasValue&&d.Element==ElementType.Poison)Enemy.Status.AddPoison(2);
   if(d.Id=="N01"||d.Id=="W06")PendingDiscard=Deck.Hand.Count>0;
   if(d.Type==CardType.Attack&&Run.SelectedCharacter==CharacterId.Priest&&!allBrand&&brandBefore>0){Brand--;consumedBrand=1;StatusHit(4);}
   if(d.Id=="P03")Mark(1);
@@ -136,7 +137,7 @@ public sealed partial class BattleRuntime {
    foreach(var p in Trigger("P09")){Mark(1);Block+=p.Upgrade>0?5:3;}
    foreach(var p in Trigger("P14","brand"))Heal70(2);
   }
-  bool cardBlock=d.Element==ElementType.Ice||d.Type==CardType.Guard||d.Id=="W10"||d.Id=="M04"||(up&&(d.Id=="N01"||d.Id=="N10"));
+  bool cardBlock=(mageElement&&d.Element==ElementType.Ice)||d.Type==CardType.Guard||d.Id=="W10"||d.Id=="M04"||(up&&(d.Id=="N01"||d.Id=="N10"));
   if(cardBlock&&Block>preBlock)GuardTraining();
   if(d.Type==CardType.Attack) {
    foreach(var p in activePowers.Where(p=>p.Id=="N06"))if(++p.Training>=3){p.Training-=3;Strength++;}
