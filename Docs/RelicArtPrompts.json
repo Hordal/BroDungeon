@@ -1,0 +1,206 @@
+{
+  "mode": "built-in image_gen",
+  "style": "Use case: stylized-concept. Asset type: ONE square inventory relic icon for BRODUN dark fantasy deckbuilding game. Original illustrated game asset, painterly ink contours, weathered tactile metals and cloth, muted charcoal/brass/teal palette with a restrained magical accent. Single large centered object, clear silhouette at 80 pixels, entirely visible within central 78% of canvas, three-quarter view, warm upper-left rim lighting. Flat near-black charcoal background with very subtle vignette. No border, no card frame, no labels, no text, no watermark, no collage, no hands, no characters. Consistent collectible gothic-fantasy item illustration. Subject: ",
+  "subjects": [
+    {
+      "id": "I01",
+      "subject": "an iron oath ring, heavy squared dark iron band with a crimson inset and tiny abstract etched vow marks"
+    },
+    {
+      "id": "I02",
+      "subject": "a heart-shaped rough slate stone with glowing amber cracks"
+    },
+    {
+      "id": "I03",
+      "subject": "a single elegant curled silver teal wind feather"
+    },
+    {
+      "id": "I04",
+      "subject": "a dawn lantern, antique brass hand lantern containing pale golden sunrise light"
+    },
+    {
+      "id": "I05",
+      "subject": "a moss covered stone pendant suspended on worn cord"
+    },
+    {
+      "id": "I06",
+      "subject": "a lucky antique gold coin with an abstract four-leaf relief"
+    },
+    {
+      "id": "I07",
+      "subject": "a dark steel wedge with a jagged red glowing fissure"
+    },
+    {
+      "id": "I08",
+      "subject": "a small protective stitched brown leather armor patch with brass rivets"
+    },
+    {
+      "id": "I09",
+      "subject": "a tactical brass compass, teal pointer and engraved concentric circles"
+    },
+    {
+      "id": "I10",
+      "subject": "a leather battle journal with a sword-shaped clasp"
+    },
+    {
+      "id": "I11",
+      "subject": "a tightly woven thick protective rope knot, gold bindings"
+    },
+    {
+      "id": "I12",
+      "subject": "a tied bundle of ash-gray medicinal herbs with muted green leaves"
+    },
+    {
+      "id": "I13",
+      "subject": "a solemn gold vow candleholder holding a single glowing ivory candle"
+    },
+    {
+      "id": "I14",
+      "subject": "an open clockwork pocket watch with visible brass gears and blue glass"
+    },
+    {
+      "id": "I15",
+      "subject": "an antique metal bookmark with dangling tassel and emerald bead"
+    },
+    {
+      "id": "I16",
+      "subject": "a curved venomous snake fang dripping bright green poison"
+    },
+    {
+      "id": "I17",
+      "subject": "a worn swordsman's whetstone set in a leather holder"
+    },
+    {
+      "id": "I18",
+      "subject": "a dark red iron-blood bracer with battered silver studs"
+    },
+    {
+      "id": "I19",
+      "subject": "a fortress anchor wedge, chunky riveted iron spike with a shield-shaped head"
+    },
+    {
+      "id": "I20",
+      "subject": "a bastion seal, round stone sigil with a miniature fortress relief"
+    },
+    {
+      "id": "I21",
+      "subject": "a compressed armor plate, layered dark steel slab held by heavy bands"
+    },
+    {
+      "id": "I22",
+      "subject": "a guardian's ledger, closed blue leather logbook with a small shield clasp"
+    },
+    {
+      "id": "I23",
+      "subject": "a glowing ember incense burner in aged bronze with tiny orange sparks"
+    },
+    {
+      "id": "I24",
+      "subject": "a frosted silver hand mirror with pale blue crystalline edges"
+    },
+    {
+      "id": "I25",
+      "subject": "a storm coil made of tightly wound copper wire around a blue crystal core"
+    },
+    {
+      "id": "I26",
+      "subject": "a tide conch shell, pearlescent spiral shell with a gentle cyan glow"
+    },
+    {
+      "id": "I27",
+      "subject": "a gentle wind chime of bronze tubes and pale jade pendant"
+    },
+    {
+      "id": "I28",
+      "subject": "an arcane capacitor, brass cage around a luminous violet crystal"
+    },
+    {
+      "id": "I29",
+      "subject": "a crimson-marked chalice, tarnished silver cup with a restrained dark red glowing sigil"
+    },
+    {
+      "id": "I30",
+      "subject": "an interrogation incense cone in a stern angular brass holder"
+    },
+    {
+      "id": "I31",
+      "subject": "a rosary of pale ivory and amber beads looped around a small sun medallion"
+    },
+    {
+      "id": "I32",
+      "subject": "a folded ivory cloth embroidered with subtle gold healing stitches"
+    },
+    {
+      "id": "I33",
+      "subject": "a judgment signet stamp, heavy bronze handle and black stone engraved base"
+    },
+    {
+      "id": "I34",
+      "subject": "a dawn scripture, closed ivory and gold holy book with a sunrise clasp"
+    },
+    {
+      "id": "I35",
+      "subject": "an expedition medal with worn red ribbon and a gold mountain crest"
+    },
+    {
+      "id": "I36",
+      "subject": "a light travel backpack, small weathered tan canvas pack with green straps"
+    },
+    {
+      "id": "I37",
+      "subject": "a traveler's strongbox, compact iron reinforced wooden coin chest"
+    },
+    {
+      "id": "I38",
+      "subject": "a long journey cloak folded neatly, weathered dark teal wool and brass clasp"
+    },
+    {
+      "id": "I39",
+      "subject": "a desperate protective charm, cracked red gemstone wrapped in black cord"
+    },
+    {
+      "id": "I40",
+      "subject": "a glass erosion vial containing luminous green poison with tiny dark flecks"
+    },
+    {
+      "id": "I41",
+      "subject": "a collapsed foundation stone, broken ancient masonry block with carved spiral, moss and pale gold dust"
+    },
+    {
+      "id": "I42",
+      "subject": "a corridor record tablet, weathered carved stone slab showing abstract branching path diagrams, no readable writing"
+    },
+    {
+      "id": "I43",
+      "subject": "an unextinguished brazier, compact iron fire bowl with stubborn rich orange flame"
+    },
+    {
+      "id": "I44",
+      "subject": "an ash wick, partly burned thick candle wick coiled among gray ashes with a red ember"
+    },
+    {
+      "id": "I45",
+      "subject": "an ice fragment from an underground waterway, translucent blue shard with trapped ripples"
+    },
+    {
+      "id": "I46",
+      "subject": "a submerged silver chalice, ancient cup covered in frost and delicate blue water droplets"
+    },
+    {
+      "id": "I47",
+      "subject": "a star-eating compass, dark antique astrolabe swallowing tiny violet stars"
+    },
+    {
+      "id": "I48",
+      "subject": "a black constellation fragment, jagged obsidian shard with connected violet star points"
+    },
+    {
+      "id": "I49",
+      "subject": "a spare pouch, burgundy leather drawstring pouch with brass buckle and a glimpse of supplies"
+    },
+    {
+      "id": "I50",
+      "subject": "a universal connector ring, interlocked brass and steel links around a small teal crystal"
+    }
+  ]
+}
