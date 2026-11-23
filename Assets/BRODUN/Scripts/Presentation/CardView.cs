@@ -43,7 +43,9 @@ namespace Brodun.Presentation
             var hue=ElementTint(card.Element);
             element.color=hue;kind.color=hue;kind.text+=" · "+(card.Rarity==CardRarity.High?"상급":card.Rarity==CardRarity.Mid?"중급":card.Rarity==CardRarity.Low?"하급":"기본");cost.color=Color.white;
             frame.sprite=card.Type==CardType.Attack?art.attackFrame:card.Type==CardType.Guard?art.guardFrame:art.skillFrame;
-            var illustration=GameFlow.Instance!=null?GameFlow.Instance.CardArtwork(card.Id):null;
+            // Shared cards deliberately use the same existing icons in hand, rewards, shops and deck views.
+            bool sharedCard=card.IsReworked&&!card.Owner.HasValue;
+            var illustration=!sharedCard&&GameFlow.Instance!=null?GameFlow.Instance.CardArtwork(card.Id):null;
             artwork.sprite=illustration!=null?illustration:card.Type==CardType.Guard?art.common.altar:art.common.battle;
             artwork.preserveAspect=true;
             artwork.raycastTarget=false;
