@@ -11,7 +11,7 @@ namespace Brodun
         { InstanceId = instanceId; CardId = cardId; UpgradeLevel = upgradeLevel; }
     }
     // One in-memory run; not a SaveData, singleton, MonoBehaviour, or ScriptableObject.
-    public sealed class RunState
+    public sealed partial class RunState
     {
         public int SchemaVersion => 1;
         public string RunId { get; }

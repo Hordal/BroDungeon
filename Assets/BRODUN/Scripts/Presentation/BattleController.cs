@@ -107,7 +107,7 @@ namespace Brodun.Presentation
         private IEnumerator FinishBattle()
         {
             View.SetInput(false);AudioCue?.Invoke("death");yield return View.Enemy.Play(SpriteMotion.Death);
-            View.Message("VICTORY");View.Announce("VICTORY");AudioCue?.Invoke("victory");yield return new WaitForSecondsRealtime(.75f);
+            View.Message(Context.Run.LastItemReward==null?"VICTORY":"VICTORY · "+Item50Catalog.Find(Context.Run.LastItemReward).Name+" 획득");View.Announce("VICTORY");AudioCue?.Invoke("victory");yield return new WaitForSecondsRealtime(.75f);
             if(Context.Room.Type==RoomType.Boss&&!Context.Runtime.Data.Cards.Any(c=>c.IsReworked))flow.FinishRun();
             else if(Context.OpenReward())View.ShowReward(ChooseReward);
         }

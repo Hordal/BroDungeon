@@ -92,11 +92,12 @@ namespace Brodun.Tests.PlayMode
                 yield return StartFixture();var run=Flow.Session.Run;
                 Click("Node_fight");yield return Ready(FlowScreen.Battle);yield return Win();yield return Reward(RewardType.Gold);Assert.AreEqual(50,run.Gold);
                 int hp=run.CurrentHP;Click("Node_shop");yield return Ready(FlowScreen.Room);Assert.AreSame(run,Flow.Session.Room.Run);yield return Capture("Shop",size);
+                Click("TradeTab_2");yield return null;
                 int index=Flow.Session.Room.Visit.Offers.Select((o,i)=>new{o,i}).OrderByDescending(x=>Flow.Session.Definitions.Card(x.o.CardId).BaseDamage).First().i;
                 string acquired=Flow.Session.Room.Visit.Offers[index].CardId;Click("ShopBuy_"+index);Assert.AreEqual(20,run.Gold);Assert.AreEqual(5,run.Deck.Count);Assert.IsFalse(Flow.Session.Room.Buy(index));
-                Assert.IsTrue(Flow.ReloadRoom());yield return Ready(FlowScreen.Room);Assert.IsFalse(Button("ShopBuy_"+index).interactable);Click("RoomLeave");yield return Ready(FlowScreen.DungeonMap);
+                Assert.IsTrue(Flow.ReloadRoom());yield return Ready(FlowScreen.Room);Click("TradeTab_2");yield return null;Assert.IsFalse(Button("ShopBuy_"+index).interactable);Click("RoomLeave");yield return Ready(FlowScreen.DungeonMap);
                 Click("Node_rest");yield return Ready(FlowScreen.Room);yield return Capture("Rest",size);Click("RestChoice");Assert.AreEqual(Math.Min(60,hp+8),run.CurrentHP);Assert.IsFalse(Flow.Session.Room.Choose(RoomChoice.Rest));Click("RoomLeave");yield return Ready(FlowScreen.DungeonMap);
-                Click("Node_altar");yield return Ready(FlowScreen.Room);yield return Capture("Altar",size);Click("AltarHeal");Assert.AreEqual(10,run.Gold);Assert.IsFalse(Flow.Session.Room.Choose(RoomChoice.Sacrifice));Click("RoomLeave");yield return Ready(FlowScreen.DungeonMap);
+                Click("Node_altar");yield return Ready(FlowScreen.Room);yield return Capture("Altar",size);Click("TradeTab_4");yield return null;Click("AltarHeal");Assert.AreEqual(10,run.Gold);Assert.IsFalse(Flow.Session.Room.Choose(RoomChoice.Sacrifice));Click("RoomLeave");yield return Ready(FlowScreen.DungeonMap);
                 Click("Node_puzzle");yield return Ready(FlowScreen.Room);yield return Capture("Puzzle",size);Click("PassChoice");Click("RoomLeave");yield return Ready(FlowScreen.DungeonMap);
                 Click("Node_elite");yield return Ready(FlowScreen.Battle);Assert.AreSame(run,Flow.Session.Battle.Run);Assert.AreEqual(EnemyType.Elite,Flow.Session.Battle.Runtime.Enemy.Definition.Type);
                 var piles=Flow.Session.Battle.Runtime.Deck;Assert.IsTrue(piles.Hand.Concat(piles.DrawPile).Any(c=>c.CardId==acquired));yield return Win();yield return Reward(RewardType.Card);

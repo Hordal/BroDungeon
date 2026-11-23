@@ -83,6 +83,7 @@ namespace Brodun.Presentation
             hand=BattleUi.Rect(Root,"Hand",new Vector2(.185f,.005f),new Vector2(.815f,.37f));
             EndTurn=BattleUi.Button(Root,"EndTurn","턴 종료  ▶",common,new Vector2(.85f,.11f),new Vector2(.975f,.185f),endTurn);
             turnBanner=gameObject.AddComponent<BattleBanner>();turnBanner.Build(Root,common);
+            BattleUi.Button(Root,"BattleItems","보유 유물",common,new Vector2(.85f,.205f),new Vector2(.975f,.275f),()=>ItemInventoryPanel.Show(Root,common,context.Run));
             foreach(var label in new[]{hp,block,status,EnergyLabel,turn,gold})BattleUi.Readable(label);
             RefreshHand(cardClick);shownHP=context.Run.CurrentHP;Refresh();
         }

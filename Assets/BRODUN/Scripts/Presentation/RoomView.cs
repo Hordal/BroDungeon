@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace Brodun.Presentation
 {
     // A shared noncombat screen. Offers/choices live in RunState, not in these buttons.
-    public sealed class RoomView : MonoBehaviour
+    public sealed partial class RoomView : MonoBehaviour
     {
         private GameFlow flow;
         private RoomRuntime room;
@@ -26,6 +26,7 @@ namespace Brodun.Presentation
             Label("RoomTitle",GameScreenView.RoomName(room.Node),48,BattleUi.Gold,.87f,.95f);
             hud=Label("RoomHUD","",28,BattleUi.Pale,.79f,.85f);
             feedback=Label("RoomFeedback","",27,BattleUi.Gold,.145f,.195f);
+            if(room.IsSanctuary){BuildSanctuary();return;}
             bool shop=room.Node.Type==RoomType.Event&&room.Node.Event==EventKind.Shop;
             if(shop)BuildShop();else BuildChoice();
             if(room.Data.Cards.Any(c=>c.IsReworked)&&(shop||room.Node.Event==EventKind.RestSite)) {
@@ -97,7 +98,7 @@ namespace Brodun.Presentation
                 buy[i].interactable=room.CanBuy(i);cards[i].SetAvailable(room.CanBuy(i));
                 buy[i].GetComponentInChildren<Text>().text=room.Visit.Offers[i].Purchased?"구매 완료":r.Gold<room.Visit.Offers[i].Price?"골드 부족 / "+room.Visit.Offers[i].Price:"GOLD "+room.Visit.Offers[i].Price+" / 구매";
             }
-            leave.interactable=room.CanInteract&&(room.Node.Event==EventKind.Shop||room.Visit.ChoiceMade);
+            leave.interactable=room.CanInteract&&(room.IsSanctuary||room.Visit.ChoiceMade);
         }
     }
 }

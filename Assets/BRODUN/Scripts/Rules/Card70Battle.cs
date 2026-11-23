@@ -54,11 +54,12 @@ public sealed partial class BattleRuntime {
   if(d.Id=="N16" && (options.RecallInstances==null||options.RecallInstances.Length>2||options.RecallInstances.Distinct().Count()!=options.RecallInstances.Length||options.RecallInstances.Any(id=>!Deck.DiscardPile.Any(c=>c.InstanceId==id))))return false;
   if(options.ExtraEnergy&&(d.Id!="M11"||Energy<d.Cost+2))return false;
   resolving=d;selection=options;trace=new CardResult(d.Id);paid=d.XCost?Energy:d.Cost+(options.ExtraEnergy?2:0);Energy-=paid;
-  int preBlock=Block;
+  int preBlock=Block,preStrength=Strength;
   // Used card leaves the hand before draws but is not available for shuffle/recall until resolution ends.
   Deck.BeginUse(instance.InstanceId);
   // Non-poison elements are Mage-only. Shared poison works for every class.
   bool mageElement=Run.SelectedCharacter==CharacterId.Mage&&d.Owner==CharacterId.Mage;
+  BeforeItemCard(d,mageElement);
   if(mageElement&&d.Element==ElementType.Fire)Strength++;
   if(mageElement&&d.Element==ElementType.Ice){Block+=3;IceRetention+=3;}
   if(Run.SelectedCharacter==CharacterId.Mage&&IsElemental(d.Element)) {
@@ -146,6 +147,8 @@ public sealed partial class BattleRuntime {
   if(paid>=2)foreach(var p in Trigger("N14"))AP(1);
   // Existing powers may react to this card, but a new installation cannot trigger itself.
   if(d.Type==CardType.Power)Install(d);
+  AfterItemCard(d,preBlock,preStrength,consumedBrand);
+  if(d.Id=="N01"||d.Id=="W06")PendingDiscard=Deck.Hand.Count>0;
   cardsUsed++;Deck.FinishUse(instance,d.Exhausts);LastCardResult=trace;
   if(Enemy.CurrentHP<=0){PendingDiscard=false;Win();}
   return true;
@@ -160,13 +163,14 @@ public sealed partial class BattleRuntime {
   int before=Run.CurrentHP;Run.Heal(Math.Max(0,amount));if(Run.CurrentHP==before)return;
   if(!healed&&Run.SelectedCharacter==CharacterId.Priest){Grace=Math.Min(10,Grace+1);}healed=true;
   foreach(var p in Trigger("P08")){Grace=Math.Min(10,Grace+1);Deck.Draw(1);}
-  Block+=Trigger("P14","heal").Length*3;
+  Block+=Trigger("P14","heal").Length*3;ItemOnActualHeal();
  }
  void Hit70(int amount,int hits=1,bool pierce=false,bool strength=true) {
   int bonus=0;if(amplify>0&&paid>=2){bonus=amplify*paid;amplify=0;}
   bool twice=once.Remove("double-ready");trace.ConditionalTriggered|=bonus>0||twice||amount>=12;
   for(int i=0;i<hits&&Enemy.CurrentHP>0;i++) {
    int raw=Math.Max(0,amount+(strength?Strength+TemporaryStrength:0)+(i==0?bonus:0));if(twice)raw*=2;
+   itemDirectHits++;raw+=IH("I25")&&itemDirectHits%3==0?4:0;if(i==0)raw+=ItemAttackBonus();
    int hp=Enemy.CurrentHP,b=Enemy.Block,original=b;
    if(pierce)b=0;var hit=DamageCalculator.Hit(raw,ref hp,ref b);Enemy.CurrentHP=hp;if(!pierce)Enemy.Block=b;else Enemy.Block=original;
    trace.Damage+=hit.HPDamage;trace.Blocked+=hit.Blocked;trace.RecordHit(hit);
@@ -175,10 +179,10 @@ public sealed partial class BattleRuntime {
  }
  void StatusHit(int amount){int hp=Enemy.CurrentHP,b=Enemy.Block;var hit=DamageCalculator.Hit(amount,ref hp,ref b);Enemy.CurrentHP=hp;Enemy.Block=b;trace.Damage+=hit.HPDamage;trace.Blocked+=hit.Blocked;trace.RecordHit(hit);}
  static bool IsElemental(ElementType e)=>e==ElementType.Fire||e==ElementType.Ice||e==ElementType.Lightning||e==ElementType.Water||e==ElementType.Wind||e==ElementType.Poison;
- void End70(){if(powers.TryGetValue("W17",out int count))Block+=count*Math.Max(0,3+Strength+TemporaryStrength);TemporaryStrength=0;amplify=0;once.Remove("double-ready");}
+ void End70(){EndItems();if(powers.TryGetValue("W17",out int count))Block+=count*Math.Max(0,3+Strength+TemporaryStrength);TemporaryStrength=0;amplify=0;once.Remove("double-ready");}
  void Start70(){
-  Turn++;once.Clear();foreach(var p in activePowers)p.Used.Clear();Energy=Math.Max(0,Math.Min(6,MaxEnergy+scheduledEnergy));scheduledEnergy=0;
-  Block=Has("W13")?Block:Math.Min(Block,Math.Max(retainBlock,IceRetention));retainBlock=0;Block+=scheduledBlock;
+  Turn++;once.Clear();BeginItemTurn();foreach(var p in activePowers)p.Used.Clear();Energy=Math.Max(0,Math.Min(6,MaxEnergy+scheduledEnergy));scheduledEnergy=0;
+  Block=Has("W13")?Block:Math.Min(Block,Math.Max(Math.Max(retainBlock,IceRetention),Math.Max(itemRetention,IH("I20")?6:0)));retainBlock=0;Block+=scheduledBlock;
   if(scheduledBlock>0)GuardTraining();scheduledBlock=0;
   SpentResonance=0;cardsUsed=0;healed=false;
   for(int i=0;i<regens.Count;i++){regens[i]--;Heal70(3);}regens.RemoveAll(turns=>turns==0);

@@ -27,7 +27,7 @@ namespace Brodun
             Data=data; Run=run; RoomId=room.Id;
             Enemy=new EnemyInstance(IntentResolver.Select(data,run,room),room,data.Config);
             Energy=MaxEnergy=data.Character(run.SelectedCharacter).Energy;
-            Deck=DeckRuntime.Begin(data,run,room); IntentResolver.Decide(Enemy);
+            Deck=DeckRuntime.Begin(data,run,room); InitializeItems();IntentResolver.Decide(Enemy);
         }
         public bool PlayCard(string instanceId) => PlayCard(instanceId,null);
         public bool PlayCard(string instanceId,CardPlayOptions options)
@@ -62,7 +62,7 @@ namespace Brodun
         private void Win()
         {
             if(Result!=BattleResult.Active)return;
-            Result=BattleResult.Won; Reward=RewardResolver.Create(Data,Run);
+            Result=BattleResult.Won; Reward=RewardResolver.Create(Data,Run);ItemVictory();
             // Active room remains pending until explicit Gold / Card / Skip resolution.
         }
     }

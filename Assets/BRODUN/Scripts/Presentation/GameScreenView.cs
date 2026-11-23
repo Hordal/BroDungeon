@@ -142,6 +142,7 @@ namespace Brodun.Presentation
             goldHud=Label(hud,"",29,Gold,new Vector2(.37f,.12f),new Vector2(.54f,.88f));
             areaHud=Label(hud,"",26,Muted,new Vector2(.55f,.12f),new Vector2(.75f,.88f));
             var deckButton=Button(hud,"DeckButton","현재 덱",new Vector2(.79f,.15f),new Vector2(.975f,.85f),OpenDeck);
+            Button(Root,"MapItems","보유 유물",new Vector2(.70f,.045f),new Vector2(.84f,.115f),()=>ItemInventoryPanel.Show(Root,Art,Flow.Session.Run));
             deckHud=deckButton.GetComponentInChildren<Text>();
             Label(Root,DungeonThemes.Find(run.ThemeId).Name,40,Gold,new Vector2(.2f,.77f),new Vector2(.8f,.85f));
             var viewportImage=Image(Root,"DungeonMapViewport",null,new Color(.016f,.025f,.035f,.58f),new Vector2(.025f,.205f),new Vector2(.975f,.765f));
@@ -297,7 +298,7 @@ namespace Brodun.Presentation
             if(node.Type==RoomType.Start)return "입구";
             if(node.Type==RoomType.Boss)return "보스";
             if(node.Type==RoomType.Puzzle)return "퍼즐";
-            if(node.Type==RoomType.Event)return node.Event==EventKind.Shop?"상점":node.Event==EventKind.Altar?"제단":"휴식처";
+            if(node.Type==RoomType.Event)return node.Event==EventKind.Shop?"상점":node.Event==EventKind.Altar?"성소":"휴식처";
             return node.Encounter==EnemyType.Elite?"엘리트":"전투";
         }
         private RectTransform Rect(Transform parent,string name,Vector2 min,Vector2 max)

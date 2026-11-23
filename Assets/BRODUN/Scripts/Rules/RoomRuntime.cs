@@ -25,7 +25,7 @@ namespace Brodun
         internal ShopOffer(string id,int price){CardId=id;Price=price;}
     }
     // Serializable-shaped domain state: only values/IDs, never Unity Scene objects.
-    public sealed class RoomVisit
+    public sealed partial class RoomVisit
     {
         public string NodeId { get; }
         public bool Resolved { get; internal set; }
@@ -38,7 +38,7 @@ namespace Brodun
         {NodeId=id;PuzzleTreasure=treasure;Offers=Array.AsReadOnly(offers.ToArray());}
     }
     public enum RoomChoice { Rest, Sacrifice, PaidHeal, Explore, Leave }
-    public sealed class RoomRuntime
+    public sealed partial class RoomRuntime
     {
         public RunState Run { get; }
         public RoomNode Node { get; }
@@ -54,13 +54,14 @@ namespace Brodun
             {
                 var rng=new SeededRandom(EncounterPool.NodeSeed(run.Seed,node.Id,0x82D311u));
                 var candidates=Shuffling.Shuffle(data.Cards.Where(c=>c.IsReworked?Card70Rewards.CanAcquire(data,run,c.Id):!data.Character(run.SelectedCharacter).StartingDeck.Contains(c.Id)),rng);
-                visit=new RoomVisit(node.Id,rng.Next()<.65,Node.Event==EventKind.Shop?
-                    candidates.Take(Rules.ShopStock).Select(c=>new ShopOffer(c.Id,Rules.ShopPrice)):Enumerable.Empty<ShopOffer>());
+                visit=new RoomVisit(node.Id,rng.Next()<.65,IsSanctuary?
+                    candidates.Take(Rules.ShopStock).Select(c=>new ShopOffer(c.Id,c.IsReworked?SanctuaryPrices.CardBuy(c):Rules.ShopPrice)):Enumerable.Empty<ShopOffer>());
+                if(IsSanctuary)PopulateItemStock(visit);
                 run.visits.Add(node.Id,visit);
             }
             Visit=visit;
         }
-        public bool CanBuy(int index)=>CanInteract && Node.Event==EventKind.Shop && index>=0 && index<Visit.Offers.Count &&
+        public bool CanBuy(int index)=>CanInteract && IsSanctuary && index>=0 && index<Visit.Offers.Count &&
             !Visit.Offers[index].Purchased && Run.Gold>=Visit.Offers[index].Price && Card70Rewards.CanAcquire(Data,Run,Visit.Offers[index].CardId);
         public bool Buy(int index)
         {
@@ -70,13 +71,13 @@ namespace Brodun
             Run.AddCard(offer.CardId);offer.Purchased=true;Visit.Feedback=Data.Card(offer.CardId).Name+" 획득 · GOLD −"+offer.Price;return true;
         }
         public bool Upgrade(string id) {
-            bool rest=Node.Event==EventKind.RestSite,shop=Node.Event==EventKind.Shop;
+            bool rest=Node.Event==EventKind.RestSite,shop=IsSanctuary;
             var card=Run.Deck.FirstOrDefault(c=>c.InstanceId==id);
             if(!CanInteract||Visit.Upgraded||!(rest||shop)||rest&&Visit.ChoiceMade||card==null||card.UpgradeLevel>0||!Data.Card(card.CardId).IsReworked||shop&&Run.Gold<30)return false;
             if(shop)Run.SpendGold(30);Run.UpgradeCard(id);Visit.Upgraded=true;if(rest)Visit.ChoiceMade=true;Visit.Feedback=Data.Card(card.CardId).Name+" 강화 완료";return true;
         }
         public bool Remove(string id) {
-            if(!CanInteract||Node.Event!=EventKind.Shop||Visit.Removed||Run.Gold<40||Run.Deck.Count<=1||!Run.Deck.Any(c=>c.InstanceId==id))return false;
+            if(!CanInteract||!IsSanctuary||Visit.Removed||Run.Gold<40||Run.Deck.Count<=1||!Run.Deck.Any(c=>c.InstanceId==id))return false;
             Run.SpendGold(40);Run.RemoveCard(id);Visit.Removed=true;Visit.Feedback="카드 제거 완료";return true;
         }
         public bool Choose(RoomChoice choice)
@@ -114,7 +115,7 @@ namespace Brodun
         }
         public bool Finish()
         {
-            if(!CanInteract || (Node.Event!=EventKind.Shop&&!Visit.ChoiceMade))return false;
+            if(!CanInteract || (!IsSanctuary&&!Visit.ChoiceMade))return false;
             Visit.Resolved=true;Run.results[Node.Id]=new RoomResult(RewardType.Skip,null,0,Node.Type==RoomType.Puzzle?"puzzle":Node.Event.ToString());
             return DungeonRuntime.Complete(Run);
         }
