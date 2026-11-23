@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 0e840ba6fd4ff35489498e57af77874f, type: 3}
+  m_Name: P17
+  m_EditorClassIdentifier:
+  definition:
+    id: "P17"
+    name: "\uc8c4\uc758 \ub099\uc778"
+    description: "\uc801 1\uba85\uc5d0\uac8c \ud53c\ud574 4\ub97c \uc900 \ub2e4\uc74c, \uadf8 \uc801\uc5d0\uac8c \ub099\uc778 1\uac1c\ub97c \ubd80\uc5ec\ud569\ub2c8\ub2e4. \uc0c8\ub85c \ubd99\uc778 \ub099\uc778\uc740 \uc774 \uce74\ub4dc\uc758 \uacf5\uaca9\uc73c\ub85c \uc989\uc2dc \ubc1c\ub3d9\ud558\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4."
+    element: "none"
+    cost: 1
+    owner: "priest"
+    starter_only: 0
+    catalog_only: 1
+    rarity: "low"
+    build: "brand"
+    target_scope: "single"
+    presentation_id: "water_wave"
+    effects:
+    - type: "damage"
+      condition: ""
+      amount: 4
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+    - type: "brand"
+      condition: ""
+      amount: 1
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+  artwork: {fileID: 21300000, guid: 66f48ae957b6570ebe0ea2f836ce559e, type: 3}

@@ -39,7 +39,7 @@ namespace Brodun.Tests.PlayMode
             ExecuteEvents.Execute(button.gameObject,new PointerEventData(EventSystem.current){button=PointerEventData.InputButton.Left},ExecuteEvents.pointerClickHandler);
         }
         private IEnumerator Map(uint seed)
-        {Assert.IsTrue(Flow.StartNewRun(seed));yield return Ready(FlowScreen.CharacterSelect);Click("Character_Warrior");yield return Ready(FlowScreen.DungeonMap);}
+        {Assert.IsTrue(Flow.StartNewRun(seed));yield return Ready(FlowScreen.CharacterSelect);Click("Character_Warrior");yield return Ready(FlowScreen.ThemeSelect);Click("Theme_ruins");yield return Ready(FlowScreen.DungeonMap);}
         [UnityTest] public IEnumerator ProductionUsesRandomMapAndRetainsProgressOnReload()
         {
             yield return Map(17);var run=Flow.Session.Run;
@@ -49,7 +49,7 @@ namespace Brodun.Tests.PlayMode
             // Isolate the map reload contract. The real scene entry is covered by ScreenFlow/BattleSlice tests.
             Assert.IsFalse(Flow.SelectRoom("boss"));Assert.IsTrue(Flow.Session.SelectRoom("r1"));View.RefreshMap();Assert.AreEqual(0,run.CompletedNodes.Count);
             run.AddGold(25);run.AddCard("earth_crush");Flow.ReloadMap();yield return Ready(FlowScreen.DungeonMap);
-            Assert.AreSame(run,Flow.Session.Run);Assert.AreEqual("r1",run.CurrentNode);Assert.AreEqual(25,run.Gold);Assert.AreEqual(5,run.Deck.Count);
+            Assert.AreSame(run,Flow.Session.Run);Assert.AreEqual("r1",run.CurrentNode);Assert.AreEqual(25,run.Gold);Assert.AreEqual(11,run.Deck.Count);
             Click("ModalAccept");yield return null;
             // Simulate only a future room-result callback in the test, not a gameplay clear button.
             DungeonRuntime.Complete(run);View.RefreshMap();
@@ -101,6 +101,45 @@ namespace Brodun.Tests.PlayMode
                 InputSystem.RemoveDevice(mouse);
                 InputSystem.settings.backgroundBehavior=originalBackground;
                 InputSystem.settings.editorInputBehaviorInPlayMode=originalEditorInput;
+            }
+        }
+        [UnityTest] public IEnumerator DeckWheelReachesLastCardWithoutPanningMap()
+        {
+            yield return Map(29);
+            foreach(var id in new[]{"W02","W05","W08","W10","W12","W14","W22"})Flow.Session.Run.AddCard(id);
+            Click("DeckButton");yield return null;Canvas.ForceUpdateCanvases();
+            var deck=View.Root.Find("DeckOverlay").GetComponentInChildren<ScrollRect>();
+            Assert.AreEqual(Flow.Session.Run.Deck.Select(c=>c.CardId).Distinct().Count(),deck.content.childCount);
+            Assert.IsTrue(deck.verticalScrollbar.gameObject.activeInHierarchy);
+            var point=RectTransformUtility.WorldToScreenPoint(null,deck.viewport.TransformPoint(deck.viewport.rect.center));
+            var hits=new System.Collections.Generic.List<RaycastResult>();
+            EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current){position=point},hits);
+            Assert.AreEqual(deck.gameObject,ExecuteEvents.GetEventHandler<IScrollHandler>(hits.First().gameObject));
+            float mapPosition=View.MapScroller.horizontalNormalizedPosition;
+            var previousFocus=InputSystem.settings.backgroundBehavior;
+            var previousRouting=InputSystem.settings.editorInputBehaviorInPlayMode;
+            InputSystem.settings.backgroundBehavior=InputSettings.BackgroundBehavior.IgnoreFocus;
+            InputSystem.settings.editorInputBehaviorInPlayMode=InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
+            var mouse=InputSystem.AddDevice<Mouse>("Deck wheel");
+            try
+            {
+                SendMouse(mouse,new MouseState{position=point});yield return null;yield return null;
+                for(int i=0;i<40&&deck.verticalNormalizedPosition>.001f;i++)
+                {
+                    SendMouse(mouse,new MouseState{position=point,scroll=Vector2.down*120});
+                    // Consume this input update before Unity clears wheel deltas on the next one.
+                    EventSystem.current.currentInputModule.Process();
+                    yield return null;
+                }
+                Assert.LessOrEqual(deck.verticalNormalizedPosition,.001f);
+                Assert.AreEqual(mapPosition,View.MapScroller.horizontalNormalizedPosition,.001f);
+                Assert.IsTrue(deck.content.GetChild(deck.content.childCount-1).name.EndsWith("W22"));
+            }
+            finally
+            {
+                InputSystem.RemoveDevice(mouse);
+                InputSystem.settings.backgroundBehavior=previousFocus;
+                InputSystem.settings.editorInputBehaviorInPlayMode=previousRouting;
             }
         }
         private static void SendMouse(Mouse mouse,MouseState state)

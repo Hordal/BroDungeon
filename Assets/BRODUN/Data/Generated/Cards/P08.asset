@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 0e840ba6fd4ff35489498e57af77874f, type: 3}
+  m_Name: P08
+  m_EditorClassIdentifier:
+  definition:
+    id: "P08"
+    name: "\uc601\uc6d0\uc758 \ucd95\ubcf5"
+    description: "\uc774\ubc88 \uc804\ud22c \ub3d9\uc548, \ub9e4 \ub0b4 \ud134 \uc2dc\uc791 \uc2dc \ubc29\uc5b4\ub3c4 4\ub97c \uc5bb\uc2b5\ub2c8\ub2e4. \uac19\uc740 \ud6a8\uacfc\ub294 \uc911\ucca9\ub418\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4."
+    element: "none"
+    cost: 3
+    owner: "priest"
+    starter_only: 0
+    catalog_only: 1
+    rarity: "high"
+    build: "blessing"
+    target_scope: "single"
+    presentation_id: "water_rest"
+    effects:
+    - type: "block_at_turn_start"
+      condition: ""
+      amount: 4
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 1
+  artwork: {fileID: 21300000, guid: 1b445c56efc55e7884393cb37d120a7e, type: 3}

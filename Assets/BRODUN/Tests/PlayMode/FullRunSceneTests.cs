@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -41,9 +41,12 @@ namespace Brodun.Tests.PlayMode
                 floor:1,encounter:i==6?EnemyType.Elite:i==7?EnemyType.Boss:EnemyType.Normal,previous:i==0?Array.Empty<string>():new[]{ids[i-1]}));
             return new GeneratedDungeon(null,nodes.AsReadOnly());
         }
-        private IEnumerator StartFixture(uint seed=17)
+        private IEnumerator StartFixture(uint seed=17,Func<uint,GeneratedDungeon> map=null)
         {
-            var f=new FlowSession(Flow.Session.Definitions,Fixture);f.FinishTransition(FlowScreen.Title);
+            // Legacy room/economy regression fixture. Formal generated runs are tested separately in PHASE 9.
+            var d=Flow.Session.Definitions;
+            var legacyEconomy=new GameDefinitions(d.AllCards,d.Characters,d.Enemies,d.Config,new RewardDefinition(d.Reward.Gold,d.Reward.CandidateCount),d.Elements);
+            var f=new FlowSession(legacyEconomy,map??Fixture);f.FinishTransition(FlowScreen.Title);
             typeof(GameFlow).GetProperty("Session").SetValue(Flow,f); // Test assembly only; no runtime QA API.
             Assert.IsTrue(Flow.StartNewRun(seed));yield return Ready(FlowScreen.CharacterSelect);Click("Character_Priest");yield return Ready(FlowScreen.DungeonMap);
         }
@@ -80,6 +83,85 @@ namespace Brodun.Tests.PlayMode
             }
             yield return Ready(FlowScreen.DungeonMap);
         }
+        [UnityTest] public IEnumerator AltarBlindSwapRevealsBothActualCardsAndKeepsResultsOnReload()
+        {
+            var dungeon=new GeneratedDungeon(null,new[]{
+                new RoomNode("start",RoomType.Start,0,50,new[]{"altar"},EventKind.None),
+                new RoomNode("altar",RoomType.Event,1,50,Array.Empty<string>(),EventKind.Altar,previous:new[]{"start"})
+            });
+            var data=Flow.Session.Definitions;
+            uint seed=Enumerable.Range(0,64).Select(i=>(uint)i).First(i=>
+            {
+                var run=new RunState(data,CharacterId.Priest,i,dungeon:dungeon);
+                var altar=new RoomRuntime(data,run,DungeonRuntime.Enter(run,"altar"));
+                return altar.Visit.AltarTrades.Contains(AltarTrade.BlindSwap);
+            });
+            yield return StartFixture(seed,_=>dungeon);
+            Click("Node_altar");
+            yield return Ready(FlowScreen.Room);
+            var before=Flow.Session.Run.Deck.ToArray();
+            Click("Altar_BlindSwap");
+            Assert.IsNull(Flow.Session.Room.Visit.SwappedInCardId);
+            Assert.IsEmpty(UnityEngine.Object.FindObjectsByType<CardView>(FindObjectsSortMode.None));
+            Click("AltarConfirm");
+            var visit=Flow.Session.Room.Visit;
+            var after=Flow.Session.Run.Deck;
+            Assert.AreEqual(visit.SwappedOutCardId,before.Except(after).Single().CardId);
+            Assert.AreEqual(visit.SwappedInCardId,after.Except(before).Single().CardId);
+            Assert.IsFalse(Button("RoomLeave").IsInteractable());
+            AssertCards();
+            var gained=UnityEngine.Object.FindObjectsByType<CardView>(FindObjectsSortMode.None).Single(c=>c.name=="AltarGainedCard");
+            Assert.Less(gained.ink.alpha,1);
+            float deadline=Time.realtimeSinceStartup+2;
+            while(!Button("RoomLeave").IsInteractable()&&Time.realtimeSinceStartup<deadline)yield return null;
+            Assert.AreEqual(1,gained.ink.alpha);
+            Assert.IsTrue(Flow.ReloadRoom());
+            yield return Ready(FlowScreen.Room);
+            AssertCards();
+            Click("RoomLeave");
+            yield return Ready(FlowScreen.DungeonMap);
+
+            void AssertCards()
+            {
+                var cards=UnityEngine.Object.FindObjectsByType<CardView>(FindObjectsSortMode.None);
+                var removed=cards.Single(card=>card.name=="AltarRemovedCard");
+                var added=cards.Single(card=>card.name=="AltarGainedCard");
+                Assert.AreEqual(visit.SwappedOutCardId,removed.Definition.Id);
+                Assert.AreEqual(visit.SwappedInCardId,added.Definition.Id);
+                Assert.NotNull(removed.artwork.sprite);
+                Assert.NotNull(added.artwork.sprite);
+            }
+        }
+
+        [UnityTest] public IEnumerator AltarHidesBlindRewardsUntilConfirmedAndRestoresTheChoice()
+        {
+            var nodes=new[]{
+                new RoomNode("start",RoomType.Start,0,50,new[]{"altar"},EventKind.None),
+                new RoomNode("altar",RoomType.Event,1,50,Array.Empty<string>(),EventKind.Altar,previous:new[]{"start"})
+            };
+            var dungeon=new GeneratedDungeon(null,nodes);
+            var data=Flow.Session.Definitions;
+            uint seed=Enumerable.Range(0,64).Select(i=>(uint)i).First(i=>
+            {
+                var run=new RunState(data,CharacterId.Priest,i,dungeon:dungeon);
+                var altar=new RoomRuntime(data,run,DungeonRuntime.Enter(run,"altar"));
+                return altar.Visit.AltarTrades.Contains(AltarTrade.BlindDoubleDraft);
+            });
+            yield return StartFixture(seed,_=>dungeon);
+            Click("Node_altar");yield return Ready(FlowScreen.Room);
+            int deckCount=Flow.Session.Run.Deck.Count;
+            Click("Altar_BlindDoubleDraft");
+            Assert.IsEmpty(Flow.Session.Room.Visit.PendingAltarCards);
+            Assert.AreEqual(deckCount,Flow.Session.Run.Deck.Count);
+            Click("AltarConfirm");
+            Assert.AreEqual(deckCount-2,Flow.Session.Run.Deck.Count);
+            Assert.IsFalse(Button("RoomLeave").IsInteractable());
+            Assert.IsTrue(Flow.ReloadRoom());yield return Ready(FlowScreen.Room);
+            Click("AltarCard_0");
+            Assert.AreEqual(deckCount-1,Flow.Session.Run.Deck.Count);
+            Click("RoomLeave");yield return Ready(FlowScreen.DungeonMap);
+        }
+
         [UnityTest] public IEnumerator AllRoomTypesResultResetAndResolutionScreensUseRealUi()
         {
             foreach(var size in new[]{new Vector2Int(1920,1080)})
@@ -93,17 +175,17 @@ namespace Brodun.Tests.PlayMode
                 Click("Node_fight");yield return Ready(FlowScreen.Battle);yield return Win();yield return Reward(RewardType.Gold);Assert.AreEqual(50,run.Gold);
                 int hp=run.CurrentHP;Click("Node_shop");yield return Ready(FlowScreen.Room);Assert.AreSame(run,Flow.Session.Room.Run);yield return Capture("Shop",size);
                 int index=Flow.Session.Room.Visit.Offers.Select((o,i)=>new{o,i}).OrderByDescending(x=>Flow.Session.Definitions.Card(x.o.CardId).BaseDamage).First().i;
-                string acquired=Flow.Session.Room.Visit.Offers[index].CardId;Click("ShopBuy_"+index);Assert.AreEqual(20,run.Gold);Assert.AreEqual(5,run.Deck.Count);Assert.IsFalse(Flow.Session.Room.Buy(index));
+                string acquired=Flow.Session.Room.Visit.Offers[index].CardId;Click("ShopBuy_"+index);Assert.AreEqual(20,run.Gold);Assert.AreEqual(11,run.Deck.Count);Assert.IsFalse(Flow.Session.Room.Buy(index));
                 Assert.IsTrue(Flow.ReloadRoom());yield return Ready(FlowScreen.Room);Assert.IsFalse(Button("ShopBuy_"+index).interactable);Click("RoomLeave");yield return Ready(FlowScreen.DungeonMap);
                 Click("Node_rest");yield return Ready(FlowScreen.Room);yield return Capture("Rest",size);Click("RestChoice");Assert.AreEqual(Math.Min(60,hp+8),run.CurrentHP);Assert.IsFalse(Flow.Session.Room.Choose(RoomChoice.Rest));Click("RoomLeave");yield return Ready(FlowScreen.DungeonMap);
-                Click("Node_altar");yield return Ready(FlowScreen.Room);yield return Capture("Altar",size);Click("AltarHeal");Assert.AreEqual(10,run.Gold);Assert.IsFalse(Flow.Session.Room.Choose(RoomChoice.Sacrifice));Click("RoomLeave");yield return Ready(FlowScreen.DungeonMap);
+                Click("Node_altar");yield return Ready(FlowScreen.Room);yield return Capture("Altar",size);Assert.AreEqual(3,Flow.Session.Room.Visit.AltarTrades.Count);Assert.AreEqual(20,run.Gold);Click("RoomLeave");yield return Ready(FlowScreen.DungeonMap);
                 Click("Node_puzzle");yield return Ready(FlowScreen.Room);yield return Capture("Puzzle",size);Click("PassChoice");Click("RoomLeave");yield return Ready(FlowScreen.DungeonMap);
                 Click("Node_elite");yield return Ready(FlowScreen.Battle);Assert.AreSame(run,Flow.Session.Battle.Run);Assert.AreEqual(EnemyType.Elite,Flow.Session.Battle.Runtime.Enemy.Definition.Type);
                 var piles=Flow.Session.Battle.Runtime.Deck;Assert.IsTrue(piles.Hand.Concat(piles.DrawPile).Any(c=>c.CardId==acquired));yield return Win();yield return Reward(RewardType.Card);
                 Click("Node_boss");yield return Ready(FlowScreen.Battle);Assert.AreEqual(EnemyType.Boss,Flow.Session.Battle.Runtime.Enemy.Definition.Type);yield return Win();yield return Ready(FlowScreen.RunResult);
                 Assert.AreEqual(RunStatus.Complete,run.Status);Assert.AreEqual(7,run.CompletedNodes.Count);Assert.AreEqual(0,DungeonRuntime.Available(run).Count);Assert.IsFalse(Flow.Session.Battle.OpenReward());yield return Capture("RunClear",size);
                 Click("ResultNewRun");Assert.IsNull(Flow.Session.Run);Assert.IsNull(Flow.Session.Battle);Assert.IsNull(Flow.Session.Room);yield return Ready(FlowScreen.CharacterSelect);Click("Character_Warrior");yield return Ready(FlowScreen.DungeonMap);
-                Assert.AreEqual(0,Flow.Session.Run.Gold);Assert.AreEqual(4,Flow.Session.Run.Deck.Count);Assert.AreEqual(0,Flow.Session.Run.CompletedNodes.Count);Assert.AreEqual("start",Flow.Session.Run.CurrentNode);
+                Assert.AreEqual(0,Flow.Session.Run.Gold);Assert.AreEqual(10,Flow.Session.Run.Deck.Count);Assert.AreEqual(0,Flow.Session.Run.CompletedNodes.Count);Assert.AreEqual("start",Flow.Session.Run.CurrentNode);
                 Assert.AreNotSame(run,Flow.Session.Run);Assert.AreEqual(60,Flow.Session.Run.CurrentHP);
                 Click("Node_fight");yield return Ready(FlowScreen.Battle);
                 for(int n=0;n<40&&Flow.Session.Screen==FlowScreen.Battle&&Flow.Session.Battle.Phase==BattlePhase.PlayerTurn;n++){Click("EndTurn");yield return Settled();}

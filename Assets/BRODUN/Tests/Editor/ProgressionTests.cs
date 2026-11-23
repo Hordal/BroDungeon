@@ -1,8 +1,8 @@
-using System.Linq;
+﻿using System.Linq;
 using NUnit.Framework;
 namespace Brodun.Tests
 {
-    public sealed class ProgressionTests : RulesTest
+    public sealed class ProgressionTests : LegacyRulesTest
     {
         [Test] public void FixedGraphHasTenRoomsWithOnlyConnectedChoices()
         {
@@ -22,11 +22,11 @@ namespace Brodun.Tests
         {
             var r=Run();DungeonRuntime.Enter(r,"r1");var reward=RewardResolver.Create(Data,r);
             var duplicate=RewardResolver.Create(Data,r);string chosen=reward.Candidates[0];
-            Assert.AreEqual(0,r.CompletedNodes.Count);Assert.AreEqual(0,r.Gold);Assert.AreEqual(4,r.Deck.Count);
+            Assert.AreEqual(0,r.CompletedNodes.Count);Assert.AreEqual(0,r.Gold);Assert.AreEqual(10,r.Deck.Count);
             Assert.IsTrue(RewardResolver.Resolve(Data,r,reward,kind,kind==RewardType.Card?chosen:null));
             Assert.IsFalse(RewardResolver.Resolve(Data,r,reward,kind,chosen));
             Assert.IsFalse(RewardResolver.Resolve(Data,r,duplicate,kind,chosen));
-            Assert.AreEqual(kind==RewardType.Gold?50:0,r.Gold);Assert.AreEqual(kind==RewardType.Card?5:4,r.Deck.Count);
+            Assert.AreEqual(kind==RewardType.Gold?50:0,r.Gold);Assert.AreEqual(kind==RewardType.Card?11:10,r.Deck.Count);
             Assert.IsNull(r.ActiveRoom);CollectionAssert.Contains(r.CompletedNodes,"r1");Assert.AreEqual(1,r.ResolvedRewards.Count);
             Assert.AreEqual(3,DungeonRuntime.Available(r).Count);
         }
@@ -57,15 +57,15 @@ namespace Brodun.Tests
             if(node.Type!=RoomType.Battle){DungeonRuntime.Complete(r);node=DungeonRuntime.Enter(r,"r6");}
             Assert.AreEqual(RoomType.Battle,node.Type);
             var b=new BattleRuntime(Data,r,node);b.Deck.Draw(20);
-            var acquired=b.Deck.Hand.Single(c=>c.CardId==id);Assert.AreEqual("card-4",acquired.InstanceId);
+            var acquired=b.Deck.Hand.Single(c=>c.CardId==id);Assert.AreEqual("card-10",acquired.InstanceId);
             Assert.IsTrue(b.PlayCard(acquired.InstanceId));
-            Assert.AreEqual(41,r.CurrentHP);Assert.AreEqual(12,r.Gold);Assert.AreEqual(5,r.Deck.Count);
+            Assert.AreEqual(41,r.CurrentHP);Assert.AreEqual(12,r.Gold);Assert.AreEqual(11,r.Deck.Count);
             Assert.AreEqual(CharacterId.Warrior,r.SelectedCharacter);Assert.AreEqual(60,r.MaxHP);
         }
         [Test] public void BattleVictoryWaitsForRewardAndBlocksMoreCards()
         {
             var b=Battle();b.Enemy.CurrentHP=1;
-            Assert.IsTrue(b.PlayCard(b.Deck.Hand.First(c=>c.CardId=="earth_strike").InstanceId));
+            Assert.IsTrue(b.PlayCard(DrawCard(b,"earth_strike").InstanceId));
             Assert.AreEqual(BattleResult.Won,b.Result);Assert.NotNull(b.Reward);
             Assert.AreEqual(0,b.Run.Gold);Assert.AreEqual("r1",b.Run.ActiveRoom);
             Assert.IsFalse(b.PlayCard(b.Deck.Hand[0].InstanceId));Assert.IsFalse(b.EndTurn());
@@ -77,7 +77,7 @@ namespace Brodun.Tests
             var r=Run();
             foreach(string id in new[]{"r1","r3","r6","r9"}){Assert.NotNull(DungeonRuntime.Enter(r,id));DungeonRuntime.Complete(r);}
             var b=new BattleRuntime(Data,r,DungeonRuntime.Enter(r,"boss"));b.Enemy.CurrentHP=1;
-            b.PlayCard(b.Deck.Hand.First(c=>c.CardId=="earth_strike").InstanceId);
+            b.PlayCard(DrawCard(b,"earth_strike").InstanceId);
             Assert.AreEqual(RunStatus.InProgress,r.Status);
             RewardResolver.Resolve(Data,r,b.Reward,RewardType.Skip);
             Assert.AreEqual(RunStatus.Complete,r.Status);Assert.AreEqual(0,DungeonRuntime.Available(r).Count);

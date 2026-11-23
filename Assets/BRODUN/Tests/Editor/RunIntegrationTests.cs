@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Brodun.Flow;
 using NUnit.Framework;
 namespace Brodun.Tests
 {
-    public sealed class RunIntegrationTests : RulesTest
+    public sealed class RunIntegrationTests : LegacyRulesTest
     {
         private GeneratedDungeon Fixture(uint seed)
         {
@@ -33,7 +33,7 @@ namespace Brodun.Tests
         {
             var r=New();Pass(r,"rest");r.AddGold(50);var shop=Enter(r,"shop");var ids=shop.Visit.Offers.Select(o=>o.CardId).ToArray();
             Assert.AreEqual(3,ids.Distinct().Count());Assert.IsFalse(shop.Buy(-1));Assert.IsFalse(shop.Buy(3));
-            Assert.IsTrue(shop.Buy(0));Assert.AreEqual(20,r.Gold);Assert.AreEqual(5,r.Deck.Count);Assert.AreEqual(ids[0],r.Deck.Last().CardId);
+            Assert.IsTrue(shop.Buy(0));Assert.AreEqual(20,r.Gold);Assert.AreEqual(11,r.Deck.Count);Assert.AreEqual(ids[0],r.Deck.Last().CardId);
             Assert.IsFalse(shop.Buy(0));Assert.IsFalse(shop.Buy(1));var restored=new RoomRuntime(Data,r,shop.Node);Assert.IsFalse(restored.Buy(0));
             CollectionAssert.AreEqual(ids,restored.Visit.Offers.Select(o=>o.CardId));Assert.IsTrue(restored.Finish());Assert.IsFalse(shop.Buy(1));
         }
@@ -44,14 +44,71 @@ namespace Brodun.Tests
             Assert.AreEqual(38,r.CurrentHP);Assert.AreEqual(20,r.Gold);Assert.IsTrue(battle.Deck.Hand.Any(c=>c.InstanceId==card.InstanceId));
             Assert.IsTrue(battle.PlayCard(card.InstanceId));
         }
-        [Test] public void AltarChoicesAreExclusiveAndCostsCheckedBeforeMutation()
+        private RoomRuntime FindAltar(AltarTrade trade)
         {
-            var r=New();Pass(r,"rest");Pass(r,"shop");var altar=Enter(r,"altar");r.CurrentHP=6;
-            Assert.IsFalse(altar.Choose(RoomChoice.Sacrifice));Assert.IsFalse(altar.Choose(RoomChoice.PaidHeal));Assert.AreEqual(6,r.CurrentHP);
-            r.CurrentHP=30;Assert.IsTrue(altar.Choose(RoomChoice.Sacrifice));Assert.AreEqual(24,r.CurrentHP);Assert.AreEqual(15,r.Gold);
-            Assert.IsFalse(altar.Choose(RoomChoice.Sacrifice));Assert.IsFalse(altar.Choose(RoomChoice.PaidHeal));Assert.IsTrue(altar.Finish());
-            var paid=New();Pass(paid,"rest");Pass(paid,"shop");paid.CurrentHP=40;paid.AddGold(10);var heal=Enter(paid,"altar");
-            Assert.IsTrue(heal.Choose(RoomChoice.PaidHeal));Assert.AreEqual(48,paid.CurrentHP);Assert.AreEqual(0,paid.Gold);
+            for(uint seed=0;seed<64;seed++)
+            {
+                var run=New(seed);
+                Pass(run,"rest");
+                Pass(run,"shop");
+                var altar=Enter(run,"altar");
+                if(altar.Visit.AltarTrades.Contains(trade))return altar;
+            }
+            throw new InvalidOperationException("No seed offered "+trade);
+        }
+
+        [Test]
+        public void AltarOffersPersistAndAllowExactlyOneAffordableTrade()
+        {
+            var altar=FindAltar(AltarTrade.GoldForHealth);
+            var run=altar.Run;
+            var reopened=new RoomRuntime(Data,run,altar.Node);
+            Assert.AreEqual(3,altar.Visit.AltarTrades.Distinct().Count());
+            CollectionAssert.AreEqual(altar.Visit.AltarTrades,reopened.Visit.AltarTrades);
+            run.CurrentHP=8;
+            Assert.IsFalse(altar.TradeAtAltar(AltarTrade.GoldForHealth));
+            Assert.AreEqual(8,run.CurrentHP);
+            run.CurrentHP=9;
+            Assert.IsTrue(reopened.TradeAtAltar(AltarTrade.GoldForHealth));
+            Assert.AreEqual(1,run.CurrentHP);
+            Assert.AreEqual(25,run.Gold);
+            Assert.IsFalse(altar.TradeAtAltar(AltarTrade.GoldForHealth));
+            Assert.IsTrue(altar.Finish());
+        }
+
+        [Test]
+        public void BlindDraftRevealsOnlyAfterPaymentAndMustBeClaimedOnce()
+        {
+            var altar=FindAltar(AltarTrade.BlindDoubleDraft);
+            var run=altar.Run;
+            int count=run.Deck.Count;
+            Assert.IsEmpty(altar.Visit.PendingAltarCards);
+            Assert.IsTrue(altar.TradeAtAltar(AltarTrade.BlindDoubleDraft));
+            Assert.AreEqual(count-2,run.Deck.Count);
+            var reopened=new RoomRuntime(Data,run,altar.Node);
+            var candidates=reopened.Visit.PendingAltarCards.ToArray();
+            Assert.AreEqual(3,candidates.Distinct().Count());
+            Assert.IsFalse(reopened.Finish());
+            Assert.IsFalse(reopened.TradeAtAltar(AltarTrade.BlindDoubleDraft));
+            Assert.IsFalse(reopened.ClaimAltarCard("없는 카드"));
+            Assert.IsTrue(reopened.ClaimAltarCard(candidates[0]));
+            Assert.AreEqual(count-1,run.Deck.Count);
+            Assert.AreEqual(candidates[0],run.Deck.Last().CardId);
+            Assert.IsFalse(altar.ClaimAltarCard(candidates[0]));
+            Assert.IsTrue(altar.Finish());
+        }
+
+        [Test]
+        public void CoinRequiresAGuessAndChargesOnce()
+        {
+            var altar=FindAltar(AltarTrade.Coin);
+            var run=altar.Run;
+            run.AddGold(10);
+            Assert.IsFalse(altar.TradeAtAltar(AltarTrade.Coin));
+            Assert.AreEqual(10,run.Gold);
+            Assert.IsTrue(altar.TradeAtAltar(AltarTrade.Coin,guess:CoinFace.Heads));
+            Assert.That(run.Gold,Is.EqualTo(0).Or.EqualTo(25));
+            Assert.IsFalse(altar.TradeAtAltar(AltarTrade.Coin,guess:CoinFace.Tails));
         }
         [Test] public void PuzzleOutcomeIsSeededAndChoiceCannotRepeat()
         {
@@ -105,7 +162,7 @@ namespace Brodun.Tests
             f.FinishTransition(FlowScreen.RunResult);var snapshot=f.Summary;Assert.AreEqual(7,snapshot.ClearedNodes);Assert.IsTrue(f.StartNewRun(29));Assert.IsFalse(f.StartNewRun(17));
             Assert.IsNull(f.Run);Assert.IsNull(f.Battle);Assert.IsNull(f.Room);Assert.IsNull(f.Summary);Assert.IsNull(f.PendingRoom);Assert.IsFalse(f.DeckOpen);
             f.FinishTransition(FlowScreen.CharacterSelect);f.ChooseCharacter(CharacterId.Priest);f.FinishTransition(FlowScreen.DungeonMap);
-            Assert.AreEqual(60,f.Run.CurrentHP);Assert.AreEqual(0,f.Run.Gold);Assert.AreEqual(29u,f.Run.Seed);Assert.AreEqual("start",f.Run.CurrentNode);Assert.AreEqual(0,f.Run.CompletedNodes.Count);Assert.AreEqual(0,f.Run.RoomVisits.Count);Assert.AreEqual(0,f.Run.ResolvedRewards.Count);Assert.AreEqual(4,f.Run.Deck.Count);
+            Assert.AreEqual(60,f.Run.CurrentHP);Assert.AreEqual(0,f.Run.Gold);Assert.AreEqual(29u,f.Run.Seed);Assert.AreEqual("start",f.Run.CurrentNode);Assert.AreEqual(0,f.Run.CompletedNodes.Count);Assert.AreEqual(0,f.Run.RoomVisits.Count);Assert.AreEqual(0,f.Run.ResolvedRewards.Count);Assert.AreEqual(10,f.Run.Deck.Count);
             Assert.AreEqual(RunStatus.Complete,snapshot.Status);
         }
         [Test] public void BattleDeathRoutesToFrozenFailureWithoutRewardCompletion()

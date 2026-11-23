@@ -32,3 +32,5 @@ MonoBehaviour:
     - type: block
       amount: 5
       hits: 0
+  attackBonus: 3
+  healthBonus: 6

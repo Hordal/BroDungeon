@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9db74682afda59bd33633be99716f490, type: 3}
+  m_Name: BrodunBattleFeedback
+  m_EditorClassIdentifier: 
+  enhancedPresentation: 1
+  soundEnabled: 1
+  masterVolume: 0.72
+  sounds:
+  - cue: 0
+    clip: {fileID: 8300000, guid: e2ae9cf3cf95a8fbf133b8b6ef45ec91, type: 3}
+    gain: .8
+  - cue: 1
+    clip: {fileID: 8300000, guid: 8e7775f2ade4e43b754d7c77e3b95d70, type: 3}
+    gain: 1
+  - cue: 2
+    clip: {fileID: 8300000, guid: 00b49923aa6308d1e6c220896811c5a8, type: 3}
+    gain: 1
+  - cue: 3
+    clip: {fileID: 8300000, guid: 9f219b72a2a19bd22819f939c3a20d37, type: 3}
+    gain: 1
+  - cue: 4
+    clip: {fileID: 8300000, guid: 2c4af496a1c5a18ed2e11c55967da633, type: 3}
+    gain: 1
+  - cue: 5
+    clip: {fileID: 8300000, guid: 2349bc3a4330773cb0bea635a2d04eac, type: 3}
+    gain: 1
+  - cue: 6
+    clip: {fileID: 8300000, guid: b404b022548ead3aba6ef2baa5d87d9d, type: 3}
+    gain: .8
+  - cue: 7
+    clip: {fileID: 8300000, guid: 188c067f4949094cf88eefb7e5d4d024, type: 3}
+    gain: 1
+  - cue: 8
+    clip: {fileID: 8300000, guid: 0580891bf453de02922527a64171bd87, type: 3}
+    gain: 1
+  - cue: 9
+    clip: {fileID: 8300000, guid: e495c051861d646939e4de7690017ec3, type: 3}
+    gain: 1
+  - cue: 10
+    clip: {fileID: 8300000, guid: 30664a7e4fbec3cb23e17a96e2f5c833, type: 3}
+    gain: 1
+  - cue: 11
+    clip: {fileID: 8300000, guid: ca1aaf7097df60864c0ad45d8a935a9d, type: 3}
+    gain: 1
+  - cue: 12
+    clip: {fileID: 8300000, guid: eaa4be07eb97b1c296142bfd05b6ef9e, type: 3}
+    gain: 1
+  - cue: 13
+    clip: {fileID: 8300000, guid: be7a82819beb2c936d2a4bb6cdebf406, type: 3}
+    gain: 1
+  - cue: 14
+    clip: {fileID: 8300000, guid: 46d116b804af0b5068bd12536165ace1, type: 3}
+    gain: 1
+  - cue: 15
+    clip: {fileID: 8300000, guid: a5929762a576fd98cb272c2e5fb41561, type: 3}
+    gain: 1
+  - cue: 16
+    clip: {fileID: 8300000, guid: 50277fa837287a9a13db82744ec07482, type: 3}
+    gain: .65
+  - cue: 17
+    clip: {fileID: 8300000, guid: 83bd18e3c2d354dfb5cb3a99f97e8ab1, type: 3}
+    gain: .65
+  enemyLooks:
+  - assetId: ruin_gargoyle
+    look: 0
+  - assetId: moss_slime
+    look: 1
+  - assetId: gale_warden
+    look: 2
+  - assetId: fallen_colossus
+    look: 1
+  - assetId: venom_eel
+    look: 3
+  - assetId: crystal_crawler
+    look: 2
+  - assetId: frost_seer
+    look: 2
+  - assetId: abyssal_leviathan
+    look: 1
+  - assetId: ember_gremlin
+    look: 4
+  - assetId: furnace_sentinel
+    look: 4
+  - assetId: coil_golem
+    look: 5
+  - assetId: foundry_tyrant
+    look: 1

@@ -81,7 +81,7 @@ namespace Brodun.Editor
                 {
                     var room=new RoomRuntime(data,run,node);
                     if(node.Event==EventKind.Shop){int i=room.Visit.Offers.ToList().FindIndex(o=>o.CardId=="ice_shard");if(i>=0)room.Buy(i);}
-                    else room.Choose(node.Event==EventKind.RestSite?RoomChoice.Rest:node.Event==EventKind.Altar&&run.Gold>=10?RoomChoice.PaidHeal:RoomChoice.Leave);
+                    else room.Choose(node.Event==EventKind.RestSite?RoomChoice.Rest:RoomChoice.Leave);
                     room.Finish();Debug.Log("GUIDE "+id+" "+node.Type+" "+node.Event+" HP="+run.CurrentHP+" GOLD="+run.Gold+" "+room.Visit.Feedback);
                 }
             }

@@ -8,11 +8,13 @@ namespace Brodun.Presentation
 {
     // Small, pixel-snapped uGUI meshes: no packages, gameplay RNG, colliders or raycasts.
     [RequireComponent(typeof(CanvasRenderer))]
-    public sealed class BattleVfx : MaskableGraphic
+    public sealed partial class BattleVfx : MaskableGraphic
     {
         public enum Style { Slash, Ground, Gust, Bolt, Shard, Flame, Wave, Venom, Burst, Ward, StoneWall, FrostShield, EarthAura, Heal, Draw, Power, Charge, PoisonCloud, Fortress, Retaliate, BlastShield }
+        public enum ImpactLook { Strike, Magic, Guard, Reaction, Stone, Gust, Flame, Lightning, Frost, Holy, Arcane }
         public Style CurrentStyle { get; private set; }
         private float progress;
+        private bool cardRelease,cardExhaust,cardEntering;
         private Color ink;
         private Vector2 source,target;
         private CardDefinition definition;
@@ -30,6 +32,15 @@ namespace Brodun.Presentation
         private RectTransform paintedViewport;
         private int paintedPeak;
         private float paintedContact,paintedHold;
+        private bool enhanced;
+        private IntentData enemyIntent;
+        private EnemyAttackLook enemyLook;
+        private float enemyClock;
+        private int enemyHitCount;
+        private ImpactLook? localImpact;
+        private bool heavyImpact;
+        private Color? impactTint;
+        private const float DrawLandingY=HandPresentation.HandTop-.03f;
         public static bool HasWarriorClip(string id)=>id=="earth_strike"||id=="stone_guard"||id=="wind_cut"||id=="wind_read";
         public static bool IsSignature(string id)=>id=="earth_strike"||id=="fire_bolt"||id=="lightning_strike";
         private float SignatureContact=>definition.Id=="earth_strike"?.34f:definition.Id=="fire_bolt"?.36f:.40f;
@@ -78,44 +89,214 @@ namespace Brodun.Presentation
                 default:return Style.Slash;
             }
         }
-        public IEnumerator Present(CardDefinition card,Action impact,bool conditional=false,Action<int> extraHit=null,int hitCount=1,Action delivered=null)
+        public IEnumerator Present(CardDefinition card,Action impact,bool conditional=false,Action<int> extraHit=null,int hitCount=1,
+            Action delivered=null,Action released=null,Action<float> contactScheduled=null)
         {
             definition=card;combo=conditional;
+            enhanced=BattleFeedback.Enhanced&&HasWarriorClip(card.Id);
             CurrentStyle=For(card);ink=Tint(card.Element);raycastTarget=false;
             PreparePaintedClip(card.Id);
             duration=card.Type==CardType.Attack?1.02f:.86f;bool struck=false;int nextHit=1;impactClock=-1;
             bool signature=IsSignature(card.Id);
-            if(signature){signatureSeed=unchecked(++signatureSequence*2654435761u);duration=card.Id=="earth_strike"?1.12f:card.Id=="fire_bolt"?1.06f:.86f;}
+            if(card.RequiresEnemyTarget)signatureSeed=unchecked(++signatureSequence*2654435761u);
+            if(signature)duration=card.Id=="earth_strike"?1.12f:card.Id=="fire_bolt"?1.06f:.86f;
+            attackContacts=card.RequiresEnemyTarget&&!signature&&paintedFrames==null?new float[Mathf.Max(1,hitCount)]:null;
+            if(attackContacts!=null)Array.Fill(attackContacts,-1f);
             float contact=signature?SignatureContact:Contact;
-            bool deliveryShown=false;
+            bool deliveryShown=false,releaseShown=false;
             if(paintedFrames!=null)
             {
                 // Seconds and keyframes are card-local; unpainted cards keep their existing clocks.
                 switch(card.Id)
                 {
-                    case "earth_strike":duration=1.30f;paintedContact=.44f;paintedPeak=8;paintedHold=.12f;break;
+                    case "earth_strike":duration=1.30f;paintedContact=.50f;paintedPeak=8;paintedHold=.12f;break;
                     case "stone_guard":duration=1.25f;paintedContact=.40f;paintedPeak=8;paintedHold=.22f;break;
                     case "wind_cut":duration=1.16f;paintedContact=.42f;paintedPeak=9;paintedHold=.12f;break;
                     default:duration=1.18f;paintedContact=.36f;paintedPeak=7;paintedHold=.15f;break;
                 }
                 contact=paintedContact;
             }
+            contactScheduled?.Invoke(duration*contact);
             for(float t=0;t<duration;t+=Time.unscaledDeltaTime)
             {
                 progress=t/duration;
                 if(paintedFrames!=null)UpdatePaintedClip(contact);
+                if(!releaseShown&&t>=BattleFeedback.WarriorRelease(card.Id)){releaseShown=true;released?.Invoke();}
                 if(!struck&&progress>=contact)
                 {
-                    struck=true;progress=contact;impactClock=Time.unscaledTime;impact?.Invoke();SetVerticesDirty();
+                    struck=true;progress=contact;impactClock=Time.unscaledTime;
+                    if(attackContacts!=null)attackContacts[0]=impactClock;
+                    impact?.Invoke();SetVerticesDirty();
                     if(paintedFrames!=null)UpdatePaintedClip(contact);
                     // Freeze this mesh at contact, not the global clock or combat simulation.
                     if(HitPause(card)>0)yield return new WaitForSecondsRealtime(HitPause(card));
                 }
-                while(struck&&nextHit<hitCount&&Time.unscaledTime-impactClock>=nextHit*MultiHitInterval){extraHit?.Invoke(nextHit);nextHit++;}
+                while(struck&&nextHit<hitCount&&Time.unscaledTime-impactClock>=nextHit*MultiHitInterval)
+                {
+                    if(attackContacts!=null)attackContacts[nextHit]=Time.unscaledTime;
+                    extraHit?.Invoke(nextHit++);
+                }
                 if(!deliveryShown&&card.Id=="wind_read"&&progress>=.90f){deliveryShown=true;delivered?.Invoke();}
                 SetVerticesDirty();yield return null;
             }
-            if(!struck)impact?.Invoke();Destroy(gameObject);
+            if(!struck)impact?.Invoke();
+            while(nextHit<hitCount)extraHit?.Invoke(nextHit++);
+            Destroy(gameObject);
+        }
+        public IEnumerator PresentEnemy(IntentData intent,EnemyAttackLook look,int hits,Action<int> contact)
+        {
+            enemyIntent=intent;enemyLook=look;enemyHitCount=hits;raycastTarget=false;
+            signatureSeed=unchecked(++signatureSequence*2654435761u);
+            var parent=GetComponentInParent<Canvas>();var canvas=gameObject.AddComponent<Canvas>();
+            canvas.overrideSorting=true;canvas.sortingLayerID=parent!=null?parent.sortingLayerID:0;canvas.sortingOrder=5;
+            int count=intent.Type==IntentType.Attack?hits:1,next=0;
+            duration=BattleFeedback.EnemyDuration(count);
+            for(float t=0;t<duration;t+=Time.unscaledDeltaTime)
+            {
+                enemyClock=t;progress=t/duration;
+                while(next<count&&t>=BattleFeedback.EnemyContact+next*BattleFeedback.EnemyHitInterval){contact?.Invoke(next);next++;}
+                SetVerticesDirty();yield return null;
+            }
+            while(next<count){contact?.Invoke(next);next++;}
+            Destroy(gameObject);
+        }
+        public IEnumerator PresentImpact(ImpactLook look,bool heavy,Color? tint=null)
+        {
+            localImpact=look;heavyImpact=heavy;impactTint=tint;raycastTarget=false;
+            string clip=look==ImpactLook.Gust?"wind_cut":look==ImpactLook.Stone?"earth_strike":null;
+            var frames=clip!=null?LoadWarriorFrames(clip):null;
+            Image paint=null;
+            if(frames!=null)
+            {
+                paint=BattleUi.Image(transform,"Contact "+clip,null,Color.white,Vector2.one*.5f,Vector2.one*.5f);
+                paint.preserveAspect=true;
+                paint.rectTransform.sizeDelta=Vector2.one*(heavy?245:195);
+                if(look==ImpactLook.Stone)paint.rectTransform.anchoredPosition=Vector2.down*28;
+            }
+            for(float t=0;t<BattleFeedback.ContactLifetime;t+=Time.unscaledDeltaTime)
+            {
+                progress=t/BattleFeedback.ContactLifetime;
+                if(paint!=null)
+                {
+                    int frame=Mathf.Min(15,8+Mathf.FloorToInt(progress*8));
+                    paint.sprite=frames[frame];paint.color=Alpha(Color.white,1-Ease(Mathf.InverseLerp(.65f,1,progress)));
+                }
+                SetVerticesDirty();
+                yield return null;
+            }
+            Destroy(gameObject);
+        }
+
+        private void DrawLocalImpact(VertexHelper mesh,ImpactLook look)
+        {
+            float fade=1-Ease(progress);
+            float scale=heavyImpact?1.22f:1;
+            var center=rectTransform.rect.center;
+            if(look==ImpactLook.Guard)
+            {
+                var steel=Alpha(new Color(.37f,.82f,1),fade);
+                Arc(mesh,center,(28+17*progress)*scale,-1.18f,1.18f,6,steel,1.20f);
+                Arc(mesh,center,(32+17*progress)*scale,-1.02f,1.02f,2,Alpha(Color.white,fade),1.20f);
+                for(int i=-1;i<=1;i++)
+                    Diamond(mesh,center+new Vector2((34+23*progress)*scale,i*(16+22*progress)),4,5,steel);
+                return;
+            }
+
+            var tint=impactTint??(look==ImpactLook.Reaction?new Color(.72f,.53f,1):
+                look==ImpactLook.Magic?new Color(.33f,.86f,1):new Color(1,.63f,.31f));
+            var bright=Alpha(new Color(1,.96f,.84f),fade);
+            if(look==ImpactLook.Strike)
+            {
+                // A blade-shaped sweep crosses the contact and sheds a short steel afterimage.
+                float sweep=1-Mathf.Pow(1-progress,3);
+                var hub=center+new Vector2(-31,35)*scale;
+                float lead=Mathf.Lerp(-1.9f,.58f,sweep);
+                Arc(mesh,hub,68*scale,lead-1.08f*fade,lead,11*fade*scale,new Color(.65f,.80f,.91f,fade),.74f);
+                Arc(mesh,hub,73*scale,lead-.81f*fade,lead,3*fade*scale,bright,.74f);
+            }
+            if(look==ImpactLook.Arcane)
+            {
+                // A pointed crystal collapses at contact; two splinters continue along its axis.
+                var axis=new Vector2(.94f,.34f);
+                var side=new Vector2(-axis.y,axis.x);
+                var head=center+axis*(12+26*progress)*scale;
+                var tail=center-axis*(62*fade)*scale;
+                var flank=center+side*12*fade*scale;
+                var amethyst=Alpha(new Color(.68f,.48f,1),fade);
+                Quad(mesh,tail,flank,head,center-side*12*fade*scale,amethyst);
+                Line(mesh,tail,head,4*fade,bright);
+                for(int i=-1;i<=1;i+=2)
+                {
+                    var shard=head+(axis*30+side*i*36)*progress*scale;
+                    Line(mesh,shard-axis*12*fade,shard,4*fade,amethyst);
+                }
+            }
+            if(look==ImpactLook.Lightning)
+            {
+                var top=center+new Vector2(-21,84)*scale;
+                var elbow=center+new Vector2(12,41)*scale;
+                var fork=center+new Vector2(-5,38)*scale;
+                Line(mesh,top,elbow,8*fade,Alpha(tint,fade));Line(mesh,elbow,fork,8*fade,Alpha(tint,fade));
+                Line(mesh,fork,center+Vector2.down*20,7*fade,bright);
+                Line(mesh,elbow,center+new Vector2(39,19)*scale,3*fade,bright);
+            }
+            if(look==ImpactLook.Frost||look==ImpactLook.Flame)
+            {
+                bool fire=look==ImpactLook.Flame;
+                for(int i=0;i<7;i++)
+                {
+                    float angle=i*2.4f+.6f;
+                    var axis=new Vector2(Mathf.Cos(angle),Mathf.Sin(angle));
+                    var tip=center+axis*(16+progress*66)*scale+Vector2.up*(fire?48*progress*progress:0);
+                    var wing=new Vector2(-axis.y,axis.x)*(fire?8:5)*fade*scale;
+                    var tail=tip-axis*(fire?18:32)*fade*scale;
+                    var mid=Vector2.Lerp(tail,tip,.6f);
+                    Quad(mesh,tail,mid+wing,tip,mid-wing,Alpha(tint,fade));
+                    Line(mesh,mid,tip,3*fade,bright);
+                }
+            }
+            if(look==ImpactLook.Holy)
+            {
+                var light=Alpha(new Color(1,.91f,.60f),fade);
+                Diamond(mesh,center,6*scale,(34+36*progress)*scale,light);
+                Diamond(mesh,center,(23+20*progress)*scale,4*scale,light);
+                Arc(mesh,center,(20+22*progress)*scale,0,Mathf.PI*2,3*fade,light,.48f);
+            }
+            if(look==ImpactLook.Strike)
+            {
+                var axis=new Vector2(.68f,.73f);
+                float sweep=1-Mathf.Pow(1-progress,4);
+                var from=center+axis*Mathf.Lerp(-59,34,sweep)*scale;
+                var to=center+axis*Mathf.Lerp(14,83,sweep)*scale;
+                Line(mesh,from,to,17*fade*scale,Alpha(BattleUi.Ink,fade));
+                Line(mesh,from,to,10*fade*scale,Alpha(tint,fade));
+                Line(mesh,from,to,4*fade*scale,bright);
+            }
+            else if(look==ImpactLook.Reaction)
+            {
+                float radius=(18+29*progress)*scale;
+                Arc(mesh,center,radius,.18f,2.65f,4,Alpha(tint,fade),.75f);
+                Arc(mesh,center,radius,3.32f,5.75f,4,Alpha(tint,fade),.75f);
+            }
+            if(look==ImpactLook.Magic)
+            {
+                float burst=1-Mathf.Pow(1-progress,3);
+                for(int i=0;i<3;i++)
+                {
+                    float start=i*Mathf.PI*2/3+burst*.35f;
+                    Arc(mesh,center,(12+42*burst)*scale,start,start+1.35f,5*fade,Alpha(tint,fade),.85f);
+                }
+            }
+            float flash=1-Mathf.SmoothStep(0,1,Mathf.Min(1,progress/.36f));
+            Diamond(mesh,center,(8+12*flash)*scale,(10+22*flash)*scale,Alpha(BattleUi.Ink,fade));
+            Diamond(mesh,center,(6+10*flash)*scale,(8+18*flash)*scale,bright);
+            for(int i=0;i<6;i++)
+            {
+                float angle=i*2.4f+.33f;
+                var axis=new Vector2(Mathf.Cos(angle),Mathf.Sin(angle));
+                var tip=center+axis*(17+40*progress)*scale;
+                Line(mesh,tip-axis*(7+8*fade)*scale,tip,3+2*fade,Alpha(tint,fade));
+            }
         }
         private static Color Tint(ElementType e)
         {
@@ -129,182 +310,86 @@ namespace Brodun.Presentation
                 default:return new Color(1,.76f,.42f);
             }
         }
+        internal static BattleVfx CreateCardRelease(RectTransform face,string name)
+        {
+            // A sibling of the face keeps sparks visible as the card's CanvasGroup fades.
+            var rect=BattleUi.Rect(face.parent,name,face.anchorMin,face.anchorMax);
+            rect.pivot=face.pivot;
+            rect.sizeDelta=face.sizeDelta;
+            rect.anchoredPosition=face.anchoredPosition;
+            return rect.gameObject.AddComponent<BattleVfx>();
+        }
+
+        internal void UpdateCardRelease(float phase,Color tint,bool exhaust,bool entering=false)
+        {
+            cardRelease=true;
+            cardExhaust=exhaust;
+            cardEntering=entering;
+            progress=phase;
+            ink=tint;
+            raycastTarget=false;
+            SetVerticesDirty();
+        }
+
+        private void DrawCardRelease(VertexHelper mesh)
+        {
+            var face=rectTransform.rect;
+            float light=1-Ease(Mathf.InverseLerp(.12f,1,progress));
+            var key=Alpha(ink,light);
+            var bottomLeft=new Vector2(face.xMin,face.yMin);
+            var bottomRight=new Vector2(face.xMax,face.yMin);
+            var topLeft=new Vector2(face.xMin,face.yMax);
+            var topRight=new Vector2(face.xMax,face.yMax);
+            Line(mesh,bottomLeft,topLeft,4*light,key);
+            Line(mesh,topLeft,topRight,4*light,key);
+            Line(mesh,topRight,bottomRight,4*light,key);
+            Line(mesh,bottomRight,bottomLeft,4*light,key);
+            float sweep=Mathf.Lerp(face.yMin+12,face.yMax-8,Ease(progress));
+            var start=new Vector2(face.xMin+8,sweep-8);
+            var end=new Vector2(face.xMax-8,sweep+8);
+            Line(mesh,start,end,7+14*light,Alpha(ink,.42f*light));
+            Line(mesh,start,end,2+3*light,Alpha(Color.Lerp(ink,Color.white,.58f),light));
+            float drift=(cardEntering?1-Ease(progress):Ease(progress))*(cardExhaust?76:46);
+            for(int i=0;i<14;i++)
+            {
+                float outward=i%2==0?1:-1;
+                float offset=(i*37%19)/19f;
+                var point=face.center+new Vector2(outward*(face.width*(.32f+offset*.18f)+drift*(.5f+offset)),
+                    Mathf.Lerp(face.yMin+12,face.yMax-12,(i+.5f)/14)+(cardEntering?1:-1)*drift*offset);
+                float size=(3+5*offset)*light;
+                Line(mesh,point-new Vector2(outward*size*2,size),point,Mathf.Max(1,size*.45f),Alpha(ink,.7f*light));
+                Diamond(mesh,point,size,size*(1+offset),key);
+            }
+        }
+
         protected override void OnPopulateMesh(VertexHelper vh)
         {
-            vh.Clear();if(definition==null)return;
-            if(paintedFrames!=null)return; // Real PNG animation replaces, rather than covers, the old mesh for these four cards.
+            vh.Clear();
+            if(cardRelease){DrawCardRelease(vh);return;}
+            if(localImpact.HasValue){DrawLocalImpact(vh,localImpact.Value);return;}
+            if(enemyIntent!=null){DrawEnemyFeedback(vh);return;}
+            if(definition==null)return;
+            if(paintedFrames!=null){if(enhanced)DrawWarriorFeedback(vh);return;}
             if(IsSignature(definition.Id))
             {
                 CaptureSignatureAnchors();
                 if(definition.Id=="earth_strike")DrawEarthSignature(vh);
                 else if(definition.Id=="fire_bolt")DrawFireSignature(vh);
                 else DrawLightningSignature(vh);
-                return; // The other 24 cards retain the existing renderer and timing.
+                return;
             }
-            // Resolve stretched Canvas coordinates at rebuild time, not before layout settles.
-            var rect=rectTransform.rect;
-            // Layout anchors only: preserve every effect shape, asset and timing.
-            CaptureSignatureAnchors();source=emitter;
-            target=CurrentStyle==Style.Ground?victimFoot:impactPoint;
-            float p=progress,travel=Ease(Mathf.InverseLerp(.07f,Contact,p)),fade=1-Ease(Mathf.InverseLerp(.74f,1,p));
-            var c=ink;c.a=fade;var core=Color.Lerp(c,Color.white,.65f);core.a=fade;
-            var point=Vector2.Lerp(source,target,travel);
-            bool support=definition.Type!=CardType.Attack;
-            DrawSupport(vh,p,c,core);
-            if(support)return;
-            // Anticipation is local to the caster; impacts only bloom at the existing contact time.
-            if(p<Contact)
+            CaptureSignatureAnchors();
+            if(definition.RequiresEnemyTarget)
             {
-                float charge=Mathf.Sin(Mathf.Clamp01(p/Contact)*Mathf.PI);
-                Arc(vh,source,22+35*charge,-p*9,3.8f-p*9,3,Alpha(c,charge*.7f),.75f);
+                DrawTargetedCard(vh);
+                return;
             }
-            if(CurrentStyle==Style.Ward)
-            {Arc(vh,source+Vector2.left*75,65+65*p,.25f,5.9f,6,c,.8f);return;}
-            if(CurrentStyle==Style.Ground)
-            {
-                var floor=castFoot;
-                // A traveling fissure, then an erupting rock crown and a wide ground shockwave.
-                bool crush=definition.Id=="earth_crush";
-                for(int i=0;i<12*travel;i++)
-                {
-                    var a=Vector2.Lerp(floor,target,i/12f)+new Vector2(0,i%2==0?-12:12);
-                    var b=Vector2.Lerp(floor,target,(i+1)/12f)+new Vector2(0,i%2==0?12:-12);
-                    Line(vh,a,b,17,new Color(.04f,.025f,.02f,fade));Line(vh,a,b,6,c);
-                    if(i%3==0)Line(vh,b,b+new Vector2(-18,i%2==0?28:-28),4,Alpha(c,.6f));
-                }
-                if(crush&&p<Contact)Arc(vh,target,110-65*travel,0,Mathf.PI*2,5,Alpha(c,travel),.25f);
-                if(p>=Contact)
-                {
-                    float hit=(p-Contact)/(1-Contact),power=crush?1.3f:1;
-                    Arc(vh,target,(55+210*hit)*power,0,Mathf.PI*2,13,c,.30f);
-                    Arc(vh,target,(35+155*hit)*power,0,Mathf.PI*2,5,core,.24f);
-                    for(int i=0;i<9;i++){float a=i*Mathf.PI/4;var d=new Vector2(Mathf.Cos(a),Mathf.Sin(a)*.32f);Line(vh,target+d*20,target+d*(100+hit*155)*power,8,c);}
-                    for(int i=0;i<7;i++)
-                    {
-                        // Ballistic lift and fall instead of a stationary crown.
-                        var v=target+new Vector2((i-3)*(34+hit*38),hit*(crush?620:420)*(1-hit)-hit*40);
-                        Diamond(vh,v,18*power,(crush?66:32)*power,new Color(.27f,.20f,.13f,fade));
-                        Line(vh,v+new Vector2(-9,14),v+new Vector2(0,32),7,c);
-                    }
-                    Debris(vh,target,hit,crush?20:12,crush?220:130,c,true);
-                    Arc(vh,target+Vector2.up*12,40+hit*210,0,Mathf.PI,9,Alpha(c,(1-hit)*.25f),.3f);
-                }
-            }
-            else if(CurrentStyle==Style.Retaliate)
-            {
-                // A slab-driven counter, not a gray wind slash. Only the trace decides the bonus bloom.
-                var slab=Vector2.Lerp(source+Vector2.right*70,target,travel);
-                if(p<Contact){Diamond(vh,slab,32,52,new Color(.28f,.25f,.20f,fade));Line(vh,slab+new Vector2(-20,25),slab+new Vector2(0,45),8,c);}
-                else {float age=(p-Contact)/(1-Contact);Debris(vh,target,age,combo?24:12,combo?210:125,c,true);if(combo)for(int i=0;i<5;i++)Line(vh,target+new Vector2((i-2)*28,-60),target+new Vector2((i-2)*44,70-age*100),8,Alpha(core,1-age));}
-            }
-            else if(CurrentStyle==Style.Slash)
-            {
-                if(p>.10f)
-                {
-                    for(int i=3;i>=0;i--)
-                    {
-                        float phase=p-i*.035f,sweep=Ease(Mathf.InverseLerp(.10f,Contact,phase));
-                        var center=Vector2.Lerp(source,target,sweep)+Vector2.left*i*12;
-                        float end=-1.7f+4.2f*sweep;
-                        Arc(vh,center,125,-1.7f,end,i==0?20:10,Alpha(c,i==0?1:.12f*(4-i)),.72f);
-                        if(i==0)Arc(vh,center,119,-1.7f,end,5,core,.72f);
-                    }
-                    if(p>=Contact)Debris(vh,target,(p-Contact)/(1-Contact),10,180,c,false);
-                }
-            }
-            else if(CurrentStyle==Style.Gust||CurrentStyle==Style.Wave)
-            {
-                bool water=CurrentStyle==Style.Wave;
-                for(int i=3;i>=0;i--)
-                {
-                    float lag=Ease(Mathf.InverseLerp(.10f,Contact,p-i*.025f));
-                    var wake=Vector2.Lerp(source,target,lag);
-                    Ribbon(vh,source,wake,p+i*.16f,water?19:34,i==0?11:5,Alpha(c,1-i*.23f));
-                    Arc(vh,wake,40+i*12,-1.3f,1.3f,8-i,Alpha(c,1-i*.22f),water?.55f:1);
-                }
-                if(!water)for(int i=0;i<3;i++)Arc(vh,point,45+i*22,p*17+i,p*17+i+4,4,Alpha(core,.6f),.6f);
-                if(p>=Contact)
-                {
-                    float age=(p-Contact)/(1-Contact);
-                    if(water)for(int i=0;i<15;i++){float a=i*2.4f;var splash=target+new Vector2(Mathf.Cos(a)*age*170,Mathf.Abs(Mathf.Sin(a))*age*200-age*age*180);Diamond(vh,splash,4,8*(1-age),Alpha(core,1-age));}
-                    else {Debris(vh,target,age,14,180,c,false);for(int i=0;i<3;i++)Arc(vh,target+Vector2.up*age*35,55+i*25+age*55,p*18+i,p*18+i+4,6,Alpha(c,1-age),.55f);}
-                }
-            }
-            else if(CurrentStyle==Style.Bolt)
-            {
-                int strikes=definition.Id=="lightning_chain"?2:1;
-                if(p<Contact)
-                {Arc(vh,target,30+18*travel,0,Mathf.PI*2,3,Alpha(c,travel),.35f);}
-                for(int j=0;j<strikes;j++)
-                {
-                    float age=impactClock<0?-1:(Time.unscaledTime-impactClock-j*MultiHitInterval)/duration;
-                    if(age<0||age>.24f)continue;
-                    float intensity=(1-age/.34f)*(.65f+.35f*Mathf.Abs(Mathf.Cos(age*60)));
-                    var aim=target+Vector2.right*(strikes==1?0:j==0?-22:30);var top=aim+Vector2.up*300;
-                    var last=top;
-                    for(int i=1;i<=8;i++)
-                    {
-                        var next=Vector2.Lerp(top,aim,i/8f)+Vector2.right*(i==8?0:Mathf.Sin(i*9+j*3)*33);
-                        Line(vh,last,next,22,Alpha(c,intensity*.35f));Line(vh,last,next,10,Alpha(c,intensity));Line(vh,last,next,4,Alpha(core,intensity));
-                        if(i==3||i==5)Line(vh,next,next+new Vector2((i%2==0?-1:1)*65,-42),3,Alpha(c,intensity*.6f));
-                        last=next;
-                    }
-                    Debris(vh,aim,age/.34f,10,110,Alpha(c,intensity),false);
-                    if(age<.065f)ImpactCrown(vh,aim,age*4,c,core,false);
-                }
-            }
-            else if(CurrentStyle==Style.Shard)
-            {
-                for(int i=0;i<3;i++)
-                {var crystal=point+new Vector2(-i*27,(i-1)*26*(1-travel));Line(vh,crystal-Vector2.right*65,crystal,6,Alpha(c,.35f));Diamond(vh,crystal,32,12,c);Diamond(vh,crystal+Vector2.up*3,22,5,core);}
-                if(p>=Contact){float h=(p-Contact)/(1-Contact);Debris(vh,target,h,18,150,core,false);for(int i=0;i<6;i++){float a=i*Mathf.PI/3;var frost=target+new Vector2(Mathf.Cos(a),Mathf.Sin(a))*(35+h*100);Line(vh,frost-Vector2.up*8,frost+Vector2.up*8,3,Alpha(c,1-h));Line(vh,frost-Vector2.right*8,frost+Vector2.right*8,3,Alpha(core,1-h));}if(combo){Arc(vh,target,110*(1-h),0,Mathf.PI*2,7,Alpha(new Color(.25f,.65f,1,fade),1-h),.6f);for(int i=0;i<5;i++)Diamond(vh,target+new Vector2((i-2)*30,h*70),12,25,Alpha(core,1-h));}}
-            }
-            else if(CurrentStyle==Style.Flame)
-            {
-                // Arcing fireball with a tapered, cooling wake; inferno rains fire downward.
-                bool inferno=definition.Id=="fire_inferno";
-                var origin=inferno?target+new Vector2(-120,270):source;
-                var fire=Vector2.Lerp(origin,target,travel)+Vector2.up*Mathf.Sin(travel*Mathf.PI)*(inferno?20:65);
-                if(p<Contact)
-                {
-                    for(int i=7;i>=0;i--){var tail=fire+new Vector2(-i*13,Mathf.Sin(i*1.9f+p*24)*9);Diamond(vh,tail,26-i*2,20-i,Alpha(c,1-i*.10f));}
-                    Diamond(vh,fire,22,19,core);
-                }
-                else
-                {
-                    float h=(p-Contact)/(1-Contact);
-                    for(int i=0;i<7;i++){var flame=target+new Vector2((i-3)*22,-20+h*(70+i%3*38));Diamond(vh,flame,(18+i%2*9)*(1-h),35*(1-h),Alpha(c,1-h));}
-                    Debris(vh,target,h,inferno?26:15,inferno?210:135,c,false);
-                }
-            }
-            else if(CurrentStyle==Style.Burst||CurrentStyle==Style.BlastShield)
-            {
-                if(p<Contact){Ribbon(vh,source,point,p,10,12,c);Diamond(vh,point,12,12,core);}
-                else
-                {
-                    float h=(p-Contact)/(1-Contact),blast=Ease(Mathf.Clamp01(h*2.7f));
-                    if(combo&&h>.1f)for(int i=0;i<3;i++)ImpactCrown(vh,target+new Vector2((i-1)*65,Mathf.Abs(i-1)*32),Mathf.Clamp01((h-.1f)*1.5f),c,core,false);
-                    Arc(vh,target,28+blast*170,0,Mathf.PI*2,18*(1-h),c,.72f);
-                    Arc(vh,target,12+blast*120,0,Mathf.PI*2,5,Alpha(core,1-h),.75f);
-                    if(h<.18f)Diamond(vh,target,85*(1-h/.18f),70*(1-h/.18f),Alpha(core,.8f));
-                    Debris(vh,target,h,24,245,c,false);
-                    for(int i=0;i<5;i++)Diamond(vh,target+new Vector2((i-2)*32,h*110),22+25*h,18+20*h,new Color(.14f,.09f,.10f,(1-h)*.35f));
-                }
-            }
-            else
-            {
-                // Venom: a weighted droplet rather than a fireball recolor.
-                var drop=point+Vector2.up*Mathf.Sin(travel*Mathf.PI)*90;
-                if(p<Contact){for(int i=0;i<5;i++)Diamond(vh,drop-new Vector2(i*14,i*3),18-i*2,23-i*3,Alpha(c,1-i*.15f));}
-                else {float h=(p-Contact)/(1-Contact);Debris(vh,target,h,combo?24:12,combo?180:120,c,true);for(int i=0;i<5;i++)Arc(vh,target+new Vector2((i-2)*20,-h*70),10+h*22,0,Mathf.PI*2,4,Alpha(new Color(.64f,.30f,.80f,fade),1-h),.8f);if(combo)for(int i=0;i<5;i++)Line(vh,target+new Vector2((i-2)*24,40),target+new Vector2((i-2)*24,-30-h*100),5,Alpha(c,1-h));}
-            }
-            if(p>=Contact)
-            {
-                float hit=(p-Contact)/(1-Contact);
-                if(CurrentStyle==Style.Ground||CurrentStyle==Style.Retaliate||CurrentStyle==Style.Burst||CurrentStyle==Style.BlastShield)ImpactCrown(vh,target,hit,c,core,CurrentStyle==Style.Ground);
-                else if(CurrentStyle!=Style.Bolt&&hit<.2f)
-                    for(int i=0;i<4;i++){float a=i*Mathf.PI/2+.4f;var dir=new Vector2(Mathf.Cos(a),Mathf.Sin(a));Line(vh,target+dir*10,target+dir*(55*(1-hit/.2f)),6,Alpha(core,1-hit/.2f));}
-            }
+            source=emitter;
+            target=impactPoint;
+            var c=Alpha(ink,1-Ease(Mathf.InverseLerp(.74f,1,progress)));
+            var core=Color.Lerp(c,Color.white,.65f);
+            core.a=c.a;
+            DrawSupport(vh,progress,c,core);
         }
         private void DrawSupport(VertexHelper vh,float p,Color c,Color core)
         {
@@ -415,25 +500,30 @@ namespace Brodun.Presentation
                 Diamond(vh,pos,size,gravity?size*.7f:size,tint);
             }
         }
-        private void PreparePaintedClip(string id)
+        private static Sprite[] LoadWarriorFrames(string id)
         {
-            if(!HasWarriorClip(id))return;
             if(!warriorClips.TryGetValue(id,out var frames))
             {
                 frames=Resources.LoadAll<Sprite>("BrodunWarriorVfx/"+id).OrderBy(s=>s.name,StringComparer.Ordinal).ToArray();
                 if(frames.Length!=16)
                 {
                     Debug.LogWarning("BRODUN: expected 16 painted VFX frames for "+id+", got "+frames.Length+". Using existing renderer.");
-                    return;
+                    return null;
                 }
                 warriorClips.Add(id,frames);
             }
-            paintedFrames=frames;
+            return frames;
+        }
+        private void PreparePaintedClip(string id)
+        {
+            if(!HasWarriorClip(id))return;
+            paintedFrames=LoadWarriorFrames(id);
+            if(paintedFrames==null)return;
             // Above the hand scrim, but clipped below HP/Intent and above card text/Energy.
             var parentCanvas=GetComponentInParent<Canvas>();
             var canvas=gameObject.AddComponent<Canvas>();canvas.overrideSorting=true;
             canvas.sortingLayerID=parentCanvas!=null?parentCanvas.sortingLayerID:0;canvas.sortingOrder=(parentCanvas!=null?parentCanvas.sortingOrder:0)+5;
-            paintedViewport=BattleUi.Rect(transform,"Painted battle viewport",new Vector2(.02f,id=="wind_read"?.295f:HandPresentation.HoverTop),new Vector2(.98f,.81f));
+            paintedViewport=BattleUi.Rect(transform,"Painted battle viewport",new Vector2(.02f,id=="wind_read"?DrawLandingY-.03f:HandPresentation.HoverTop),new Vector2(.98f,.81f));
             paintedViewport.gameObject.AddComponent<RectMask2D>();
             paintedEffect=BattleUi.Image(paintedViewport,"Painted "+id,null,Color.white,new Vector2(.5f,.5f),new Vector2(.5f,.5f));
             paintedEffect.preserveAspect=true;
@@ -450,6 +540,12 @@ namespace Brodun.Presentation
         private int PaintedFrame(float phase,float contact)
         {
             float holdEnd=contact+paintedHold/duration;
+            if(enhanced&&definition.Id=="earth_strike"&&phase<contact)
+                return Mathf.Clamp(4+Mathf.FloorToInt(Mathf.InverseLerp(contact-.07f,contact,phase)*4),4,7);
+            if(enhanced&&definition.Id=="wind_cut"&&phase<contact)
+                return Mathf.Clamp(Mathf.FloorToInt(Mathf.InverseLerp(BattleFeedback.WarriorRelease("wind_cut")/duration,contact,phase)*8),0,8);
+            if(definition.Id=="earth_strike"&&phase<contact)
+                return phase<.25f?Mathf.Clamp(Mathf.FloorToInt(phase/.25f*4),0,3):4+Mathf.Clamp(Mathf.FloorToInt((phase-.25f)/(contact-.25f)*4),0,3);
             if(phase<contact)return Mathf.Clamp(Mathf.FloorToInt(phase/contact*paintedPeak),0,paintedPeak-1);
             if(phase<holdEnd)
                 return definition.Id=="wind_cut"&&phase>contact+(holdEnd-contact)*.5f?10:paintedPeak;
@@ -469,7 +565,19 @@ namespace Brodun.Presentation
             int frame=PaintedFrame(p,contact);float fade=1-Ease(Mathf.InverseLerp(.88f,1,p));
             if(definition.Id=="earth_strike")
             {
-                float travel=Ease(Mathf.InverseLerp(.08f,contact,p));
+                if(enhanced)
+                {
+                    if(p*duration<=BattleFeedback.WarriorRelease(definition.Id))castFoot.x=FootPoint(casterRect,castFoot).x;
+                    // Eruption is rooted at the target. The mesh carries the moving fissure;
+                    // translating a complete rock mound across the floor looked like a sticker.
+                    float grow=Ease(Mathf.InverseLerp(contact-.065f,contact+.045f,p));
+                    PlacePainted(paintedEffect,frame,victimFoot,Vector2.one*Mathf.Lerp(290,590,grow),fade*grow);
+                    for(int i=0;i<paintedTrails.Count;i++)paintedTrails[i].color=Color.clear;
+                    return;
+                }
+                // Charge follows the advancing actor; the ground baseline never bobs.
+                if(p<.25f)castFoot.x=FootPoint(casterRect,castFoot).x;
+                float travel=Ease(Mathf.InverseLerp(.25f,contact,p));
                 var start=castFoot+Vector2.right*45;var point=Vector2.Lerp(start,victimFoot,travel);
                 float size=Mathf.Lerp(430,640,Ease(Mathf.InverseLerp(.15f,contact,p)));
                 PlacePainted(paintedEffect,frame,point,Vector2.one*size,fade);
@@ -483,23 +591,26 @@ namespace Brodun.Presentation
             {
                 // This is a shield beside the body, not a projectile or enemy impact.
                 var foot=FootPoint(casterRect,castFoot);
-                PlacePainted(paintedEffect,frame,foot+Vector2.right*120,Vector2.one*600,fade);
+                PlacePainted(paintedEffect,frame,foot+Vector2.right*120,Vector2.one*(enhanced?530:600),fade);
             }
             else if(definition.Id=="wind_cut")
             {
                 // Readable crescent launch followed by acceleration; frame 9 is at the target.
-                float travel=Mathf.Clamp01(Mathf.InverseLerp(.09f,contact,p));travel=travel*travel;
+                float launch=enhanced?BattleFeedback.WarriorRelease("wind_cut")/duration:.09f;
+                if(enhanced&&p<=launch)emitter=ActorPoint(casterRect,new Vector2(.88f,.56f),emitter);
+                float travel=Mathf.Clamp01(Mathf.InverseLerp(launch,contact,p));travel=travel*travel;
+                if(enhanced&&p<launch){PlacePainted(paintedEffect,frame,emitter,Vector2.one*180,p/launch*.55f);return;}
                 PlacePainted(paintedEffect,frame,Vector2.Lerp(emitter,impactPoint,travel),Vector2.one*560,fade);
                 for(int i=0;i<paintedTrails.Count;i++)
                 {
-                    float lag=Mathf.Max(0,p-(i+1)*.045f),t=Mathf.InverseLerp(.09f,contact,lag);t*=t;
+                    float lag=Mathf.Max(0,p-(i+1)*(enhanced?.025f:.045f)),t=Mathf.InverseLerp(launch,contact,lag);t*=t;
                     float wakeFade=1-Ease(Mathf.InverseLerp(contact,contact+.20f,p));
-                    PlacePainted(paintedTrails[i],Mathf.Min(7,PaintedFrame(lag,contact)),Vector2.Lerp(emitter,impactPoint,t),Vector2.one*510,fade*wakeFade*(.24f-i*.065f));
+                    PlacePainted(paintedTrails[i],Mathf.Min(7,PaintedFrame(lag,contact)),Vector2.Lerp(emitter,impactPoint,t),Vector2.one*510,fade*wakeFade*(.24f-i*.065f)*(enhanced&&lag<launch?0:1));
                 }
             }
             else
             {
-                var r=rectTransform.rect;var hand=r.min+Vector2.Scale(r.size,new Vector2(.50f,.325f));
+                var r=rectTransform.rect;var hand=r.min+Vector2.Scale(r.size,new Vector2(.50f,DrawLandingY));
                 float deliver=Ease(Mathf.InverseLerp(contact+paintedHold/duration,.90f,p));
                 var point=Vector2.Lerp(castFoot+Vector2.up*195,hand,deliver)+Vector2.up*Mathf.Sin(deliver*Mathf.PI)*45;
                 float size=Mathf.Lerp(430,145,deliver);
@@ -517,8 +628,8 @@ namespace Brodun.Presentation
         private void CaptureSignatureAnchors()
         {
             var r=rectTransform.rect;
-            var left=r.min+Vector2.Scale(r.size,new Vector2(.25f,.44f));
-            var right=r.min+Vector2.Scale(r.size,new Vector2(.77f,.44f));
+            var left=r.min+Vector2.Scale(r.size,new Vector2(.25f,BattleUi.FloorY));
+            var right=r.min+Vector2.Scale(r.size,new Vector2(.77f,BattleUi.FloorY));
             if(!anchorsCaptured)
             {
                 castFoot=FootPoint(casterRect,left);
@@ -529,6 +640,166 @@ namespace Brodun.Presentation
             }
             // Follow the hand during charge only, then lock the launch point for a stable trajectory.
             if(progress<.14f)emitter=ActorPoint(casterRect,new Vector2(.76f,.50f),emitter);
+        }
+        private void DrawWarriorFeedback(VertexHelper vh)
+        {
+            CaptureSignatureAnchors();float p=progress,seconds=p*duration;
+            float tail=1-Ease(Mathf.InverseLerp(.75f,1,p));
+            var soil=new Color(.62f,.43f,.25f,tail);var glow=new Color(1,.81f,.48f,tail);
+            var wind=new Color(.31f,.91f,.79f,tail);var white=new Color(.82f,1,.94f,tail);
+            if(definition.Id=="earth_strike")
+            {
+                float release=BattleFeedback.WarriorRelease(definition.Id);
+                float travel=Ease(Mathf.InverseLerp(release,paintedContact*duration,seconds));
+                var foot=FootPoint(casterRect,castFoot);
+                Dust(vh,foot,Mathf.Clamp01(seconds/.5f),10,100,Mathf.Sin(Mathf.Clamp01(seconds/.6f)*Mathf.PI)*.65f);
+                var start=castFoot+Vector2.right*60;
+                for(int i=0;i<20;i++)
+                {
+                    if(travel<i/20f)break;
+                    var a=Vector2.Lerp(start,victimFoot,i/20f)+new Vector2(0,(Noise(i+7)-.5f)*24);
+                    var b=Vector2.Lerp(start,victimFoot,(i+1)/20f)+new Vector2(0,(Noise(i+8)-.5f)*24);
+                    Line(vh,a,b,18,new Color(.06f,.035f,.02f,tail*.9f));Line(vh,a,b,5,soil);
+                    float fresh=1-Mathf.Clamp01((travel-i/20f)*3);
+                    Line(vh,a,b,2,Alpha(glow,fresh));
+                    if(i%3==0)
+                    {
+                        var branch=b+new Vector2(-20,(i%2==0?1:-1)*(18+Noise(i+60)*19));
+                        Line(vh,b,branch,7,new Color(.09f,.06f,.035f,tail));Line(vh,b,branch,2,soil);
+                        Dust(vh,b,Mathf.Clamp01((travel-i/20f)*2),3,45,tail*.4f);
+                    }
+                }
+                if(p<paintedContact)return;
+                float age=(p-paintedContact)/(1-paintedContact);
+                for(int i=0;i<15;i++)
+                {
+                    float local=Mathf.Max(0,age-Noise(i+100)*.12f);
+                    var delta=new Vector2((Noise(i+120)-.5f)*380*local,local*(260+Noise(i+140)*240)-local*local*600);
+                    delta.y=Mathf.Max(-8,delta.y);
+                    Rock(vh,victimFoot+delta,(6+Noise(i+160)*8)*(1-age),12*(1-age),Alpha(soil,1-age));
+                }
+                Dust(vh,victimFoot,age,20,230,(1-age)*.55f);
+                if(age<.23f)ImpactCrown(vh,victimFoot,age*2,soil,glow,true);
+            }
+            else if(definition.Id=="stone_guard")
+            {
+                var center=FootPoint(casterRect,castFoot)+new Vector2(120,110);
+                float gather=Ease(Mathf.Clamp01(p/paintedContact));
+                for(int i=0;i<11;i++)
+                {
+                    float angle=i*2.4f,remain=1-gather;
+                    var position=center+new Vector2(Mathf.Cos(angle)*(60+remain*100),Mathf.Sin(angle)*70-remain*70);
+                    Rock(vh,position,(4+i%3*2)*(1-p),8,Alpha(soil,Mathf.Sin(gather*Mathf.PI)));
+                }
+                Dust(vh,center+Vector2.down*110,p,12,170,tail*.40f);
+                if(p>=paintedContact)
+                {
+                    float lockAge=(p-paintedContact)*duration;
+                    float shine=Mathf.Max(0,1-lockAge/.28f);
+                    Line(vh,center+new Vector2(-52,-66),center+new Vector2(0,60),4,Alpha(glow,shine));
+                    Line(vh,center+new Vector2(0,60),center+new Vector2(54,-66),4,Alpha(glow,shine));
+                }
+            }
+            else if(definition.Id=="wind_cut")
+            {
+                float launch=BattleFeedback.WarriorRelease(definition.Id);
+                if(seconds<launch)
+                {
+                    var weapon=ActorPoint(casterRect,new Vector2(.88f,.56f),emitter);
+                    float charge=seconds/launch;
+                    for(int i=0;i<5;i++)Line(vh,weapon+new Vector2(-70-i*9,(i-2)*10)*(1-charge),weapon,2,Alpha(wind,charge*.6f));
+                }
+                if(p>=paintedContact)
+                {
+                    float age=(p-paintedContact)/(1-paintedContact),cut=1-Ease(Mathf.Clamp01(age/.45f));
+                    for(int i=0;i<2;i++)
+                    {
+                        var axis=new Vector2(.85f,i==0?.65f:-.65f);
+                        Line(vh,impactPoint-axis*(70+age*90),impactPoint+axis*(100+age*110),10*cut,Alpha(wind,cut));
+                        Line(vh,impactPoint-axis*50,impactPoint+axis*80,3,Alpha(white,cut));
+                    }
+                    Debris(vh,impactPoint,age,17,210,wind,false);
+                }
+            }
+            else // Support only: orbit -> card-shaped light -> actual hand delivery callback.
+            {
+                var center=castFoot+Vector2.up*170;
+                float flight=Ease(Mathf.InverseLerp(.50f,.90f,p));
+                var r=rectTransform.rect;var destination=r.min+Vector2.Scale(r.size,new Vector2(.5f,DrawLandingY));
+                for(int i=0;i<12;i++)
+                {
+                    float angle=i*2.4f+p*9;
+                    var swirl=center+new Vector2(Mathf.Cos(angle)*78,Mathf.Sin(angle)*48);
+                    var position=Vector2.Lerp(swirl,destination,flight)+Vector2.up*Mathf.Sin(flight*Mathf.PI)*42;
+                    Diamond(vh,position,3,6,Alpha(white,tail*(1-flight*.55f)));
+                }
+                if(flight>0&&p<.92f)
+                {
+                    var card=Vector2.Lerp(center,destination,flight)+Vector2.up*Mathf.Sin(flight*Mathf.PI)*42;
+                    var a=card+new Vector2(-15,-23);var b=card+new Vector2(-11,24);var c=card+new Vector2(18,20);var d=card+new Vector2(14,-27);
+                    Quad(vh,a,b,c,d,new Color(.06f,.22f,.23f,tail*.85f));
+                    Line(vh,a,b,3,white);Line(vh,b,c,3,wind);Line(vh,c,d,3,white);Line(vh,d,a,3,wind);
+                }
+                if(p>=.90f)Arc(vh,destination,18+(p-.9f)*400,0,Mathf.PI*2,3,Alpha(wind,tail),.3f);
+            }
+        }
+        private void DrawEnemyFeedback(VertexHelper vh)
+        {
+            CaptureSignatureAnchors();
+            var c=enemyLook==EnemyAttackLook.Fire?new Color(1,.43f,.13f):enemyLook==EnemyAttackLook.Venom?new Color(.60f,.83f,.27f):enemyLook==EnemyAttackLook.Spark?new Color(.76f,.83f,1):enemyLook==EnemyAttackLook.Magic?new Color(.54f,.72f,1):new Color(.88f,.73f,.55f);
+            float t=enemyClock;
+            if(enemyIntent.Type!=IntentType.Attack)
+            {
+                var center=ActorPoint(casterRect,new Vector2(.5f,.45f),emitter);
+                float gather=Ease(Mathf.InverseLerp(0,BattleFeedback.EnemyContact,t));
+                float fade=1-Ease(Mathf.InverseLerp(BattleFeedback.EnemyContact+.08f,duration,t));
+                if(enemyIntent.Type==IntentType.Block)
+                {
+                    var shield=new Color(.51f,.76f,.91f,fade);var top=center+Vector2.up*85;
+                    var l=center+new Vector2(-67,45);var r=center+new Vector2(67,45);var bottom=center+Vector2.down*80;
+                    Quad(vh,top,l,bottom,r,Alpha(shield,.11f*gather));
+                    Line(vh,top,l,6,Alpha(shield,gather));Line(vh,l,bottom,6,Alpha(shield,gather));
+                    Line(vh,bottom,r,6,Alpha(shield,gather));Line(vh,r,top,6,Alpha(shield,gather));
+                    if(t>=BattleFeedback.EnemyContact)Debris(vh,center,(t-BattleFeedback.EnemyContact)/.4f,9,115,shield,false);
+                }
+                else if(enemyIntent.Type==IntentType.Buff)
+                {
+                    var aura=new Color(.91f,.50f,.94f,fade);
+                    for(int i=0;i<11;i++)
+                    {
+                        float angle=i*2.4f+t*4;
+                        var position=center+new Vector2(Mathf.Cos(angle)*(110-70*gather),Mathf.Sin(angle)*55+Mathf.Max(0,t-BattleFeedback.EnemyContact)*110);
+                        Diamond(vh,position,4,9,aura);
+                    }
+                    if(t>=BattleFeedback.EnemyContact)
+                    {
+                        var up=center+Vector2.up*(t-BattleFeedback.EnemyContact)*100;
+                        Line(vh,up+new Vector2(-22,-7),up+Vector2.up*18,6,aura);Line(vh,up+new Vector2(22,-7),up+Vector2.up*18,6,aura);
+                    }
+                }
+                return;
+            }
+            // One contact per immutable result.Hits entry, never per animation frame.
+            if(enemyLook==EnemyAttackLook.Claw||enemyLook==EnemyAttackLook.Heavy)return;
+            int hits=enemyHitCount;
+            for(int i=0;i<hits;i++)
+            {
+                float release=BattleFeedback.EnemyRelease+i*BattleFeedback.EnemyHitInterval;
+                float hit=BattleFeedback.EnemyContact+i*BattleFeedback.EnemyHitInterval;
+                if(t<release||t>=hit)continue;
+                var aim=impactPoint+Vector2.up*(i%2==0?12:-12);
+                float travel=Ease(Mathf.InverseLerp(release,hit,t));
+                var start=emitter;var point=Vector2.Lerp(start,aim,travel);
+                if(enemyLook==EnemyAttackLook.Spark)ElectricPath(vh,start,point,40+i,5,c);
+                else
+                {
+                    float arc=enemyLook==EnemyAttackLook.Venom?42:20;
+                    point+=Vector2.up*Mathf.Sin(travel*Mathf.PI)*arc;
+                    Ribbon(vh,Vector2.Lerp(start,point,.65f),point,t,10,8,Alpha(c,.45f));
+                    Diamond(vh,point,enemyLook==EnemyAttackLook.Fire?18:12,enemyLook==EnemyAttackLook.Venom?16:12,c);
+                    Diamond(vh,point,6,7,Color.white);
+                }
+            }
         }
         private float Noise(int index)
         {

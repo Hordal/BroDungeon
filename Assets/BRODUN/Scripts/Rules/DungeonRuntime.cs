@@ -65,7 +65,7 @@ namespace Brodun
             if (id == null || run.Status!=RunStatus.InProgress || run.CurrentHP<=0) return false;
             if (!run.completed.Contains(id)) run.completed.Add(id);
             run.ActiveRoom = null;
-            if (Node(run,id).Type == RoomType.Boss) run.Status = RunStatus.Complete;
+            if (Node(run,id).Type == RoomType.Boss && run.CurrentArea>=run.AreaCount) run.Status = RunStatus.Complete;
             return true;
         }
     }

@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 0e840ba6fd4ff35489498e57af77874f, type: 3}
+  m_Name: M04
+  m_EditorClassIdentifier:
+  definition:
+    id: "M04"
+    name: "\ube44\uc804\ucc3d"
+    description: "\uc801 1\uba85\uc5d0\uac8c \ud53c\ud574 27\uc744 \uc90d\ub2c8\ub2e4."
+    element: "none"
+    cost: 3
+    owner: "mage"
+    starter_only: 0
+    catalog_only: 1
+    rarity: "middle"
+    build: "sniper"
+    target_scope: "single"
+    element_application: "none"
+    presentation_id: "lightning_strike"
+    effects:
+    - type: "damage"
+      condition: ""
+      amount: 27
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+      fallback_amount: 0
+      penetration: "none"
+  artwork: {fileID: 21300000, guid: 429a25f2622a5a5a8cdd4fbabdf28910, type: 3}

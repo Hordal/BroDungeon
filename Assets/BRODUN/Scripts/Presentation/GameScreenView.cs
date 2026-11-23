@@ -15,13 +15,13 @@ namespace Brodun.Presentation
         public FlowScreen Screen { get; private set; }
         public RectTransform Root { get; private set; }
         public IReadOnlyDictionary<string,StyledButton> NodeButtons => nodes;
-        public bool IsDeckVisible => deckOverlay!=null && deckOverlay.activeSelf;
+        public bool IsDeckVisible => Flow!=null&&Flow.Session.DeckOpen;
         private readonly Dictionary<string,StyledButton> nodes=new Dictionary<string,StyledButton>();
         private readonly Dictionary<string,GameObject> nodeStatus=new Dictionary<string,GameObject>();
         private readonly Dictionary<string,Text> nodeLabels=new Dictionary<string,Text>();
         private readonly Dictionary<string,Image> nodeIcons=new Dictionary<string,Image>();
         private MapPathsGraphic paths;
-        private GameObject modal,deckOverlay;
+        private GameObject modal;
         private CanvasGroup content;
         private Text hpHud,goldHud,areaHud,deckHud;
         public DungeonMapScroller MapScroller { get; private set; }
@@ -39,11 +39,21 @@ namespace Brodun.Presentation
             var scaler=canvasObject.GetComponent<CanvasScaler>();scaler.uiScaleMode=CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution=new Vector2(1920,1080);scaler.matchWidthOrHeight=.5f;
             content=canvasObject.GetComponent<CanvasGroup>();content.interactable=false;
-            Background(screen==FlowScreen.Title?Art.titleBackground:Art.mapBackground,screen==FlowScreen.Title?.13f:.78f);
+            bool title=screen==FlowScreen.Title;
+            bool themedMap=screen==FlowScreen.DungeonMap&&flow.Session.Run?.IsThemedRun==true;
+            var background=title?Art.titleBackground:Art.mapBackground;
+            if(themedMap)background=BattleBackgrounds.Resolve(flow.Session.Run.ThemeId,false,background);
+            Background(background,title?.13f:themedMap?.62f:.78f);
             if(screen==FlowScreen.Title)BuildTitle();
             else if(screen==FlowScreen.CharacterSelect)BuildCharacters();
+            else if(screen==FlowScreen.ThemeSelect)BuildThemes();
             else if(screen==FlowScreen.DungeonMap)BuildMap();
-            else if(screen==FlowScreen.Room)gameObject.AddComponent<RoomView>().Build(flow,Root);
+            else if(screen==FlowScreen.Room)
+            {
+                gameObject.AddComponent<RoomView>().Build(flow,Root);
+                Button(Root,"CodexButton","도감",new Vector2(.08f,.055f),new Vector2(.165f,.115f),()=>Flow.OpenCardLibrary(Root));
+                Button(Root,"DeckButton","현재 덱",new Vector2(.845f,.145f),new Vector2(.92f,.20f),()=>Flow.OpenCardLibrary(Root,true));
+            }
             else if(screen==FlowScreen.RunResult)RunResultView.Build(flow,Root);
         }
         public void Ready()
@@ -53,7 +63,11 @@ namespace Brodun.Presentation
             if(EventSystem.current!=null)
             {
                 var first=Root.GetComponentsInChildren<StyledButton>().FirstOrDefault(b=>b.interactable);
-                if(first!=null)EventSystem.current.SetSelectedGameObject(first.gameObject);
+                if(first!=null)
+                {
+                    if(Screen==FlowScreen.CharacterSelect||Screen==FlowScreen.ThemeSelect)first.FocusQuietly();
+                    else EventSystem.current.SetSelectedGameObject(first.gameObject);
+                }
             }
         }
         private void Background(Sprite sprite,float darkness)
@@ -67,15 +81,16 @@ namespace Brodun.Presentation
         }
         private void BuildTitle()
         {
-            Label(Root,"R O G U E L I T E   /   D E C K B U I L D E R",24,Muted,new Vector2(.2f,.86f),new Vector2(.8f,.91f));
-            var title=Label(Root,"BRODUN",144,Gold,new Vector2(.14f,.64f),new Vector2(.86f,.85f));
+            var title=Label(Root,"BRODUN",144,Gold,new Vector2(.14f,.68f),new Vector2(.86f,.86f));
             title.font=Art.logoFont;
-            title.fontStyle=FontStyle.Bold;title.gameObject.AddComponent<Shadow>().effectDistance=new Vector2(4,-5);
-            Label(Root,"운명을 고르고, 심연으로 내려가라",27,Pale,new Vector2(.25f,.61f),new Vector2(.75f,.67f));
-            Button(Root,"GameStart","GAME START  /  게임 시작",new Vector2(.37f,.41f),new Vector2(.63f,.49f),()=>Flow.StartNewRun());
-            Button(Root,"Quit","EXIT  /  종료",new Vector2(.40f,.29f),new Vector2(.60f,.36f),()=>Flow.QuitGame());
-            Label(Root,"B R O D U N   ·   잊혀진 회랑",21,Muted,new Vector2(.25f,.045f),new Vector2(.75f,.09f));
-            // No false Continue/Settings promise: neither feature is implemented yet.
+            title.fontStyle=FontStyle.Bold;
+            title.gameObject.AddComponent<Shadow>().effectDistance=new Vector2(4,-5);
+            Label(Root,"운명을 고르고, 심연으로 내려가라",27,Pale,new Vector2(.25f,.60f),new Vector2(.75f,.67f));
+
+            Button(Root,"GameStart","게임 시작",new Vector2(.37f,.46f),new Vector2(.63f,.535f),()=>Flow.StartNewRun());
+            Button(Root,"AudioSettings","설정",new Vector2(.37f,.36f),new Vector2(.63f,.435f),()=>GameAudio.Ensure().OpenSettings(Art,Root));
+            Button(Root,"CodexButton","도감",new Vector2(.37f,.26f),new Vector2(.63f,.335f),()=>Flow.OpenCardLibrary(Root));
+            Button(Root,"Quit","종료",new Vector2(.37f,.16f),new Vector2(.63f,.235f),()=>Flow.QuitGame());
         }
         private void BuildCharacters()
         {
@@ -91,13 +106,43 @@ namespace Brodun.Presentation
                 var rect=(RectTransform)card.transform;
                 Image(rect,"Hero portrait",Art.Portrait(hero.Id),Color.white,new Vector2(.20f,.39f),new Vector2(.8f,.82f)).preserveAspect=true;
                 Label(rect,hero.Name,38,Gold,new Vector2(.06f,.84f),new Vector2(.94f,.98f));
-                Label(rect,"HP  "+hero.MaxHP+"     ENERGY  "+hero.Energy,26,Pale,new Vector2(.05f,.295f),new Vector2(.95f,.36f));
-                Label(rect,hero.Description,23,Pale,new Vector2(.06f,.19f),new Vector2(.94f,.29f));
-                Label(rect,"시작 덱  "+hero.StartingDeck.Count+"장",20,Muted,new Vector2(.08f,.135f),new Vector2(.92f,.20f));
+                Label(rect,"HP  "+hero.MaxHP+"     ENERGY  "+Flow.Session.Definitions.BaseEnergyFor(hero.Id),26,Pale,new Vector2(.05f,.295f),new Vector2(.95f,.36f));
+                string style=definitions.Cards.Any(card=>card.IsReworked)?hero.Description:hero.Id switch
+                {
+                    CharacterId.Warrior=>"방패로 버티고, 반격하거나 쌓은 방어도를 공격에 씁니다.",
+                    CharacterId.Mage=>"강한 마법으로 단일 적을 저격하거나, 광역 주문과 원소 반응을 활용합니다.",
+                    _=>"회복과 축복으로 버티고, 약화와 낙인으로 적을 무너뜨립니다."
+                };
+                var playstyle=Label(rect,style,23,Pale,new Vector2(.075f,.125f),new Vector2(.925f,.29f));
+                playstyle.resizeTextForBestFit=true;
+                playstyle.resizeTextMinSize=18;playstyle.resizeTextMaxSize=23;
                 Label(rect,"선택",28,Gold,new Vector2(.12f,.025f),new Vector2(.88f,.13f));
             }
             Button(Root,"Back","돌아가기",new Vector2(.04f,.05f),new Vector2(.19f,.12f),()=>Flow.ReturnToTitle());
-            Label(Root,"선택한 영웅의 카드로 새로운 여정이 시작됩니다",22,Muted,new Vector2(.27f,.06f),new Vector2(.78f,.11f));
+        }
+        private void BuildThemes()
+        {
+            var run=Flow.Session.Run;
+            int area=(run?.CurrentArea??0)+1;
+            Label(Root,area+"구역 테마 선택",48,Gold,new Vector2(.20f,.87f),new Vector2(.80f,.95f));
+            var themes=DungeonThemes.All.Where(theme=>run?.HasVisitedTheme(theme.Id)!=true&&
+                DungeonThemes.IsAvailable(Flow.Session.Definitions,theme.Id)).ToArray();
+            for(int i=0;i<themes.Length;i++)
+            {
+                float left=i==2&&themes.Length==3?.34f:.17f+(i%2)*.34f;
+                float bottom=themes.Length<=2?.32f:.49f-(i/2)*.35f;
+                BuildTheme(themes[i],left,bottom);
+            }
+            if(run==null)
+                Button(Root,"Back","돌아가기",new Vector2(.04f,.05f),new Vector2(.19f,.12f),()=>Flow.ReturnToCharacterSelect());
+        }
+        private void BuildTheme(DungeonTheme theme,float left,float bottom)
+        {
+            var option=Button(Root,"Theme_"+theme.Id,"",new Vector2(left,bottom),new Vector2(left+.32f,bottom+.33f),()=>Flow.ChooseTheme(theme.Id),true);
+            var panel=(RectTransform)option.transform;
+            var preview=BattleBackgrounds.Resolve(theme.Id,false,Art.mapBackground);
+            Image(panel,"Theme preview",preview,Color.white,new Vector2(.03f,.21f),new Vector2(.97f,.97f)).preserveAspect=true;
+            Label(panel,theme.Name,34,Gold,new Vector2(.04f,.02f),new Vector2(.96f,.21f));
         }
         private void BuildMap()
         {
@@ -105,13 +150,14 @@ namespace Brodun.Presentation
             if(run==null)throw new InvalidOperationException("Map view requires an active RunState.");
             var panel=Image(Root,"Run HUD",null,new Color(.025f,.04f,.045f,.94f),new Vector2(.025f,.865f),new Vector2(.975f,.965f));
             var hud=(RectTransform)panel.transform;
-            Label(hud,Flow.Session.Definitions.Character(run.SelectedCharacter).Name,30,Gold,new Vector2(.025f,.12f),new Vector2(.16f,.88f));
-            hpHud=Label(hud,"",29,Pale,new Vector2(.17f,.12f),new Vector2(.36f,.88f));
-            goldHud=Label(hud,"",29,Gold,new Vector2(.37f,.12f),new Vector2(.54f,.88f));
-            areaHud=Label(hud,"",26,Muted,new Vector2(.55f,.12f),new Vector2(.75f,.88f));
+            Button(hud,"CodexButton","도감",new Vector2(.018f,.15f),new Vector2(.112f,.85f),()=>Flow.OpenCardLibrary(Root));
+            Label(hud,Flow.Session.Definitions.Character(run.SelectedCharacter).Name,29,Gold,new Vector2(.12f,.12f),new Vector2(.26f,.88f));
+            hpHud=Label(hud,"",29,Pale,new Vector2(.265f,.12f),new Vector2(.42f,.88f));
+            goldHud=Label(hud,"",29,Gold,new Vector2(.43f,.12f),new Vector2(.58f,.88f));
+            areaHud=Label(hud,"",26,Muted,new Vector2(.59f,.12f),new Vector2(.77f,.88f));
             var deckButton=Button(hud,"DeckButton","현재 덱",new Vector2(.79f,.15f),new Vector2(.975f,.85f),OpenDeck);
             deckHud=deckButton.GetComponentInChildren<Text>();
-            Label(Root,"THE FORGOTTEN PATH",40,Gold,new Vector2(.2f,.77f),new Vector2(.8f,.85f));
+            Label(Root,run.IsThemedRun?DungeonThemes.Find(run.ThemeId).Name:"THE FORGOTTEN PATH",40,Gold,new Vector2(.2f,.77f),new Vector2(.8f,.85f));
             var viewportImage=Image(Root,"DungeonMapViewport",null,new Color(.016f,.025f,.035f,.58f),new Vector2(.025f,.205f),new Vector2(.975f,.765f));
             viewportImage.raycastTarget=true;viewportImage.gameObject.AddComponent<RectMask2D>();
             MapScroller=viewportImage.gameObject.AddComponent<DungeonMapScroller>();
@@ -185,54 +231,24 @@ namespace Brodun.Presentation
         }
         public void OpenDeck()
         {
-            if(!Flow.Session.OpenDeck())return;
-            RefreshMap();
-            CloseModal();
-            deckOverlay=PanelOverlay("DeckOverlay",out var panel);
-            Label(panel,"현재 덱  /  "+Flow.Session.Run.Deck.Count+"장",36,Gold,new Vector2(.1f,.86f),new Vector2(.9f,.96f));
-            var viewport=Image(panel,"Deck viewport",null,new Color(.03f,.045f,.055f,.95f),new Vector2(.065f,.16f),new Vector2(.935f,.83f));
-            viewport.gameObject.AddComponent<RectMask2D>();
-            var scroll=viewport.gameObject.AddComponent<ScrollRect>();scroll.horizontal=false;scroll.scrollSensitivity=35;
-            var list=Rect((RectTransform)viewport.transform,"Card list",new Vector2(0,1),Vector2.one);list.pivot=new Vector2(.5f,1);list.sizeDelta=new Vector2(0,0);
-            var layout=list.gameObject.AddComponent<VerticalLayoutGroup>();layout.spacing=8;layout.padding=new RectOffset(15,15,12,12);
-            layout.childControlHeight=true;layout.childForceExpandHeight=false;layout.childControlWidth=true;layout.childForceExpandWidth=true;
-            list.gameObject.AddComponent<ContentSizeFitter>().verticalFit=ContentSizeFitter.FitMode.PreferredSize;
-            scroll.content=list;scroll.viewport=(RectTransform)viewport.transform;
-            foreach(var instance in Flow.Session.Run.Deck)
-            {
-                var card=Flow.Session.Definitions.Card(instance.CardId);
-                string element=Flow.Session.Definitions.Elements.Single(e=>e.Id==card.Element).Name;
-                var row=Image(list,"DeckCard_"+instance.InstanceId,null,new Color(.09f,.13f,.16f,.95f),Vector2.zero,Vector2.one);
-                row.gameObject.AddComponent<LayoutElement>().preferredHeight=144;
-                var tint=CardView.ElementTint(card.Element);
-                Image(row.transform,"Element accent",null,tint,new Vector2(0,.06f),new Vector2(.004f,.94f));
-                var illustration=Flow.CardArtwork(card.Id);
-                if(illustration!=null)
-                {
-                    var thumb=Image(row.transform,"Card artwork",illustration,Color.white,new Vector2(.015f,.05f),new Vector2(.155f,.95f));
-                    thumb.preserveAspect=true;thumb.raycastTarget=false;
-                }
-                float start=illustration!=null?.18f:.025f;
-                Label((RectTransform)row.transform,card.Name,27,Pale,new Vector2(start,.62f),new Vector2(.58f,.94f),TextAnchor.MiddleLeft);
-                string role=card.Type==CardType.Attack?"공격":card.Type==CardType.Guard?"방어":"기술";
-                Label((RectTransform)row.transform,"비용 "+card.Cost+"  ·  "+element+" / "+role,21,card.Cost==0?BattleUi.Teal:tint,new Vector2(.58f,.63f),new Vector2(.975f,.94f),TextAnchor.MiddleRight);
-                var rules=Label((RectTransform)row.transform,card.Description,22,Pale,new Vector2(start,.09f),new Vector2(.965f,.61f),TextAnchor.MiddleLeft);
-                rules.resizeTextForBestFit=true;rules.resizeTextMinSize=18;rules.resizeTextMaxSize=22;
-            }
-            Button(panel,"DeckClose","닫기",new Vector2(.35f,.035f),new Vector2(.65f,.125f),CloseDeck);
-            Focus("DeckClose");
+            if(Flow.OpenCardLibrary(Root,true))RefreshMap();
         }
-        public void CloseDeck()
-        {
-            Flow.Session.CloseDeck();if(deckOverlay!=null)Destroy(deckOverlay);deckOverlay=null;Focus("DeckButton");
-        }
+        public void CloseDeck()=>Flow.CloseCardLibrary();
+
         public void Back()
         {
             if(Flow.Session.IsTransitioning)return;
-            if(IsDeckVisible){CloseDeck();return;}
-            if(modal!=null){CloseModal();return;}
+            if(TryDismissOverlay())return;
             if(Screen==FlowScreen.CharacterSelect)Flow.ReturnToTitle();
+            else if(Screen==FlowScreen.ThemeSelect)Flow.ReturnToCharacterSelect();
             else if(Screen==FlowScreen.DungeonMap)ConfirmLeave();
+        }
+        internal bool TryDismissOverlay()
+        {
+            if(Flow.CloseCardLibrary())return true;
+            if(modal==null)return false;
+            CloseModal();
+            return true;
         }
         private void ConfirmLeave()
         {
@@ -295,7 +311,7 @@ namespace Brodun.Presentation
             {
                 if(Flow.Session.IsTransitioning)return;
                 if(modal!=null && !button.transform.IsChildOf(modal.transform))return;
-                if(deckOverlay!=null && !button.transform.IsChildOf(deckOverlay.transform))return;
+                if(Flow.IsCardLibraryOpen)return;
                 action();
             });
             if(!string.IsNullOrEmpty(title))Label((RectTransform)image.transform,title,27,Gold,new Vector2(.04f,.05f),new Vector2(.96f,.95f));

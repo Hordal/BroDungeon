@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Linq;
 using NUnit.Framework;
 namespace Brodun.Tests
 {
-    public sealed class CoreRulesTests : RulesTest
+    public sealed class CoreRulesTests : LegacyRulesTest
     {
         [TestCase(CharacterId.Warrior,"earth_strike,stone_guard,wind_cut,wind_read")]
         [TestCase(CharacterId.Mage,"fire_bolt,ice_guard,lightning_strike,lightning_charge")]
@@ -12,15 +12,15 @@ namespace Brodun.Tests
         {
             var r=Run(id);Assert.AreEqual(60,r.MaxHP);Assert.AreEqual(60,r.CurrentHP);Assert.AreEqual(0,r.Gold);
             Assert.AreEqual(id,r.SelectedCharacter);Assert.AreEqual(RunStatus.InProgress,r.Status);
-            CollectionAssert.AreEqual(deck.Split(','),r.Deck.Select(c=>c.CardId));
-            CollectionAssert.AreEqual(new[]{"card-0","card-1","card-2","card-3"},r.Deck.Select(c=>c.InstanceId));
-            Assert.AreEqual(3,Data.Character(id).Energy);Assert.AreEqual("start",r.CurrentNode);
+            CollectionAssert.AreEqual(deck.Split(','),r.Deck.Skip(6).Select(c=>c.CardId));
+            CollectionAssert.AreEqual(Enumerable.Range(0,10).Select(i=>"card-"+i),r.Deck.Select(c=>c.InstanceId));
+            Assert.AreEqual(5,Data.BaseEnergyFor(id));Assert.AreEqual("start",r.CurrentNode);
         }
         [Test] public void RunInstancesAndAssetDefinitionsAreIndependent()
         {
             var first=Run();var second=Run();first.AddCard("earth_strike");first.AddGold(50);
-            Assert.AreEqual(4,second.Deck.Count);Assert.AreEqual(0,second.Gold);Assert.AreEqual(4,Data.Character(CharacterId.Warrior).StartingDeck.Count);
-            Assert.AreEqual("card-4",first.AcquiredCards.Single());Assert.AreNotSame(first.Deck[0],second.Deck[0]);
+            Assert.AreEqual(10,second.Deck.Count);Assert.AreEqual(0,second.Gold);Assert.AreEqual(10,Data.Character(CharacterId.Warrior).StartingDeck.Count);
+            Assert.AreEqual("card-10",first.AcquiredCards.Single());Assert.AreNotSame(first.Deck[0],second.Deck[0]);
         }
         [Test] public void GoldAndHealValidation()
         {
@@ -31,28 +31,28 @@ namespace Brodun.Tests
         }
         [Test] public void CostsAreChargedOnceAndInvalidPlaysDoNothing()
         {
-            var b=Battle();var attack=b.Deck.Hand.First(x=>x.CardId=="earth_strike");
-            Assert.IsFalse(b.PlayCard("missing"));Assert.AreEqual(3,b.Energy);
-            Assert.IsTrue(b.PlayCard(attack.InstanceId));Assert.AreEqual(2,b.Energy);
-            Assert.IsFalse(b.PlayCard(attack.InstanceId));Assert.AreEqual(2,b.Energy);
-            b.Energy=0;var guard=b.Deck.Hand.First(x=>x.CardId=="stone_guard");
+            var b=Battle();var attack=DrawCard(b,"earth_strike");
+            Assert.IsFalse(b.PlayCard("missing"));Assert.AreEqual(5,b.Energy);
+            Assert.IsTrue(b.PlayCard(attack.InstanceId));Assert.AreEqual(4,b.Energy);
+            Assert.IsFalse(b.PlayCard(attack.InstanceId));Assert.AreEqual(4,b.Energy);
+            b.Energy=0;var guard=DrawCard(b,"stone_guard");
             Assert.IsFalse(b.PlayCard(guard.InstanceId));Assert.IsTrue(b.Deck.Hand.Contains(guard));
         }
         [Test] public void DrawDiscardReshuffleMaintainEveryInstanceExactlyOnce()
         {
-            var b=Battle();b.Deck.EndTurn();Assert.AreEqual(0,b.Deck.Hand.Count);Assert.AreEqual(4,b.Deck.DiscardPile.Count);
-            b.Deck.Draw(20);Assert.AreEqual(4,b.Deck.Hand.Count);Assert.AreEqual(0,b.Deck.DiscardPile.Count);
-            Assert.AreEqual(4,b.Deck.Hand.Select(c=>c.InstanceId).Distinct().Count());
-            b.Deck.EndTurn();b.Deck.NextTurn();Assert.AreEqual(4,b.Deck.Hand.Count);
+            var b=Battle();b.Deck.EndTurn();Assert.AreEqual(0,b.Deck.Hand.Count);Assert.AreEqual(5,b.Deck.DiscardPile.Count);
+            b.Deck.Draw(20);Assert.AreEqual(10,b.Deck.Hand.Count);Assert.AreEqual(0,b.Deck.DiscardPile.Count);
+            Assert.AreEqual(10,b.Deck.Hand.Select(c=>c.InstanceId).Distinct().Count());
+            b.Deck.EndTurn();b.Deck.NextTurn();Assert.AreEqual(5,b.Deck.Hand.Count);
         }
         [Test] public void ExhaustIsBattleLocalAndUsePrecedesDrawEffect()
         {
             var run=Run();var b=Battle(run);
-            var wind=b.Deck.Hand.Single(c=>c.CardId=="wind_read");
+            var wind=DrawCard(b,"wind_read");
             Assert.IsTrue(b.PlayCard(wind.InstanceId));Assert.AreEqual(1,b.Deck.ExhaustPile.Count);
-            b.Deck.EndTurn();b.Deck.Draw(20);Assert.AreEqual(3,b.Deck.Hand.Count);
-            Assert.AreEqual(4,run.Deck.Count);
-            Assert.AreEqual(4,DeckRuntime.Begin(Data,run,DungeonRuntime.Node(run,"r1")).Hand.Count);
+            b.Deck.EndTurn();b.Deck.Draw(20);Assert.AreEqual(9,b.Deck.Hand.Count);
+            Assert.AreEqual(10,run.Deck.Count);
+            Assert.AreEqual(5,DeckRuntime.Begin(Data,run,DungeonRuntime.Node(run,"r1")).Hand.Count);
             var recycle=new DeckRuntime(Data,new[]{new CardInstance("draw-self","water_stream")},new SeededRandom(1),1);
             var def=recycle.Use("draw-self");Assert.AreEqual("water_stream",def.Id);
             recycle.Draw(1);Assert.AreEqual("draw-self",recycle.Hand.Single().InstanceId);
@@ -79,11 +79,11 @@ namespace Brodun.Tests
             var r=CardEffectResolver.Resolve(b,Data.Card("lightning_chain"));
             Assert.AreEqual(7,r.Damage);Assert.AreEqual(3,r.Blocked);
         }
-        [Test] public void WeakUsesMaximumDurationAndTicksOnNonAttack()
+        [Test] public void WeakAddsDurationUpToThreeAndTicksOnNonAttack()
         {
             var b=Battle();b.Enemy.Status.ApplyWeak(2);b.Enemy.Status.ApplyWeak(1);
-            Assert.AreEqual(2,b.Enemy.Status.Weak);b.Enemy.PatternIndex=2;IntentResolver.Decide(b.Enemy);
-            b.EndTurn();Assert.AreEqual(1,b.Enemy.Status.Weak);Assert.AreEqual(5,b.Enemy.Block);
+            Assert.AreEqual(3,b.Enemy.Status.Weak);b.Enemy.PatternIndex=2;IntentResolver.Decide(b.Enemy);
+            b.EndTurn();Assert.AreEqual(2,b.Enemy.Status.Weak);Assert.AreEqual(5,b.Enemy.Block);
         }
         [Test] public void PoisonIgnoresBlockTicksBeforeEnemyAndDecreases()
         {
@@ -113,15 +113,15 @@ namespace Brodun.Tests
         }
         [Test] public void EnergyCapAndTurnRecovery()
         {
-            var b=Battle();b.Energy=6;CardEffectResolver.Resolve(b,Data.Card("lightning_charge"));Assert.AreEqual(6,b.Energy);
-            b.Energy=0;b.Block=8;b.EndTurn();Assert.AreEqual(3,b.Energy);Assert.AreEqual(0,b.Block);Assert.AreEqual(2,b.Turn);
+            var b=Battle();b.Energy=8;CardEffectResolver.Resolve(b,Data.Card("lightning_charge"));Assert.AreEqual(8,b.Energy);
+            b.Energy=0;b.Block=8;b.EndTurn();Assert.AreEqual(5,b.Energy);Assert.AreEqual(0,b.Block);Assert.AreEqual(2,b.Turn);
         }
         [Test] public void IntentPreviewEqualsExecutedDamageAndAdvancesOnce()
         {
             var b=Battle();b.Enemy.Status.AddStrength(2);b.Enemy.Status.ApplyWeak(2);b.Block=2;
-            var preview=b.CurrentIntent;Assert.AreEqual(5,preview.Amount);Assert.AreEqual(3,preview.ExpectedHPDamage(b.Block));
-            b.EndTurn();Assert.AreEqual(5,b.LastEnemyAction.Intent.Amount);Assert.AreEqual(3,b.LastEnemyAction.HPDamage);
-            Assert.AreEqual(57,b.Run.CurrentHP);Assert.AreEqual(1,b.Enemy.PatternIndex);Assert.AreEqual(7,b.CurrentIntent.Amount);
+            var preview=b.CurrentIntent;Assert.AreEqual(8,preview.Amount);Assert.AreEqual(6,preview.ExpectedHPDamage(b.Block));
+            b.EndTurn();Assert.AreEqual(8,b.LastEnemyAction.Intent.Amount);Assert.AreEqual(6,b.LastEnemyAction.HPDamage);
+            Assert.AreEqual(54,b.Run.CurrentHP);Assert.AreEqual(1,b.Enemy.PatternIndex);Assert.AreEqual(10,b.CurrentIntent.Amount);
         }
         [Test] public void FrozenMultiAttackAppliesWeakPerHitAndBlockAcrossHits()
         {
@@ -137,10 +137,10 @@ namespace Brodun.Tests
             IntentResolver.Execute(b.Run,b,new IntentData(IntentType.Buff,2));
             Assert.AreEqual(0,b.Enemy.Block);Assert.AreEqual(2,b.Enemy.Status.Strength);
         }
-        [TestCase("ruin_gargoyle",1,38,6)]
-        [TestCase("moss_slime",3,42,6)]
-        [TestCase("gale_warden",3,56,8)]
-        [TestCase("fallen_colossus",3,64,10)]
+        [TestCase("ruin_gargoyle",1,44,9)]
+        [TestCase("moss_slime",3,48,9)]
+        [TestCase("gale_warden",3,68,10)]
+        [TestCase("fallen_colossus",3,82,13)]
         [TestCase("venom_eel",1,42,6)]
         [TestCase("coil_golem",3,68,8)]
         [TestCase("foundry_tyrant",3,80,10)]

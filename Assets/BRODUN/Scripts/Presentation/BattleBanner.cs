@@ -11,7 +11,7 @@ namespace Brodun.Presentation
         private Coroutine bannerRoutine;
         public void Build(Transform parent,PresentationAssets art)
         {
-            var panel=BattleUi.Image(parent,"Turn banner",null,new Color(.015f,.025f,.04f,.60f),new Vector2(.39f,.865f),new Vector2(.61f,.915f));
+            var panel=BattleUi.Surface(parent,"Turn banner",new Vector2(.39f,.85f),new Vector2(.61f,.90f),BattleChrome.Form.Command,BattleUi.Bronze);
             group=panel.gameObject.AddComponent<CanvasGroup>();group.blocksRaycasts=false;group.alpha=0;
             label=BattleUi.Text(panel.transform,"Announcement","",art.font,25,BattleUi.Gold,Vector2.zero,Vector2.one);
         }

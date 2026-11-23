@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -24,3 +24,14 @@ MonoBehaviour:
     - wind_cut
     - wind_read
   portrait: {fileID: 0}
+  startingDeckOverride:
+  - B-W01
+  - B-W01
+  - B-W02
+  - B-W02
+  - B-W02
+  - B-W02
+  - W01
+  - W12
+  - E04
+  - E08

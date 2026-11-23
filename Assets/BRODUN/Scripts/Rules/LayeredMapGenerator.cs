@@ -32,7 +32,11 @@ namespace Brodun
         public string GeneratorVersion => "layered-v2";
         public DungeonGraph Graph { get; }
         public IReadOnlyList<RoomNode> Rooms { get; }
-        internal GeneratedDungeon(DungeonGraph graph,IReadOnlyList<RoomNode> rooms){Graph=graph;Rooms=rooms;}
+        private readonly bool openingEncounters;
+        internal GeneratedDungeon(DungeonGraph graph,IReadOnlyList<RoomNode> rooms,bool openingEncounters=false)
+        {Graph=graph;Rooms=rooms;this.openingEncounters=openingEncounters;}
+        internal bool IsOpeningBattle(RoomNode room,int layer) => openingEncounters &&
+            room.Layer==layer && room.Type==RoomType.Battle && room.Encounter==EnemyType.Normal;
     }
     public static class LayeredMapGenerator
     {
@@ -41,7 +45,7 @@ namespace Brodun
         {
             config=config??MapGenerationConfig.Default;
             var graph=GenerateGraph(seed,config);
-            return new GeneratedDungeon(graph,RoomAssignment.Assign(graph,seed,config));
+            return new GeneratedDungeon(graph,RoomAssignment.Assign(graph,seed,config),config.OpeningEncounters);
         }
         // Stage A: monotone neighbouring-layer coverage, then safe optional branch/merge edges.
         public static DungeonGraph GenerateGraph(uint seed,MapGenerationConfig config)
@@ -51,8 +55,8 @@ namespace Brodun
             layers.Add(new List<GraphNode>{new GraphNode("start",0,0)});
             for(int layer=1;layer<=count;layer++)
             {
-                // First choice fans into 2 nodes; final intermediate layer converges to 2.
-                int width=layer==1 || layer==count?2:Pick(rng,config.MinNodes,config.MaxNodes);
+                // The last two battle lanes converge at one shop, immediately before the boss.
+                int width=layer==count?1:layer==1 || layer==count-1?2:Pick(rng,config.MinNodes,config.MaxNodes);
                 var row=new List<GraphNode>();
                 for(int lane=0;lane<width;lane++)row.Add(new GraphNode("r"+serial++,layer,lane));
                 layers.Add(row);
@@ -102,7 +106,7 @@ namespace Brodun
                 var room=new Assignment{Type=RoomType.Battle,Enemy=EnemyType.Normal};
                 if(node.Id=="start")room.Type=RoomType.Start;
                 else if(node.Id=="boss"){room.Type=RoomType.Boss;room.Enemy=EnemyType.Boss;}
-                else if(node.Layer>1)
+                else if(node.Layer>(config.OpeningEncounters?2:1))
                 {
                     int total=config.BattleWeight+config.EliteWeight+config.PuzzleWeight+config.EventWeight;
                     int roll=(int)(rng.Next()*total);
@@ -123,28 +127,32 @@ namespace Brodun
                 }
                 rooms.Add(node.Id,room);
             }
-            // Guaranteed opportunities, not guaranteed rewards on every path.
-            var shop=graph.Nodes.First(n=>n.Layer==2);
-            rooms[shop.Id]=new Assignment{Type=RoomType.Event,Event=EventKind.Shop};
-            foreach(var layer in graph.Nodes.Where(n=>n.Layer>0 && n.Layer<=graph.IntermediateLayers).GroupBy(n=>n.Layer))
+            // Give every route a respite halfway through. Adjacent lanes offer different activities.
+            var pause=graph.Nodes.Where(n=>n.Layer==(graph.IntermediateLayers+1)/2).ToArray();
+            int restLane=(int)(rng.Next()*pause.Length);
+            foreach(var node in pause)
             {
-                // At least half each layer is combat; enough fights on the entire graph.
-                var ordered=layer.ToArray();int needed=(ordered.Length+1)/2;
-                foreach(var node in ordered.Reverse())
-                {
-                    if(ordered.Count(n=>rooms[n.Id].Type==RoomType.Battle)>=needed)break;
-                    if(node.Id!=shop.Id)rooms[node.Id]=new Assignment{Type=RoomType.Battle,Enemy=EnemyType.Normal};
-                }
+                rooms[node.Id]=node.Lane==restLane
+                    ?new Assignment{Type=RoomType.Event,Event=EventKind.RestSite}
+                    :new Assignment{Type=RoomType.Puzzle};
             }
-            // Before Boss, both choices are combat; one elite. Previous connected elites become normal.
-            var final=graph.Nodes.Where(n=>n.Layer==graph.IntermediateLayers).ToArray();
+            // The main run buys time for a second battle by moving the early shop to the break.
+            var shop=config.OpeningEncounters?pause.First(n=>n.Lane!=restLane):graph.Nodes.First(n=>n.Layer==2);
+            rooms[shop.Id]=new Assignment{Type=RoomType.Event,Event=EventKind.Shop};
+            foreach(var previous in shop.Previous)
+                if(rooms[previous].Type==RoomType.Event&&rooms[previous].Event==EventKind.Shop)
+                    rooms[previous]=new Assignment{Type=RoomType.Puzzle};
+            // Keep the elite/normal choice on the approach to the shop.
+            var merchant=graph.Nodes.Single(n=>n.Layer==graph.IntermediateLayers);
+            rooms[merchant.Id]=new Assignment{Type=RoomType.Event,Event=EventKind.Shop};
+            var final=graph.Nodes.Where(n=>n.Layer==graph.IntermediateLayers-1).ToArray();
             foreach(var node in final)rooms[node.Id]=new Assignment{Type=RoomType.Battle,Enemy=EnemyType.Normal};
             var elite=final[(int)(rng.Next()*final.Length)];rooms[elite.Id].Enemy=EnemyType.Elite;
             foreach(var previous in elite.Previous)rooms[previous].Enemy=EnemyType.Normal;
             // Prevent adjacent same altar/rest/shop, including the guaranteed shop override.
             foreach(var node in graph.Nodes.Where(n=>n.Layer>1))
                 if(rooms[node.Id].Type==RoomType.Event && node.Previous.Any(p=>rooms[p].Type==RoomType.Event && rooms[p].Event==rooms[node.Id].Event))
-                    rooms[node.Id]=new Assignment{Type=RoomType.Battle,Enemy=EnemyType.Normal};
+                    rooms[node.Id]=new Assignment{Type=RoomType.Puzzle};
             var result=new List<RoomNode>();
             foreach(var node in graph.Nodes)
             {

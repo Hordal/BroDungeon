@@ -1,23 +1,23 @@
 # BRODUN 전투 배경 팩
 
-일반전·엘리트와 보스전에 사용할 회화풍 PNG 8장이다. 기존 픽셀 배경과 몬스터 에셋은 보존한다.
+회랑·불·서리·공허의 일반전·엘리트, 보스전에 사용하는 배경 8장이다. 몬스터와 배경은 같은 테마 ID를 기준으로 고른다.
 
 ## 사용
 
-- 기본 게임: 기존처럼 `Assets/BRODUN/Scenes/BrodunBoot.unity` 실행.
+- `Assets/BRODUN/Scenes/BrodunBoot.unity`에서 시작하고, 캐릭터 선택 후 1구역 테마를 고른다. 1·2구역 보스를 처치하면 방문하지 않은 테마 중 다음 구역을 직접 고른다.
 - 8장 미리보기: **BRODUN > Art > Battle Background Pack**.
 - 위치: `Assets/BRODUN/Resources/BRODUN/Backgrounds/`.
-- 전투 배경은 실제 조우한 적의 `Definition.Area`와 방의 보스 여부로 선택한다. 일반전과 엘리트는 normal, 보스는 boss를 사용한다.
+- 일반 게임은 현재 구역의 테마 ID로 배경과 조우를 선택한다. 일반전과 엘리트는 normal, 보스는 boss 배경을 사용한다.
 - 미지원 구역이나 누락된 리소스에는 기존 `BattlePresentationAssets.background`를 사용한다.
 
-| 기존 구역 번호 | 테마 | 일반전 및 엘리트 | 보스전 |
+| 테마 ID | 테마 | 일반전 및 엘리트 | 보스전 |
 |---|---|---|---|
-| 1 | 잊혀진 회랑 | 01_ruins_normal.png | 01_ruins_boss.png |
-| 2 | 침잠의 수맥 | 02_waterway_normal.png | 02_waterway_boss.png |
-| 3 | 소멸의 화로 | 03_foundry_normal.png | 03_foundry_boss.png |
-| 4 리소스 시안 | 폭풍의 첨탑 | 04_storm_normal.png | 04_storm_boss.png |
+| ruins | 잊혀진 회랑 | 01_ruins_normal.png | 01_ruins_boss.png |
+| frost | 서리의 수맥 | 02_waterway_normal.png | 02_waterway_boss.png |
+| fire | 소멸의 화로 | 03_foundry_normal.png | 03_foundry_boss.png |
+| void | 공허의 성좌 | 04_storm_normal.png | 04_storm_boss.png |
 
-**네 번째 테마는 질풍·번개 몬스터에서 확장한 시안이다.** 확정된 네 번째 구역이나 보스 데이터를 대체한다는 의미가 아니다. 4개 중 3개를 방문하는 새 진행 규칙을 이 변경에서 구현하지 않는다. 기본 게임의 현재 구역·몬스터 편성과 YeonJun의 별도 57종 모션 팩을 변경하지 않는다.
+서리와 공허 배경은 기존 Unity GUID를 유지하도록 파일 접두사를 재사용한다. 불·서리·공허는 YeonJun의 테마별 일반 15종·엘리트 3종·보스 1종을 사용하고, 회랑은 가고일·슬라임·질풍 파수꾼·몰락한 거신을 사용한다.
 
 ## 아트와 임포트
 

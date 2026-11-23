@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 0e840ba6fd4ff35489498e57af77874f, type: 3}
+  m_Name: M08
+  m_EditorClassIdentifier:
+  definition:
+    id: "M08"
+    name: "\uc9d1\ud589 \uad11\uc120"
+    description: "\uc801 1\uba85\uc5d0\uac8c \ud53c\ud574 20\uc744 \uc90d\ub2c8\ub2e4. \uc0ac\uc6a9\ud558\uae30 \uc804\uc5d0 \uadf8 \uc801\uc758 HP\uac00 \ucd5c\ub300 HP\uc758 \uc808\ubc18 \uc774\ud558\ub77c\uba74 \ucd94\uac00 \ud53c\ud574 12\ub97c \uc90d\ub2c8\ub2e4."
+    element: "none"
+    cost: 3
+    owner: "mage"
+    starter_only: 0
+    catalog_only: 1
+    rarity: "high"
+    build: "sniper"
+    target_scope: "single"
+    element_application: "none"
+    presentation_id: "lightning_strike"
+    effects:
+    - type: "damage"
+      condition: ""
+      amount: 20
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+      fallback_amount: 0
+      penetration: "none"
+    - type: "conditional_damage"
+      condition: "hp_half_before"
+      amount: 12
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+      fallback_amount: 0
+      penetration: "none"
+  artwork: {fileID: 21300000, guid: 9f7faf4548ff51ab8c2a0def80257eab, type: 3}

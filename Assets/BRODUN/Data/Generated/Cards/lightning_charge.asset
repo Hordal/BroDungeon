@@ -15,7 +15,7 @@ MonoBehaviour:
   definition:
     id: lightning_charge
     name: "\uC804\uD558 \uCD95\uC801"
-    description: "\uD589\uB3D9\uB825 +1(\uCD5C\uB300 6). \uC774\uBC88 \uC804\uD22C\uC5D0\uC11C
+    description: "\uD589\uB3D9\uB825 +1(\uCD5C\uB300 8). \uC774\uBC88 \uC804\uD22C\uC5D0\uC11C
       \uC18C\uBA78."
     element: lightning
     cost: 0

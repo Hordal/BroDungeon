@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 0e840ba6fd4ff35489498e57af77874f, type: 3}
+  m_Name: E16
+  m_EditorClassIdentifier:
+  definition:
+    id: "E16"
+    name: "\uc810\ud654 \ud3ed\ubc1c"
+    description: "\uc801 1\uba85\uc5d0\uac8c \ud53c\ud574 10\uc744 \uc90d\ub2c8\ub2e4. \uc774 \uce74\ub4dc\ub85c \uc6d0\uc18c \ubc18\uc751\uc774 \ubc1c\uc0dd\ud558\uba74 \ub2e4\ub978 \uc801 1\uba85\uc5d0\uac8c \ucd94\uac00 \ud53c\ud574 4\ub97c \uc90d\ub2c8\ub2e4. \ub2e4\ub978 \uc801\uc774 \uc5c6\ub2e4\uba74 \uc6d0\ub798 \ub300\uc0c1\uc5d0\uac8c \ucd94\uac00 \ud53c\ud574 2\ub97c \uc90d\ub2c8\ub2e4."
+    element: "fire"
+    cost: 2
+    owner: ""
+    starter_only: 0
+    catalog_only: 1
+    rarity: "middle"
+    build: ""
+    target_scope: "single"
+    element_application: "shared_attack"
+    presentation_id: "explosion_link"
+    effects:
+    - type: "damage"
+      condition: ""
+      targets: ""
+      amount: 10
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+      fallback_amount: 0
+    - type: "reaction_splash"
+      condition: "reaction_occurred"
+      targets: ""
+      amount: 4
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+      fallback_amount: 2
+  artwork: {fileID: 21300000, guid: 06c00c5c95d24ba69f310cc115e29bbc, type: 3}

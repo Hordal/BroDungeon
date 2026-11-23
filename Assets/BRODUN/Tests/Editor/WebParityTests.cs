@@ -22,12 +22,12 @@ namespace Brodun.Tests
         }
         [Test] public void ActualAssetsAndIndependentDefinitions()
         {
-            Assert.AreEqual(45,AssetDatabase.FindAssets("t:ScriptableObject",new[]{"Assets/BRODUN/Data/Generated"}).Length);
-            Assert.AreEqual(27,Data.Cards.Count); Assert.AreEqual(3,Data.Characters.Count); Assert.AreEqual(12,Data.Enemies.Count);
+            Assert.AreEqual(142,AssetDatabase.FindAssets("t:ScriptableObject",new[]{"Assets/BRODUN/Data/Generated"}).Length);
+            Assert.AreEqual(27,Data.Cards.Count); Assert.AreEqual(124,Data.AllCards.Count); Assert.AreEqual(3,Data.Characters.Count); Assert.AreEqual(12,Data.Enemies.Count);
             Assert.AreEqual(9,AssetDatabase.LoadAssetAtPath<GameCatalogData>(DataAssetBuilder.CatalogPath).ElementCount);
             foreach(var c in Snapshot().cards)
             {
-                var d=Data.Card(c.id); Assert.AreEqual(c.name,d.Name); Assert.AreEqual(c.description,d.Description);
+                var d=Data.Card(c.id); Assert.AreEqual(c.name,d.Name); Assert.AreEqual(c.id=="lightning_charge"?c.description.Replace("최대 6","최대 "+Data.Config.EnergyCap):c.description,d.Description);
                 Assert.AreEqual(c.cost,d.Cost); Assert.AreEqual(Ids.Parse<ElementType>(c.element),d.Element);
                 Assert.AreEqual(c.effects.Length,d.Effects.Count);
                 for(int i=0;i<c.effects.Length;i++)
@@ -51,9 +51,10 @@ namespace Brodun.Tests
         }
         [TestCaseSource(nameof(Seeds))] public void SeedHandRewardAndMapMatchActualJavaScript(FixtureRecord f)
         {
-            var run=Run(seed:(uint)f.seed);var b=Battle(run);
+            var web=WebDefinitions();var run=new RunState(web,CharacterId.Warrior,(uint)f.seed,"test-run");
+            var b=new BattleRuntime(web,run,DungeonRuntime.Enter(run,"r1"));
             CollectionAssert.AreEqual(f.hand,b.Deck.Hand.Select(x=>x.CardId));
-            CollectionAssert.AreEqual(f.reward,RewardResolver.Create(Data,run).Candidates);
+            CollectionAssert.AreEqual(f.reward,RewardResolver.Create(web,run).Candidates);
             for(int i=0;i<f.map.Length;i++)
             {
                 var expected=f.map[i];var actual=run.Map[i];
@@ -64,9 +65,18 @@ namespace Brodun.Tests
                 if(expected.room_type=="event")Assert.AreEqual(Ids.Parse<EventKind>(expected.event_kind),actual.Event);
             }
         }
+        private GameDefinitions WebDefinitions()
+        {
+            var snapshot=Snapshot();
+            return new GameDefinitions(Data.Cards,snapshot.characters.Select(c=>c.ToDefinition()),snapshot.enemies.Select(e=>e.ToDefinition()),
+                snapshot.config.ToDefinition(),new RewardDefinition(Data.Reward.Gold,Data.Reward.CandidateCount),Data.Elements);
+        }
         [TestCaseSource(nameof(TraceCases))] public void FullBattleTraceMatchesActualJavaScript(GoldenTrace trace)
         {
-            var b=Battle(Run(Ids.Parse<CharacterId>(trace.character),(uint)trace.seed));
+            // The recorded browser run uses its own historical AP configuration.
+            var web=WebDefinitions();
+            var run=new RunState(web,Ids.Parse<CharacterId>(trace.character),(uint)trace.seed,"test-run");
+            var b=new BattleRuntime(web,run,DungeonRuntime.Enter(run,"r1"));
             foreach(var step in trace.steps)
             {
                 if(step.kind=="card")Assert.IsTrue(b.PlayCard(step.instance));

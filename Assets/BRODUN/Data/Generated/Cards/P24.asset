@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 0e840ba6fd4ff35489498e57af77874f, type: 3}
+  m_Name: P24
+  m_EditorClassIdentifier:
+  definition:
+    id: "P24"
+    name: "\uc2ec\ud310\uc758 \ud30c\ubb38"
+    description: "\ubaa8\ub4e0 \uc801\uc5d0\uac8c \uac01\uac01 \ud53c\ud574 7\uc744 \uc90d\ub2c8\ub2e4. \uc774 \uce74\ub4dc\uc758 \uacf5\uaca9\uc73c\ub85c \ub099\uc778\uc774 \ubc1c\ub3d9\ud55c 1\uac1c\ub2f9 \ubc29\uc5b4\ub3c4 2\ub97c \uc5bb\uc2b5\ub2c8\ub2e4(\ucd5c\ub300 6)."
+    element: "none"
+    cost: 2
+    owner: "priest"
+    starter_only: 0
+    catalog_only: 1
+    rarity: "high"
+    build: "brand"
+    target_scope: "all_enemies"
+    presentation_id: "water_wave"
+    effects:
+    - type: "damage"
+      condition: ""
+      amount: 7
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+    - type: "block"
+      condition: ""
+      amount: 0
+      hits: 1
+      rule_version: 1
+      value_source: "attack_brands_triggered"
+      numerator: 2
+      denominator: 1
+      maximum: 6
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+  artwork: {fileID: 21300000, guid: fdbdf822995f5877ba03e668e33c0d5d, type: 3}

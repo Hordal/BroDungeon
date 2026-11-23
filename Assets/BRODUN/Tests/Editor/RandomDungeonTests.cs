@@ -24,7 +24,7 @@ namespace Brodun.Tests
             {
                 var map=LayeredMapGenerator.Generate(seed);var nodes=map.Rooms;var graph=map.Graph;
                 string label="Seed "+seed;
-                Assert.That(graph.IntermediateLayers,Is.InRange(8,10),label);Assert.That(nodes.Count,Is.InRange(18,38),label);
+                Assert.That(graph.IntermediateLayers,Is.InRange(6,7),label);Assert.That(nodes.Count,Is.InRange(13,23),label);
                 Assert.AreEqual(1,nodes.Count(n=>n.Type==RoomType.Start),label);Assert.AreEqual(1,nodes.Count(n=>n.Type==RoomType.Boss),label);
                 var byId=nodes.ToDictionary(n=>n.Id);
                 foreach(var n in nodes)
@@ -45,15 +45,37 @@ namespace Brodun.Tests
                 var reached=new HashSet<string>{"start"};foreach(var n in nodes)if(reached.Contains(n.Id))foreach(var next in n.Next)reached.Add(next);
                 Assert.AreEqual(nodes.Count,reached.Count,label);
                 foreach(var layer in nodes.Where(n=>n.Layer>0&&n.Id!="boss").GroupBy(n=>n.Layer))
-                {Assert.That(layer.Count(),Is.InRange(2,4));Assert.GreaterOrEqual(layer.Count(n=>n.Type==RoomType.Battle),(layer.Count()+1)/2,label);}
+                {
+                    if(layer.Key==graph.IntermediateLayers)Assert.AreEqual(1,layer.Count(),label);
+                    else Assert.That(layer.Count(),Is.InRange(2,4));
+                    if(layer.Key==(graph.IntermediateLayers+1)/2)
+                        Assert.IsFalse(layer.Any(n=>n.Type==RoomType.Battle),label);
+                }
                 Assert.IsTrue(nodes.Any(n=>n.Type==RoomType.Event&&n.Event==EventKind.Shop),label);
-                var final=nodes.Where(n=>n.Layer==graph.IntermediateLayers).ToArray();
+                var merchant=byId[byId["boss"].Previous.Single()];
+                Assert.AreEqual(EventKind.Shop,merchant.Event,label);
+                Assert.AreEqual(RoomType.Event,merchant.Type,label);
+                var final=nodes.Where(n=>n.Layer==graph.IntermediateLayers-1).ToArray();
+                Assert.IsTrue(final.All(n=>n.Next.Single()==merchant.Id),label);
                 Assert.IsTrue(final.All(n=>n.Type==RoomType.Battle),label);Assert.AreEqual(1,final.Count(n=>n.Encounter==EnemyType.Elite),label);
                 var edges=graph.Nodes.SelectMany(a=>a.Next.Select(id=>new{A=a,B=graph.Nodes.Single(b=>b.Id==id)})).ToArray();
                 foreach(var a in edges)foreach(var b in edges.Where(e=>e.A.Layer==a.A.Layer))
                     Assert.GreaterOrEqual((a.A.Lane-b.A.Lane)*(a.B.Lane-b.B.Lane),0,"Crossed edges "+label);
             }
         }
+        [Test]
+        public void OpeningPathsLeadToTwoBattlesBeforeTheFirstBreak()
+        {
+            var config=new MapGenerationConfig(openingEncounters:true);
+            for(uint seed=0;seed<128;seed++)
+            {
+                var dungeon=LayeredMapGenerator.Generate(seed,config);
+                foreach(var room in dungeon.Rooms.Where(room=>room.Layer==1||room.Layer==2))
+                    Assert.IsTrue(dungeon.IsOpeningBattle(room,room.Layer),room.Id+" / "+seed);
+                Assert.IsTrue(dungeon.Rooms.Any(room=>room.Layer==(dungeon.Graph.IntermediateLayers+1)/2 && room.Event==EventKind.Shop));
+            }
+        }
+
         [Test] public void AssigningRoomsDoesNotChangeTopology()
         {
             var config=new MapGenerationConfig();var graph=LayeredMapGenerator.GenerateGraph(17,config);

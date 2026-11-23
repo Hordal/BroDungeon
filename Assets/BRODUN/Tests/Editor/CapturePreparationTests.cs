@@ -4,7 +4,7 @@ using Brodun.Flow;
 using NUnit.Framework;
 namespace Brodun.Tests
 {
-    public sealed class CapturePreparationTests:RulesTest
+    public sealed class CapturePreparationTests:LegacyRulesTest
     {
         [Test] public void PreviewIsSeparateAndLeavesAllOriginalRulesUntouched()
         {
@@ -15,7 +15,7 @@ namespace Brodun.Tests
             Assert.AreEqual(14,preview.Enemy(original.Id).BaseHP);
             Assert.AreSame(original.Pattern[0],preview.Enemy(original.Id).Pattern[0]);
             Assert.AreSame(Data.Config,preview.Config);Assert.AreSame(Data.Reward,preview.Reward);
-            CollectionAssert.AreEqual(Data.Cards,preview.Cards);CollectionAssert.AreEqual(Data.Characters,preview.Characters);
+            CollectionAssert.AreEqual(Data.AllCards,preview.AllCards);CollectionAssert.AreEqual(Data.Characters,preview.Characters);
             foreach(var enemy in Data.Enemies.Where(e=>e!=original))Assert.AreSame(enemy,preview.Enemy(enemy.Id));
         }
         [Test] public void CaptureScriptWinsOnTurnTwoAfterOneRealEnemyAttackAndReward()
@@ -25,17 +25,20 @@ namespace Brodun.Tests
             f.FinishTransition(FlowScreen.CharacterSelect);f.ChooseCharacter(CharacterId.Warrior);
             f.FinishTransition(FlowScreen.DungeonMap);Assert.IsTrue(f.SelectRoom("r2"));Assert.IsTrue(f.BeginBattle());
             f.FinishTransition(FlowScreen.Battle);var c=f.Battle;Assert.AreEqual(14,c.Runtime.Enemy.MaxHP);
-            foreach(string id in new[]{"earth_strike","wind_cut"})Play(c,id);
-            Assert.AreEqual(5,c.Runtime.Enemy.CurrentHP);Assert.AreEqual(1,c.Runtime.Energy);
-            c.EndTurn();c.FinishActionPresentation();Assert.AreEqual(54,c.Run.CurrentHP);
-            Assert.AreEqual(6,c.Runtime.LastEnemyAction.Intent.Amount);Assert.AreEqual(8,c.Runtime.CurrentIntent.Amount);
-            Play(c,"earth_strike");Assert.AreEqual(BattlePhase.Victory,c.Phase);
+            var attacks=c.Runtime.Deck.Hand.Where(x=>Data.Card(x.CardId).Type==CardType.Attack).Take(2).ToArray();
+            Assert.AreEqual(2,attacks.Length);
+            foreach(var attack in attacks)Play(c,attack.InstanceId);
+            Assert.AreEqual(14-attacks.Sum(x=>Data.Card(x.CardId).BaseDamage),c.Runtime.Enemy.CurrentHP);
+            Assert.AreEqual(3,c.Runtime.Energy);
+            c.EndTurn();c.FinishActionPresentation();Assert.AreEqual(51,c.Run.CurrentHP);
+            Assert.AreEqual(9,c.Runtime.LastEnemyAction.Intent.Amount);Assert.AreEqual(11,c.Runtime.CurrentIntent.Amount);
+            Play(c,c.Runtime.Deck.Hand.First(x=>Data.Card(x.CardId).BaseDamage>=c.Runtime.Enemy.CurrentHP).InstanceId);Assert.AreEqual(BattlePhase.Victory,c.Phase);
             Assert.IsFalse(c.Run.CompletedNodes.Contains("r2"));c.OpenReward();Assert.IsTrue(c.ResolveReward(RewardType.Gold));
             Assert.IsFalse(c.ResolveReward(RewardType.Gold));Assert.AreEqual(50,c.Run.Gold);
             Assert.IsTrue(f.ReturnFromBattle());f.FinishTransition(FlowScreen.DungeonMap);
             Assert.IsTrue(f.Run.CompletedNodes.Contains("r2"));Assert.IsNotEmpty(DungeonRuntime.Available(f.Run));
         }
-        private static void Play(BattleContext c,string id)
-        {Assert.IsTrue(c.Play(c.Runtime.Deck.Hand.Single(x=>x.CardId==id).InstanceId));c.FinishActionPresentation();}
+        private static void Play(BattleContext c,string instanceId)
+        {Assert.IsTrue(c.Play(instanceId));c.FinishActionPresentation();}
     }
 }

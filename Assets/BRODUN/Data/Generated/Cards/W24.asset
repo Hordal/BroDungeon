@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 0e840ba6fd4ff35489498e57af77874f, type: 3}
+  m_Name: W24
+  m_EditorClassIdentifier:
+  definition:
+    id: "W24"
+    name: "\uac15\ucca0 \uc21c\ud658"
+    description: "\uc774\ubc88 \uc804\ud22c \ub3d9\uc548, \ub9e4 \ub0b4 \ud134\uc5d0 \ucc98\uc74c \uce74\ub4dc \ud6a8\uacfc\ub85c \ubc29\uc5b4\ub3c4\ub97c \uc18c\ubaa8\ud560 \ub54c \uadf8 \uc591\uc758 \uc808\ubc18\uc744 \ub2e4\uc2dc \uc5bb\uc2b5\ub2c8\ub2e4(\ucd5c\ub300 3, \uc18c\uc218\uc810 \ubc84\ub9bc). \uac19\uc740 \ud6a8\uacfc\ub294 \uc911\ucca9\ub418\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4."
+    element: "none"
+    cost: 2
+    owner: "warrior"
+    starter_only: 0
+    catalog_only: 1
+    rarity: "high"
+    build: "block_spend"
+    target_scope: "single"
+    presentation_id: "stone_guard"
+    effects:
+    - type: "restore_on_first_spend"
+      condition: ""
+      amount: 0
+      hits: 1
+      rule_version: 1
+      value_source: "last_block_spent"
+      numerator: 1
+      denominator: 2
+      maximum: 3
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 1
+  artwork: {fileID: 21300000, guid: 20674ac404de5b7f800edc1f91ec7c29, type: 3}

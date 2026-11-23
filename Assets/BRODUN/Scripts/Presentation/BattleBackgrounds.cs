@@ -16,6 +16,18 @@ namespace Brodun.Presentation
             "잊혀진 회랑", "침잠의 수맥", "소멸의 화로", "폭풍의 첨탑 (시안)"
         };
 
+        public static string ResourcePath(string themeId,bool boss)
+        {
+            var theme=DungeonThemes.Find(themeId);
+            return theme==null?null:ResourceRoot+theme.BackgroundKey+(boss?"_boss":"_normal");
+        }
+
+        public static Sprite Resolve(string themeId,bool boss,Sprite fallback)
+        {
+            string path=ResourcePath(themeId,boss);
+            return path==null?fallback:Resources.Load<Sprite>(path)??fallback;
+        }
+
         public static string ResourcePath(int area, bool boss)
         {
             if (area < 1 || area > ThemeCount) return null;

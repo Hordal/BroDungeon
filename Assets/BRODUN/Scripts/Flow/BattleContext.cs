@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 namespace Brodun.Flow
 {
     public enum BattlePhase { Initializing, PlayerTurn, ResolvingPlayerAction, EnemyTurn, Victory, Defeat, Reward, Finished }
@@ -9,20 +9,17 @@ namespace Brodun.Flow
         public RoomNode Room { get; }
         public BattleRuntime Runtime { get; }
         public uint Seed => Run.Seed;
-        public string EnemyTargetId => "enemy-0";
+        public string EnemyTargetId => Runtime.ResolveEnemyTarget(null)?.TargetId;
         public BattlePhase Phase { get; private set; }=BattlePhase.Initializing;
-        public BattleContext(GameDefinitions data,RunState run,RoomNode room)
-        {Run=run;Room=room;Runtime=new BattleRuntime(data,run,room);Phase=BattlePhase.PlayerTurn;}
+        public BattleContext(GameDefinitions data,RunState run,RoomNode room,EnemyDefinition companion=null)
+        {Run=run;Room=room;Runtime=new BattleRuntime(data,run,room,companion);Phase=BattlePhase.PlayerTurn;}
         public bool CanPlay(string id)
+            => Phase==BattlePhase.PlayerTurn&&Runtime.CanPlayCard(id);
+        public bool Play(string id,string targetId=null,StatusEffectType? cleanseStatus=null,string recoveryInstanceId=null,CardPlayOptions options=null)
         {
-            var card=Runtime.Deck.Hand.FirstOrDefault(c=>c.InstanceId==id);
-            return Phase==BattlePhase.PlayerTurn && card!=null && Runtime.Energy>=Runtime.Data.Card(card.CardId).Cost;
-        }
-        public bool Play(string id,string targetId=null)
-        {
-            if(!CanPlay(id) || (targetId!=null&&targetId!=EnemyTargetId))return false;
+            if(!CanPlay(id))return false;
             Phase=BattlePhase.ResolvingPlayerAction;
-            if(Runtime.PlayCard(id))return true;
+            if(Runtime.PlayCard(id,targetId,cleanseStatus,recoveryInstanceId,options))return true;
             Phase=BattlePhase.PlayerTurn;return false;
         }
         public bool EndTurn()

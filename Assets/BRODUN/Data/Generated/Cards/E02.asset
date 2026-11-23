@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 0e840ba6fd4ff35489498e57af77874f, type: 3}
+  m_Name: E02
+  m_EditorClassIdentifier:
+  definition:
+    id: "E02"
+    name: "\uc2ec\ud310\uc758 \ubc14\ub78c"
+    description: "\ubaa8\ub4e0 \uc801\uc5d0\uac8c \uac01\uac01 \ud53c\ud574 6\uc744 \uc90d\ub2c8\ub2e4. \uc774 \uce74\ub4dc\ub85c \uc6d0\uc18c \ubc18\uc751\uc774 \ud558\ub098\ub77c\ub3c4 \ubc1c\uc0dd\ud588\ub2e4\uba74 \ubc29\uc5b4\ub3c4 4\ub97c \uc5bb\uc2b5\ub2c8\ub2e4."
+    element: "wind"
+    cost: 2
+    owner: ""
+    starter_only: 0
+    catalog_only: 1
+    rarity: "middle"
+    build: ""
+    target_scope: "all_enemies"
+    element_application: "shared_attack"
+    presentation_id: "wind_judgment"
+    effects:
+    - type: "damage"
+      condition: ""
+      targets: ""
+      amount: 6
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+      fallback_amount: 0
+    - type: "block"
+      condition: "reaction_occurred"
+      targets: ""
+      amount: 4
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+      fallback_amount: 0
+  artwork: {fileID: 21300000, guid: c2bd143b6cd0464cbae175eb478d1480, type: 3}

@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 0e840ba6fd4ff35489498e57af77874f, type: 3}
+  m_Name: W06
+  m_EditorClassIdentifier:
+  definition:
+    id: "W06"
+    name: "\uc218\ud638\uc758 \uc555\ubc15"
+    description: "\uc801 1\uba85\uc5d0\uac8c \ud53c\ud574 10\uc744 \uc90d\ub2c8\ub2e4. \ub0b4 \ubc29\uc5b4\ub3c4\uac00 12 \uc774\uc0c1\uc774\ub77c\uba74 \uadf8 \uc801\uc5d0\uac8c \uc57d\ud654 1\uc744 \ubd80\uc5ec\ud569\ub2c8\ub2e4."
+    element: "none"
+    cost: 2
+    owner: "warrior"
+    starter_only: 0
+    catalog_only: 1
+    rarity: "middle"
+    build: "fortress"
+    target_scope: "single"
+    presentation_id: "earth_strike"
+    effects:
+    - type: "damage"
+      condition: ""
+      amount: 10
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+    - type: "weak"
+      condition: "current_block_at_least"
+      amount: 1
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 12
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+  artwork: {fileID: 21300000, guid: 721c335b7e6f5ecc9f4021da4e66bf7d, type: 3}

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections;
 using UnityEngine;
@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 namespace Brodun.Presentation
 {
-    public sealed class CardView : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,IPointerClickHandler,IScrollHandler,ICanvasRaycastFilter
+    public sealed class CardView : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,IPointerClickHandler,
+        IPointerDownHandler,IBeginDragHandler,IDragHandler,IEndDragHandler,IScrollHandler,ICanvasRaycastFilter
     {
         public RectTransform visual;
         public Image frame,artwork;
@@ -20,6 +21,7 @@ namespace Brodun.Presentation
         private int restingIndex;
         private bool presenting;
         private Image costSeal,costRim,costGem,elementRule,textBed,nameBed;
+        private BattleChrome frameChrome;
         private float exposedWidth=HandPresentation.CardWidth;
         private bool battleHand;
         private readonly Vector3[] cardCorners=new Vector3[4];
@@ -28,23 +30,41 @@ namespace Brodun.Presentation
         private Image hoverInput;
         public bool HasHandPosition {get;private set;}
         public bool IsPresenting => presenting;
+        private bool targeting;
+        private BattleController battleController;
+        private bool suppressClick,dragging;
+        private RectTransform details;
+        private Vector2 measuredBody;
+        private bool abridged;
+        public void SetTargeting(bool value)
+        {
+            if(targeting==value)return;
+            targeting=value;
+            SetAvailable(CanPlay);
+        }
         public void Bind(CardDefinition card,string id,BattlePresentationAssets art,GameDefinitions data,Action<CardView> click)
         {
             Definition=card;InstanceId=id;selected=click;restingIndex=transform.GetSiblingIndex();
-            title.text=card.Name;cost.text=card.Cost.ToString();element.text=data.Elements.Single(e=>e.Id==card.Element).Name;
-            kind.text=card.Type==CardType.Attack?"공격":card.Type==CardType.Guard?"방어":"기술";
+            title.text=card.Name;cost.text=card.XCost?"X":card.Cost.ToString();element.text=data.ElementName(card.Element);
+            var hero=GameFlow.Instance?.Session?.Run?.SelectedCharacter;
+            bool provisional=hero.HasValue&&data.Character(hero.Value).ProvisionalStartingCards.Contains(card.Id);
+            bool tagged=card.Rarity!=CardRarity.Unspecified||provisional;
+            kind.text=Classification(card,provisional);
             effect.text=(card.BaseDamage>0?"피해 "+card.BaseDamage+"   ":"")+(card.Block>0?"방어 "+card.Block:"");
+            HideDetails();measuredBody=Vector2.zero;
             description.text=card.Description;
             // One shared layout for the prefab, generated cards and reward cards.
             battleHand=transform.parent!=null&&transform.parent.name=="Hand";
+            battleController=battleHand?GetComponentInParent<BattleController>():null;
             var canvas=GetComponentInParent<Canvas>();
             canvasSurface=canvas!=null?(RectTransform)canvas.rootCanvas.transform:null;
             ((RectTransform)transform).sizeDelta=new Vector2(236,354);
             var hue=ElementTint(card.Element);
             element.color=hue;kind.color=hue;cost.color=Color.white;
-            frame.sprite=card.Type==CardType.Attack?art.attackFrame:card.Type==CardType.Guard?art.guardFrame:art.skillFrame;
-            var illustration=GameFlow.Instance!=null?GameFlow.Instance.CardArtwork(card.Id):null;
-            artwork.sprite=illustration!=null?illustration:card.Type==CardType.Guard?art.common.altar:art.common.battle;
+            frame.sprite=null;frame.overrideSprite=null;frame.color=Color.clear;
+            if(frameChrome==null)frameChrome=BattleUi.Decorate(frame.rectTransform,BattleChrome.Form.Card,Color.Lerp(BattleUi.Bronze,hue,.35f));
+            var illustration=GameFlow.Instance!=null?GameFlow.Instance.CardArtwork(card):null;
+            artwork.sprite=illustration!=null?illustration:Placeholder(card,art.common);
             artwork.preserveAspect=true;
             artwork.raycastTarget=false;
             Slot(artwork.rectTransform,.07f,.415f,.93f,.825f);
@@ -66,26 +86,34 @@ namespace Brodun.Presentation
             costSeal.color=Color.clear;
             Slot(costSeal.rectTransform,.13f,.915f,.13f,.915f);costSeal.rectTransform.sizeDelta=new Vector2(56,56);
             cost.transform.SetParent(costSeal.transform,false);Slot(cost.rectTransform,0,0,1,1);
-            cost.gameObject.SetActive(true);cost.enabled=true;cost.text=card.Cost.ToString();
+            cost.gameObject.SetActive(true);cost.enabled=true;cost.text=card.XCost?"X":card.Cost.ToString();
             cost.fontSize=38;cost.fontStyle=FontStyle.Bold;cost.resizeTextForBestFit=false;
             cost.alignment=TextAnchor.MiddleCenter;cost.lineSpacing=1;
             cost.horizontalOverflow=HorizontalWrapMode.Overflow;cost.verticalOverflow=VerticalWrapMode.Overflow;
             cost.raycastTarget=false;cost.transform.SetAsLastSibling();
-            Slot(title.rectTransform,.075f,.32f,.925f,.405f);title.fontSize=25;title.color=BattleUi.Pale;
-            title.resizeTextForBestFit=true;title.resizeTextMinSize=21;title.resizeTextMaxSize=25;
+            Slot(title.rectTransform,.255f,.835f,.945f,.985f);title.transform.SetAsLastSibling();title.fontSize=25;title.color=BattleUi.Pale;
+            title.resizeTextForBestFit=true;title.resizeTextMinSize=16;title.resizeTextMaxSize=25;title.horizontalOverflow=HorizontalWrapMode.Wrap;
             Slot(element.rectTransform,.08f,.03f,.53f,.085f);element.fontSize=18;element.alignment=TextAnchor.MiddleLeft;
             Slot(kind.rectTransform,.53f,.03f,.92f,.085f);kind.fontSize=18;kind.alignment=TextAnchor.MiddleRight;
+            if(tagged)
+            {
+                // The prefab's original 18-pixel footer clips the Korean grade label.
+                Slot(element.rectTransform,.085f,.032f,.53f,.115f);
+                Slot(kind.rectTransform,.53f,.032f,.915f,.115f);
+                element.fontSize=kind.fontSize=16;
+                element.verticalOverflow=kind.verticalOverflow=VerticalWrapMode.Overflow;
+            }
             // The authoritative description already contains damage/block and conditions.
             // Do not repeat a misleading base-damage summary above the full rules text.
             effect.gameObject.SetActive(false);
-            Slot(description.rectTransform,.09f,.10f,.91f,.31f);
+            Slot(description.rectTransform,.075f,tagged?.125f:.10f,.925f,.405f);
             description.fontSize=21;description.resizeTextForBestFit=true;description.resizeTextMinSize=17;description.resizeTextMaxSize=21;
             description.alignment=TextAnchor.MiddleCenter;description.lineSpacing=1.06f;
             if(battleHand)
             {
                 ((RectTransform)transform).sizeDelta=new Vector2(HandPresentation.CardWidth,HandPresentation.CardHeight);
                 Slot(textBed.rectTransform,.065f,.025f,.935f,.35f);
-                Slot(description.rectTransform,.085f,.105f,.915f,.34f);
+                Slot(description.rectTransform,.085f,tagged?.125f:.105f,.915f,.34f);
                 description.fontSize=21;description.resizeTextMinSize=18;description.resizeTextMaxSize=21;description.lineSpacing=1.10f;
                 Slot(elementRule.rectTransform,.075f,.35f,.925f,.357f);
                 // Quiet backing keeps the priority name readable above the full-color art.
@@ -93,9 +121,24 @@ namespace Brodun.Presentation
                 nameBed.transform.SetSiblingIndex(title.transform.GetSiblingIndex());
                 StyleHandHeader();
             }
+            description.transform.SetAsLastSibling();
             foreach(var label in new[]{cost,title,element,kind,description})BattleUi.Readable(label);
             costSeal.transform.SetAsLastSibling();
             CanPlay=true;SetAvailable(true);
+#if UNITY_EDITOR
+            CardDesignComparison.Apply(this);
+#endif
+        }
+        internal static Sprite Placeholder(CardDefinition card,PresentationAssets art) =>
+            card.Type==CardType.Guard?art.altar:art.battle;
+        internal static string Classification(CardDefinition card,bool provisional)
+        {
+            var role=card.Type==CardType.Attack?"공격":card.Type==CardType.Guard?"방어":card.Type==CardType.Power?"지속":"기술";
+            string grade=card.Rarity switch
+            {
+                CardRarity.Starter=>"기본",CardRarity.Low=>"하급",CardRarity.Middle=>"중급",CardRarity.High=>"상급",_=>null
+            };
+            return grade!=null?grade+" · "+role:provisional?"임시 · "+role:role;
         }
         private static void Slot(RectTransform rect,float x0,float y0,float x1,float y1)
         {rect.anchorMin=new Vector2(x0,y0);rect.anchorMax=new Vector2(x1,y1);rect.offsetMin=rect.offsetMax=Vector2.zero;}
@@ -104,23 +147,27 @@ namespace Brodun.Presentation
         private void StyleHandHeader()
         {
             if(nameBed==null)return;
-            bool compact=!Hovered&&exposedWidth<HandPresentation.CardWidth*.80f;
+            float width=Mathf.Max(1,((RectTransform)transform).rect.width);
+            bool compact=!Hovered&&exposedWidth<width*.80f;
             if(compact)
             {
                 // Put the complete name in the exposed left strip, below the cost badge.
-                float right=Mathf.Clamp((exposedWidth-8)/HandPresentation.CardWidth,.30f,.94f);
+                float right=Mathf.Clamp((exposedWidth-8)/width,.30f,.94f);
                 Slot(title.rectTransform,.045f,.705f,right,.84f);
                 Slot(nameBed.rectTransform,.035f,.695f,right+.01f,.845f);
-                title.fontSize=20;title.resizeTextMinSize=18;title.resizeTextMaxSize=20;title.alignment=TextAnchor.MiddleLeft;
+                title.fontSize=20;title.resizeTextMinSize=14;title.resizeTextMaxSize=20;title.alignment=TextAnchor.MiddleLeft;
                 Slot(artwork.rectTransform,.065f,.365f,.935f,.69f);
             }
             else
             {
                 Slot(title.rectTransform,.26f,.845f,.94f,.98f);
                 Slot(nameBed.rectTransform,.25f,.84f,.95f,.985f);
-                title.fontSize=26;title.resizeTextMinSize=22;title.resizeTextMaxSize=26;title.alignment=TextAnchor.MiddleCenter;
+                title.fontSize=26;title.resizeTextMinSize=16;title.resizeTextMaxSize=26;title.alignment=TextAnchor.MiddleCenter;
                 Slot(artwork.rectTransform,.065f,.365f,.935f,.81f);
             }
+#if UNITY_EDITOR
+            CardDesignComparison.Restyle(this);
+#endif
         }
         public static Color ElementTint(ElementType element)
         {
@@ -140,11 +187,19 @@ namespace Brodun.Presentation
         public void SetAvailable(bool value)
         {
             CanPlay=value;ink.alpha=value?1:Hovered?.94f:.74f;
-            frame.color=value?Color.white:new Color(.69f,.72f,.77f);
+            frame.color=Color.clear;
+            if(frameChrome!=null)
+            {
+                bool emphasized=Hovered||targeting;
+                frameChrome.Accent=Definition!=null?Color.Lerp(BattleUi.Bronze,ElementTint(Definition.Element),emphasized?.85f:.35f):BattleUi.Bronze;
+                frameChrome.Emphasize(emphasized?.85f:0);frameChrome.SetVerticesDirty();
+            }
             var battle=GameFlow.Instance?.Session?.Battle?.Runtime;
-            bool lacking=battleHand&&battle!=null&&Definition!=null&&battle.Energy<Definition.Cost;
+            int displayedCost=Definition==null?0:battleHand&&battle!=null?battle.GetCardCost(Definition):Definition.Cost;
+            cost.text=Definition?.XCost==true?"X":displayedCost.ToString();
+            bool lacking=battleHand&&battle!=null&&battle.Energy<displayedCost;
             cost.color=Color.white;
-            bool free=Definition!=null&&Definition.Cost==0;
+            bool free=displayedCost==0;
             if(costRim!=null)costRim.color=lacking?new Color(1,.36f,.24f):free?BattleUi.Teal:BattleUi.Gold;
             if(costGem!=null)costGem.color=lacking?new Color(.26f,.035f,.025f):free?new Color(.015f,.14f,.10f):new Color(.025f,.055f,.07f);
         }
@@ -177,27 +232,70 @@ namespace Brodun.Presentation
         {return !presenting&&(handOwner==null||handOwner.PointerOwner(screenPoint,eventCamera)==this);}
         public void OnScroll(PointerEventData data)
         {handOwner?.Scroll(Mathf.Abs(data.scrollDelta.x)>.001f?data.scrollDelta.x:data.scrollDelta.y);}
-        private void OnDisable(){handOwner?.Leave(this);}
+        private void OnDisable()
+        {
+            HideDetails();
+            handOwner?.Leave(this);
+            if(battleController!=null)battleController.CancelTargetDrag(this);
+        }
+        public void OnPointerDown(PointerEventData data)
+        {
+            if(data.button==PointerEventData.InputButton.Left)suppressClick=false;
+        }
+        public void OnBeginDrag(PointerEventData data)
+        {
+            if(battleController==null||data.button!=PointerEventData.InputButton.Left)return;
+            suppressClick=true;dragging=true;
+            if(CanPlay&&!presenting)battleController.BeginTargetDrag(this,data);
+        }
+        public void OnDrag(PointerEventData data)
+        {
+            if(data.button==PointerEventData.InputButton.Left&&battleController!=null)battleController.MoveTargetDrag(this,data);
+        }
+        public void OnEndDrag(PointerEventData data)
+        {
+            dragging=false;
+            if(data.button==PointerEventData.InputButton.Left&&battleController!=null)battleController.EndTargetDrag(this,data);
+        }
         public IEnumerator PresentUse(bool exhaust)
         {
             presenting=true;handOwner?.BeginUse(this);Hovered=false;
             if(hoverInput!=null)hoverInput.gameObject.SetActive(false);transform.SetAsLastSibling();
             var origin=visual.anchoredPosition;
             float originalScale=visual.localScale.x;
-            for(float t=0;t<.24f;t+=Time.unscaledDeltaTime)
+            var release=BattleVfx.CreateCardRelease(visual,"Card use effect");
+            var tint=Definition.Element!=ElementType.None?ElementTint(Definition.Element):
+                Definition.Type==CardType.Guard?BattleUi.Steel:Definition.Type==CardType.Attack?BattleUi.Gold:BattleUi.Teal;
+            const float duration=.32f;
+            float direction=exhaust?0:canvasSurface!=null&&transform.position.x>canvasSurface.position.x?-1:1;
+            for(float t=0;t<duration;t+=Time.unscaledDeltaTime)
             {
-                float u=t/.24f;
-                visual.anchoredPosition=Vector2.Lerp(origin,new Vector2(exhaust?0:95,100),u);
-                visual.localScale=Vector3.one*Mathf.Lerp(originalScale,.83f,u);
-                ink.alpha=1-u*.8f;yield return null;
+                float phase=t/duration;
+                float lift=Mathf.SmoothStep(0,1,Mathf.InverseLerp(0,.72f,phase));
+                float dissolve=Mathf.SmoothStep(0,1,Mathf.InverseLerp(.27f,.96f,phase));
+                float kick=1+.075f*Mathf.Sin(Mathf.Clamp01(phase/.35f)*Mathf.PI);
+                visual.anchoredPosition=origin+new Vector2(direction*46,88)*lift;
+                visual.localScale=Vector3.one*Mathf.Lerp(originalScale*kick,.58f,dissolve);
+                visual.localRotation=Quaternion.Euler(0,0,-direction*10*dissolve);
+                ink.alpha=1-dissolve;
+                release.rectTransform.anchoredPosition=visual.anchoredPosition;
+                release.rectTransform.localScale=Vector3.one*Mathf.Lerp(originalScale,.88f,dissolve);
+                release.UpdateCardRelease(phase,tint,exhaust);
+                yield return null;
             }
+            ink.alpha=0;
+            Destroy(release.gameObject);
             // Remain presentation-owned until the hand refresh destroys this used card.
         }
         public void OnPointerClick(PointerEventData data)
-        {if(data.button==PointerEventData.InputButton.Left&&CanPlay&&!presenting)selected?.Invoke(this);}
+        {if(data.button==PointerEventData.InputButton.Left&&!suppressClick&&CanPlay&&!presenting)selected?.Invoke(this);}
         private void Update()
         {
-            if(visual==null||presenting)return;
+            if(visual==null||presenting||Definition==null){HideDetails();return;}
+            UpdateRulesText();
+            if(Hovered&&!targeting&&!dragging&&(abridged||Definition.Description.Length>55)&&description.gameObject.activeInHierarchy)
+                ShowDetails();
+            else HideDetails();
             float zoom=Hovered?(battleHand?HandPresentation.HoverScale:1.06f):1;
             var offset=Hovered&&battleHand?new Vector2(0,HandPresentation.HoverLift):Vector2.zero;
             // Clamp the animated artwork to its own Canvas, including narrow game views.
@@ -224,6 +322,58 @@ namespace Brodun.Presentation
                 hoverInput.rectTransform.anchoredPosition=visual.anchoredPosition;
                 hoverInput.rectTransform.sizeDelta=Vector2.Scale(visual.rect.size,new Vector2(visual.localScale.x,visual.localScale.y));
             }
+        }
+        // Measure the actual font and rect after the reward row or hand has sized the prefab.
+        private void UpdateRulesText()
+        {
+            var size=description.rectTransform.rect.size;
+            if(size==measuredBody||size.x<=0||size.y<=0)return;
+            measuredBody=size;
+            var settings=description.GetGenerationSettings(size);
+            settings.resizeTextForBestFit=false;
+            settings.fontSize=description.resizeTextMinSize;
+            var layout=description.cachedTextGeneratorForLayout;
+            string full=Definition.Description;
+            bool Fits(string value)=>layout.GetPreferredHeight(value,settings)<=size.y*description.pixelsPerUnit;
+            abridged=!Fits(full);
+            if(!abridged){description.text=full;return;}
+            int low=0,high=full.Length;
+            while(low<high)
+            {
+                int mid=(low+high+1)/2;
+                if(Fits(full.Substring(0,mid)+"…"))low=mid;else high=mid-1;
+            }
+            int boundary=full.LastIndexOf(' ',Mathf.Min(low,full.Length-1));
+            if(boundary>low*2/3)low=boundary;
+            description.text=full.Substring(0,low).TrimEnd()+"…";
+        }
+        private void ShowDetails()
+        {
+            if(canvasSurface==null)return;
+            var bounds=canvasSurface.rect;
+            if(details==null)
+            {
+                details=BattleUi.Panel(canvasSurface,"Card rules",canvasSurface.pivot,canvasSurface.pivot);
+                details.gameObject.AddComponent<CanvasGroup>().blocksRaycasts=false;
+                details.sizeDelta=new Vector2(Mathf.Min(480,bounds.width-24),120);
+                var body=BattleUi.Text(details,"Full description",Definition.Description,description.font,24,BattleUi.Pale,Vector2.zero,Vector2.one);
+                body.alignment=TextAnchor.MiddleLeft;
+                body.rectTransform.offsetMin=new Vector2(18,12);body.rectTransform.offsetMax=new Vector2(-18,-12);
+                details.sizeDelta=new Vector2(details.sizeDelta.x,Mathf.Ceil(body.preferredHeight)+28);
+            }
+            visual.GetWorldCorners(cardCorners);
+            var left=canvasSurface.InverseTransformPoint(cardCorners[0]);
+            var right=canvasSurface.InverseTransformPoint(cardCorners[2]);
+            Vector2 half=details.sizeDelta*.5f;
+            float x=right.x+16+half.x;
+            if(x+half.x>bounds.xMax-8)x=left.x-16-half.x;
+            details.anchoredPosition=new Vector2(Mathf.Clamp(x,bounds.xMin+8+half.x,bounds.xMax-8-half.x),
+                Mathf.Clamp((left.y+right.y)*.5f,bounds.yMin+8+half.y,bounds.yMax-8-half.y));
+        }
+        private void HideDetails()
+        {
+            if(details==null)return;
+            details.gameObject.SetActive(false);Destroy(details.gameObject);details=null;
         }
         public static CardView Create(Transform parent,PresentationAssets art)
         {

@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 namespace Brodun.Flow
 {
-    public enum FlowScreen { Boot, Title, CharacterSelect, DungeonMap, Battle, Room, RunResult }
+    public enum FlowScreen { Boot, Title, CharacterSelect, DungeonMap, Battle, Room, RunResult, ThemeSelect }
     public enum NodeVisualState { Locked, Available, Completed, Current }
     public sealed class PendingRoomContext
     {
@@ -25,28 +25,63 @@ namespace Brodun.Flow
         public bool IsTransitioning { get; private set; }
         public bool DeckOpen { get; private set; }
         private readonly Func<uint,GeneratedDungeon> dungeonFactory;
-        public FlowSession(GameDefinitions data,Func<uint,GeneratedDungeon> mapFactory=null) { Definitions=data;dungeonFactory=mapFactory; }
+        private readonly EnemyDefinition firstBattleCompanion;
+        private readonly bool chooseTheme;
+        private CharacterId? pendingCharacter;
+        public bool RequiresThemeSelection => chooseTheme;
+        public FlowSession(GameDefinitions data,Func<uint,GeneratedDungeon> mapFactory=null,EnemyDefinition firstBattleCompanion=null,bool chooseTheme=false)
+        {
+            Definitions=data;
+            dungeonFactory=mapFactory;
+            this.firstBattleCompanion=firstBattleCompanion;
+            this.chooseTheme=chooseTheme;
+        }
         public bool BeginTransition() { if(IsTransitioning)return false;IsTransitioning=true;DeckOpen=false;return true; }
         public void FinishTransition(FlowScreen screen) { Screen=screen;IsTransitioning=false; }
         public bool StartNewRun(uint seed)
         {
             if(IsTransitioning || (Screen!=FlowScreen.Title&&Screen!=FlowScreen.RunResult))return false;
-            Run=null;PendingRoom=null;Battle=null;Room=null;Summary=null;PendingSeed=seed;return BeginTransition();
+            Run=null;PendingRoom=null;Battle=null;Room=null;Summary=null;pendingCharacter=null;PendingSeed=seed;return BeginTransition();
         }
         public bool ChooseCharacter(CharacterId id)
         {
             if(IsTransitioning || Screen!=FlowScreen.CharacterSelect || !Definitions.Characters.Any(c=>c.Id==id))return false;
-            Run=new RunState(Definitions,id,PendingSeed,dungeon:dungeonFactory?.Invoke(PendingSeed));PendingRoom=null;return BeginTransition();
+            pendingCharacter=id;
+            return chooseTheme?BeginTransition():CreateRun(id,null);
+        }
+        public bool ChooseTheme(string themeId)
+        {
+            if(IsTransitioning||Screen!=FlowScreen.ThemeSelect||
+                !DungeonThemes.IsAvailable(Definitions,themeId))return false;
+            if(Run!=null)return Run.TryAdvanceArea(themeId)&&BeginTransition();
+            return pendingCharacter.HasValue&&CreateRun(pendingCharacter.Value,themeId);
+        }
+        public bool ReturnToCharacterSelect()
+        {
+            if(IsTransitioning||Screen!=FlowScreen.ThemeSelect||Run!=null)return false;
+            pendingCharacter=null;
+            return BeginTransition();
+        }
+        private bool CreateRun(CharacterId id,string firstTheme)
+        {
+            Run=new RunState(Definitions,id,PendingSeed,dungeon:dungeonFactory?.Invoke(PendingSeed),firstTheme:firstTheme);
+            pendingCharacter=null;PendingRoom=null;return BeginTransition();
         }
         public bool ReturnToTitle()
         {
             if(IsTransitioning)return false;
-            Run=null;PendingRoom=null;Battle=null;Room=null;Summary=null;PendingSeed=0;return BeginTransition(); // Explicit run abandonment, no fake Save/Continue.
+            Run=null;PendingRoom=null;Battle=null;Room=null;Summary=null;pendingCharacter=null;PendingSeed=0;return BeginTransition(); // Explicit run abandonment, no fake Save/Continue.
         }
         public bool BeginBattle()
         {
             if(IsTransitioning||Screen!=FlowScreen.DungeonMap||PendingRoom==null||!PendingRoom.IsBattle)return false;
-            if(Battle==null)Battle=new BattleContext(Definitions,Run,PendingRoom.Node);
+            if(Battle==null)
+            {
+                var node=PendingRoom.Node;
+                var companion=node.Type==RoomType.Battle&&node.Layer==1&&node.Encounter==EnemyType.Normal
+                    ?firstBattleCompanion:null;
+                Battle=new BattleContext(Definitions,Run,node,companion);
+            }
             if(Battle.Room.Id!=PendingRoom.Node.Id)return false;
             return BeginTransition();
         }
@@ -70,7 +105,13 @@ namespace Brodun.Flow
             if(IsTransitioning||Run==null||(Screen!=FlowScreen.Battle&&Screen!=FlowScreen.Room))return false;
             if(Screen==FlowScreen.Battle && Battle?.Room.Type==RoomType.Boss && Battle.Phase==BattlePhase.Victory)
             {if(!Battle.CompleteBoss())return false;}
-            if(Run.Status==RunStatus.InProgress)return false;
+            if(Run.Status==RunStatus.InProgress)
+            {
+                if(Screen!=FlowScreen.Battle||Battle?.Phase!=BattlePhase.Finished||Battle.Room.Type!=RoomType.Boss||
+                    !Run.CanAdvanceArea)return false;
+                PendingRoom=null;Battle=null;
+                return BeginTransition();
+            }
             Summary=new RunSummary(Run);return BeginTransition();
         }
         public bool SelectRoom(string id)

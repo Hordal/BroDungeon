@@ -6,7 +6,8 @@ namespace Brodun.Data
     {
         [SerializeField] private CharacterRecord definition;
         [SerializeField] private Sprite portrait;
-        public CharacterDefinition ToDefinition() => definition.ToDefinition();
+        [SerializeField] private string[] startingDeckOverride;
+        public CharacterDefinition ToDefinition() => definition.ToDefinition(startingDeckOverride is { Length: > 0 }?startingDeckOverride:null);
         public Sprite Portrait => portrait;
         public void Initialize(CharacterRecord value) { definition = value; }
     }

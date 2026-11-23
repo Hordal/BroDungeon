@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 0e840ba6fd4ff35489498e57af77874f, type: 3}
+  m_Name: E01
+  m_EditorClassIdentifier:
+  definition:
+    id: "E01"
+    name: "\ub3cc\ud48d \ubca0\uae30"
+    description: "\uc801 1\uba85\uc5d0\uac8c \ud53c\ud574 6\uc744 \uc90d\ub2c8\ub2e4. \uc0ac\uc6a9\ud558\uae30 \uc804\uc5d0 \ub300\uc0c1\uc5d0\uac8c \ubc14\ub78c\uc774 \uc544\ub2cc \ub2e4\ub978 \uc6d0\uc18c \ud45c\uc2dd\uc774 \uc788\uc5c8\ub2e4\uba74 \uce74\ub4dc 1\uc7a5\uc744 \ubf51\uc2b5\ub2c8\ub2e4."
+    element: "wind"
+    cost: 1
+    owner: ""
+    starter_only: 0
+    catalog_only: 1
+    rarity: "low"
+    build: ""
+    target_scope: "single"
+    element_application: "shared_attack"
+    presentation_id: "wind_cut"
+    effects:
+    - type: "damage"
+      condition: ""
+      targets: ""
+      amount: 6
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+      fallback_amount: 0
+    - type: "draw"
+      condition: "other_mark_before"
+      targets: ""
+      amount: 1
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+      fallback_amount: 0
+  artwork: {fileID: 21300000, guid: cc99a53b770d44eba851d160842ae1dd, type: 3}

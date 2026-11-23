@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 0e840ba6fd4ff35489498e57af77874f, type: 3}
+  m_Name: P07
+  m_EditorClassIdentifier:
+  definition:
+    id: "P07"
+    name: "\uc131\uc5ed"
+    description: "\ubc29\uc5b4\ub3c4 14\ub97c \uc5bb\uace0, \ub0b4 HP\ub97c 6 \ud68c\ubcf5\ud569\ub2c8\ub2e4. \uc0ac\uc6a9\ud55c \uce74\ub4dc\ub294 \uc774\ubc88 \uc804\ud22c\uc5d0\uc11c \uc18c\uba78\ud569\ub2c8\ub2e4."
+    element: "none"
+    cost: 3
+    owner: "priest"
+    starter_only: 0
+    catalog_only: 1
+    rarity: "high"
+    build: "blessing"
+    target_scope: "single"
+    presentation_id: "water_rest"
+    effects:
+    - type: "block"
+      condition: ""
+      amount: 14
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+    - type: "heal"
+      condition: ""
+      amount: 6
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+    - type: "exhaust"
+      condition: ""
+      amount: 0
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+  artwork: {fileID: 21300000, guid: 35b7475474b54eaaa8f87f0b69fb945c, type: 3}

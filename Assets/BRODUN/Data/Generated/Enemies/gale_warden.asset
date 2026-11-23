@@ -35,3 +35,5 @@ MonoBehaviour:
     - type: attack
       amount: 10
       hits: 1
+  attackBonus: 2
+  healthBonus: 12

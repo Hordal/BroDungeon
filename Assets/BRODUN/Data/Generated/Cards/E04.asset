@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 0e840ba6fd4ff35489498e57af77874f, type: 3}
+  m_Name: E04
+  m_EditorClassIdentifier:
+  definition:
+    id: "E04"
+    name: "\uc815\ud654\uc758 \ud30c\ub3d9"
+    description: "\ubaa8\ub4e0 \uc801\uc5d0\uac8c \uac01\uac01 \ud53c\ud574 5\ub97c \uc90d\ub2c8\ub2e4. \uc790\uc2e0\uc5d0\uac8c \uac78\ub9b0 \ub3c5 \ub610\ub294 \uc57d\ud654 \uc911 \ud55c \uc885\ub958\ub97c \uc81c\uac70\ud569\ub2c8\ub2e4."
+    element: "water"
+    cost: 2
+    owner: ""
+    starter_only: 0
+    catalog_only: 1
+    rarity: "middle"
+    build: ""
+    target_scope: "all_enemies"
+    element_application: "shared_attack"
+    presentation_id: "water_wave"
+    effects:
+    - type: "damage"
+      condition: ""
+      targets: ""
+      amount: 5
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+      fallback_amount: 0
+    - type: "cleanse_player"
+      condition: ""
+      targets: ""
+      amount: 0
+      hits: 1
+      rule_version: 1
+      value_source: "fixed"
+      numerator: 1
+      denominator: 1
+      maximum: 2147483647
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+      fallback_amount: 0
+  artwork: {fileID: 21300000, guid: 1b98b95ef738460c96d2b4511c3850bf, type: 3}

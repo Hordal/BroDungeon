@@ -13,11 +13,11 @@ namespace Brodun.Tests
         }
         [Test] public void MultiHitTraceContainsTheActualCalculatedResults()
         {
-            var b=Battle();b.Enemy.Block=4;
+            var b=Battle();b.Enemy.Block=4;int startingHP=b.Enemy.CurrentHP;
             var result=CardEffectResolver.Resolve(b,Data.Card("lightning_chain"));
             Assert.AreEqual(2,result.Hits.Count);Assert.AreEqual(4,result.Hits.Sum(x=>x.Blocked));
             Assert.AreEqual(result.Damage,result.Hits.Sum(x=>x.HPDamage));
-            Assert.AreEqual(2,result.Damage);Assert.AreEqual(36,b.Enemy.CurrentHP);
+            Assert.AreEqual(2,result.Damage);Assert.AreEqual(startingHP-2,b.Enemy.CurrentHP);
         }
         [Test] public void EnemyMultiHitTraceConsumesBlockOnceAndMatchesTotals()
         {

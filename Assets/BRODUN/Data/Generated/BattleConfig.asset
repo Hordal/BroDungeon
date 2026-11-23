@@ -23,3 +23,5 @@ MonoBehaviour:
     event:
       heal: 8
       gold: 15
+  handSizeOverride: 5
+  baseEnergyOverride: 5

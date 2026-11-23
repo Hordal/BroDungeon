@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 0e840ba6fd4ff35489498e57af77874f, type: 3}
+  m_Name: W08
+  m_EditorClassIdentifier:
+  definition:
+    id: "W08"
+    name: "\uc218\ud638\uc790\uc758 \uc77c\uaca9"
+    description: "\uc801 1\uba85\uc5d0\uac8c \ud53c\ud574 10\uc744 \uc90d\ub2c8\ub2e4. \ub0b4 \ud604\uc7ac \ubc29\uc5b4\ub3c4\uc758 75%\ub9cc\ud07c \ud53c\ud574\uac00 \ucd94\uac00\ub429\ub2c8\ub2e4(\ucd5c\ub300 +15, \uc18c\uc218\uc810 \ubc84\ub9bc). \uc774\ub54c \ub0b4 \ubc29\uc5b4\ub3c4\ub294 \uc904\uc5b4\ub4e4\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4."
+    element: "none"
+    cost: 3
+    owner: "warrior"
+    starter_only: 0
+    catalog_only: 1
+    rarity: "high"
+    build: "fortress"
+    target_scope: "single"
+    presentation_id: "earth_strike"
+    effects:
+    - type: "damage"
+      condition: ""
+      amount: 10
+      hits: 1
+      rule_version: 1
+      value_source: "current_block"
+      numerator: 3
+      denominator: 4
+      maximum: 15
+      threshold: 1
+      turn_limit: 2147483647
+      attacker_limit: 2147483647
+      draw_on_counter: 0
+      persistent: 0
+  artwork: {fileID: 21300000, guid: 6bab9470c36556899fe8e88715968364, type: 3}

@@ -1,3 +1,4 @@
+using System.Linq;
 using Brodun.Presentation;
 using NUnit.Framework;
 using UnityEditor;
@@ -7,6 +8,30 @@ namespace Brodun.Tests
 {
     public sealed class BattleBackgroundTests
     {
+        [Test]
+        public void TeamThemesResolveAllBackgroundsAndMonsterPrefabs()
+        {
+            var roster=Resources.Load<ThemeMonsterArt>("ThemeMonsterRoster");
+            Assert.NotNull(roster);
+            Assert.AreEqual(57,ThemeEnemyCatalog.Entries.Count);
+            foreach(var theme in DungeonThemes.All)
+            {
+                Assert.AreEqual(theme.BackgroundKey+"_normal",BattleBackgrounds.Resolve(theme.Id,false,null).name);
+                Assert.AreEqual(theme.BackgroundKey+"_boss",BattleBackgrounds.Resolve(theme.Id,true,null).name);
+            }
+            foreach(var entry in ThemeEnemyCatalog.Entries)
+            {
+                Assert.Contains(entry.Id,DungeonThemes.Find(entry.ThemeId).EnemyIds.ToArray());
+                var prefab=roster.Find(entry.Id);
+                Assert.NotNull(prefab,entry.Id);
+                var renderer=prefab.GetComponentInChildren<SpriteRenderer>();
+                Assert.AreEqual(entry.Id,renderer.sprite.name);
+                var attack=prefab.GetComponent<Animator>().runtimeAnimatorController.animationClips
+                    .Single(clip=>clip.name.EndsWith("_Attack"));
+                Assert.IsTrue(attack.events.Any(evt=>evt.functionName=="OnAttackImpact"),entry.Id);
+            }
+        }
+
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]

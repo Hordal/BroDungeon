@@ -7,11 +7,11 @@ namespace Brodun.Presentation
     // Presentation only. Model order is never derived from draw/sibling order.
     public sealed class HandPresentation
     {
-        public const float CardWidth=260,CardHeight=360;
-        public const float NaturalSpacing=274,OverflowSpacing=148;
-        public const float HoverScale=1.14f,HoverLift=30,LayoutSpeed=18;
-        // Normal cards top out below .36; enlarged inspection stays below the .44 floor.
-        public const float HoverTop=.41f;
+        public const float CardWidth=236,CardHeight=312;
+        public const float NaturalSpacing=250,OverflowSpacing=148;
+        public const float HoverScale=1.20f,HoverLift=26,LayoutSpeed=18;
+        public const float HandTop=.326f,HoverTop=.37f;
+        private const float BottomPadding=14,ArcHeight=7;
         public const int FullyVisibleCount=8;
         private readonly IReadOnlyList<CardView> cards;
         private readonly RectTransform hand,viewport,foreground;
@@ -20,7 +20,7 @@ namespace Brodun.Presentation
         private readonly Vector3[] corners=new Vector3[4];
         private readonly List<CardView> returning=new List<CardView>();
         private CardView hovered;
-        private float width,spacing,overflow;
+        private float width,cardWidth,cardHeight,spacing,overflow;
         private bool inputEnabled=true,visible=true,disposed;
         public float ScrollPosition {get;private set;}
         public HandPresentation(Transform root,RectTransform handRoot,PresentationAssets art,IReadOnlyList<CardView> entries,float scrollPosition=0)
@@ -30,12 +30,12 @@ namespace Brodun.Presentation
             viewport.gameObject.AddComponent<RectMask2D>();
             // Only the inspected/used card leaves the mask. HUDs stay outside hand bounds.
             foreground=BattleUi.Rect(root,"Hand foreground",Vector2.zero,Vector2.one);
-            var track=BattleUi.Image(root,"Hand scroll",null,new Color(.06f,.09f,.10f,.94f),new Vector2(.205f,.002f),new Vector2(.795f,.022f));
-            track.raycastTarget=true;
+            var track=BattleUi.Surface(root,"Hand scroll",new Vector2(.205f,.002f),new Vector2(.795f,.022f),BattleChrome.Form.Hud,BattleUi.Bronze);
+            track.GetComponent<BattleChrome>().raycastTarget=true;
             scrollbar=track.gameObject.AddComponent<Scrollbar>();
             var slide=BattleUi.Rect(track.transform,"Scroll area",Vector2.zero,Vector2.one);
             slide.offsetMin=new Vector2(4,3);slide.offsetMax=new Vector2(-4,-3);
-            var thumb=BattleUi.Image(slide,"Scroll thumb",null,new Color(.63f,.57f,.39f),Vector2.zero,Vector2.one);
+            var thumb=BattleUi.Image(slide,"Scroll thumb",null,BattleUi.Steel,Vector2.zero,Vector2.one);
             thumb.raycastTarget=true;scrollbar.handleRect=thumb.rectTransform;scrollbar.targetGraphic=thumb;
             scrollbar.direction=Scrollbar.Direction.LeftToRight;
             scrollbar.onValueChanged.AddListener(value=>{ScrollPosition=value;ClearHover();});
@@ -45,7 +45,7 @@ namespace Brodun.Presentation
                 var card=cards[i];var rect=(RectTransform)card.transform;
                 Vector2 previous=rect.anchoredPosition;
                 rect.SetParent(viewport,false);rect.localScale=Vector3.one;
-                rect.sizeDelta=new Vector2(CardWidth,CardHeight);
+                rect.sizeDelta=new Vector2(cardWidth,cardHeight);
                 positions[i]=card.HasHandPosition?previous:Destination(i)+Vector2.down*55;
                 rect.anchoredPosition=positions[i];
                 card.AttachHand(this);card.gameObject.SetActive(true);
@@ -53,29 +53,41 @@ namespace Brodun.Presentation
         }
         private void CalculateLayout()
         {
-            width=Mathf.Max(CardWidth+24,hand.rect.width);
+            float fitHeight=Mathf.Min(viewport.rect.height-BottomPadding-ArcHeight-1,(foreground.rect.height*HoverTop-12)/HoverScale);
+            float nextHeight=Mathf.Clamp(fitHeight,1,CardHeight);
+            float nextCardWidth=CardWidth*nextHeight/CardHeight;
+            float nextWidth=Mathf.Max(nextCardWidth+24,hand.rect.width);
+            if(Mathf.Approximately(width,nextWidth)&&Mathf.Approximately(cardHeight,nextHeight))return;
+            width=nextWidth;
+            cardWidth=nextCardWidth;
+            cardHeight=nextHeight;
             spacing=cards.Count<=1?0:cards.Count<=FullyVisibleCount?
-                Mathf.Min(NaturalSpacing,(width-CardWidth-16)/(cards.Count-1)):OverflowSpacing;
-            overflow=Mathf.Max(0,CardWidth+Mathf.Max(0,cards.Count-1)*spacing+16-width);
+                Mathf.Min(NaturalSpacing,(width-cardWidth-16)/(cards.Count-1)):OverflowSpacing;
+            overflow=Mathf.Max(0,cardWidth+Mathf.Max(0,cards.Count-1)*spacing+16-width);
             if(overflow<=0)ScrollPosition=0;
             scrollbar.gameObject.SetActive(visible&&overflow>0);
             scrollbar.size=Mathf.Clamp01(width/(width+overflow));
             scrollbar.SetValueWithoutNotify(ScrollPosition);
             scrollbar.interactable=inputEnabled&&overflow>0;
-            foreach(var card in cards)card.SetHandExposedWidth(spacing>0?Mathf.Min(CardWidth,spacing):CardWidth);
+            foreach(var card in cards)
+            {
+                if(card==null||card.IsPresenting)continue;
+                ((RectTransform)card.transform).sizeDelta=new Vector2(cardWidth,cardHeight);
+                card.SetHandExposedWidth(spacing>0?Mathf.Min(cardWidth,spacing):cardWidth);
+            }
         }
         private Vector2 Destination(int index)
         {
             float x=(index-(cards.Count-1)*.5f)*spacing;
             if(overflow>0)x+=overflow*.5f-ScrollPosition*overflow;
             // Nearly flat arch; no rotation to compromise text or hit testing.
-            float arc=cards.Count<=1?0:7*(1-Mathf.Abs(index-(cards.Count-1)*.5f)/Mathf.Max(1,(cards.Count-1)*.5f));
-            return new Vector2(x,viewport.rect.yMin+CardHeight*.5f+14+arc);
+            float arc=cards.Count<=1?0:ArcHeight*(1-Mathf.Abs(index-(cards.Count-1)*.5f)/Mathf.Max(1,(cards.Count-1)*.5f));
+            return new Vector2(x,viewport.rect.yMin+cardHeight*.5f+BottomPadding+arc);
         }
         public void Tick(float deltaTime)
         {
             if(disposed)return;
-            if(Mathf.Abs(width-Mathf.Max(CardWidth+24,hand.rect.width))>.5f)CalculateLayout();
+            CalculateLayout();
             float blend=1-Mathf.Exp(-LayoutSpeed*deltaTime);
             for(int i=0;i<cards.Count;i++)
             {
@@ -105,7 +117,7 @@ namespace Brodun.Presentation
                 {
                     var card=cards[i];if(card==null||!card.gameObject.activeInHierarchy||card.IsPresenting)continue;
                     var delta=point-positions[i];
-                    if(Mathf.Abs(delta.x)>CardWidth*.5f||Mathf.Abs(delta.y)>CardHeight*.5f)continue;
+                    if(Mathf.Abs(delta.x)>cardWidth*.5f||Mathf.Abs(delta.y)>cardHeight*.5f)continue;
                     return card;
                 }
             }

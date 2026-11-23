@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Brodun.Flow;
 using Brodun.Presentation;
 using Brodun.Editor;
@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Brodun.Tests
 {
-    public sealed class Phase3FlowTests : RulesTest
+    public sealed class Phase3FlowTests : LegacyRulesTest
     {
         private FlowSession Title()
         {var flow=new FlowSession(Data);Assert.IsTrue(flow.BeginTransition());flow.FinishTransition(FlowScreen.Title);return flow;}
@@ -49,7 +49,7 @@ namespace Brodun.Tests
         {
             var f=Map();f.Run.AddGold(50);f.Run.AddCard("earth_crush");f.SelectRoom("r1");var run=f.Run;
             Assert.IsTrue(f.BeginTransition());f.RestorePendingRoom();f.FinishTransition(FlowScreen.DungeonMap);
-            Assert.AreSame(run,f.Run);Assert.AreEqual(50,f.Run.Gold);Assert.AreEqual(5,f.Run.Deck.Count);Assert.AreEqual("r1",f.PendingRoom.Node.Id);
+            Assert.AreSame(run,f.Run);Assert.AreEqual(50,f.Run.Gold);Assert.AreEqual(11,f.Run.Deck.Count);Assert.AreEqual("r1",f.PendingRoom.Node.Id);
         }
         [Test] public void LeavingDiscardsRunAndNextGameHasNoOldState()
         {
