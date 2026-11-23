@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 9,
+  "schemaVersion": 10,
   "status": "implemented_rules_pending_unity_playtest",
   "title": "BRODUN 직업별 두 빌드 카드 70종 개편안",
   "date": "2026-11-23",
-  "supersedes": "70-card two-build design v8 decorative ground/stone/explosion tags",
+  "supersedes": "70-card two-build design v9 element tag cleanup",
   "counts": {
     "warrior": 18,
     "mage": 18,
@@ -2437,10 +2437,11 @@
   "buildCountPerClass": 2,
   "implementationEntry": "GameCatalogData.ToPlayableDefinitions -> Card70Catalog.Apply",
   "implementationValidation": {
-    "rulesTests": 124,
+    "rulesTests": 132,
     "failedRulesTests": 0,
     "fullSourceCompile": "passed",
-    "unityPlayModeExecuted": false
+    "unityPlayModeExecuted": false,
+    "classPoisonGuard": "rejected warrior/mage/priest definitions"
   },
   "elementPolicy": {
     "removedTags": [
@@ -2459,6 +2460,50 @@
     ],
     "automaticElementStatus": false,
     "mageCrossing": "Different tagged attack from previous resonant attack gains 1 resonance; first tagged attack also qualifies. Untagged attacks and non-attacks neither grant resonance nor change the previous resonant element. Wind/poison shared attacks remain eligible.",
-    "effects": "Only the explicit card text applies. Fire does not automatically burn; ice does not automatically freeze; lightning does not automatically shock."
+    "effects": "Only the explicit card text applies. Fire does not automatically burn; ice does not automatically freeze; lightning does not automatically shock.",
+    "poisonOwner": "neutral",
+    "poisonCardIds": [
+      "N08"
+    ],
+    "roles": {
+      "불": {
+        "role": "원소 교차 추가 피해와 공명 방출",
+        "cards": [
+          "M03",
+          "M09"
+        ]
+      },
+      "얼음": {
+        "role": "공격과 방어도 확보",
+        "cards": [
+          "M04"
+        ]
+      },
+      "번개": {
+        "role": "다단 공격 중심",
+        "cards": [
+          "M05"
+        ]
+      },
+      "물": {
+        "role": "다음 턴 활동력 확보",
+        "cards": [
+          "M10"
+        ]
+      },
+      "바람": {
+        "role": "카드 뽑기로 손패 확보",
+        "cards": [
+          "M16"
+        ]
+      },
+      "독": {
+        "role": "공용 카드의 누적 피해",
+        "cards": [
+          "N08"
+        ]
+      }
+    },
+    "confirmedRoles": "원소별 대표 카드의 역할은 불=교차 추가 피해·공명 방출, 얼음=피해와 방어도, 번개=다단 공격, 물=다음 턴 활동력, 바람=드로우로 확정한다. 독은 공용 카드 N08 침식의 일격으로만 공급하며 전사·마법사·사제 모두 보상·상점에서 획득할 수 있다. 독은 기본 2(강화 3)+설치된 서로 다른 지속 카드 수만큼 부여하고 적 행동 시작 시 방어도를 무시한 누적 피해를 준 뒤 1 감소한다. 이 역할은 각 카드의 명시 효과로 적용한다."
   }
 }

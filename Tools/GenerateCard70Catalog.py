@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 spec=json.loads((root/'Docs/Cards70.json').read_text(encoding='utf-8'))
+if any(c['element']=='독' and c['owner']!='neutral' for c in spec['cards']):
+ raise ValueError('Poison cards must belong to the neutral/shared pool.')
 q=lambda s:json.dumps(s,ensure_ascii=False)
 elements={None:'None','불':'Fire','물':'Water','얼음':'Ice','번개':'Lightning','바람':'Wind','독':'Poison'}
 rarity={'기본':'Basic','하급':'Low','중급':'Mid','상급':'High'}
