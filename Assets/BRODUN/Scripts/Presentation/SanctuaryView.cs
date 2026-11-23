@@ -33,11 +33,11 @@ public sealed partial class RoomView {
   int count=0;
   if(tab==0)for(int i=0;i<room.Visit.ItemOffers.Count;i++){
    int index=i;var offer=room.Visit.ItemOffers[i];var item=Item50Catalog.Find(offer.ItemId);
-   TradeRow(content,item.Name+" · "+ItemCategory(item)+" · "+item.Tier+"등급",item.Description,offer.Purchased?"구매 완료":room.Run.Gold<offer.Price?"골드 부족 / "+offer.Price:offer.Price+" GOLD / 구매",room.CanBuyItem(index),()=>Transact(()=>room.BuyItem(index)),"ItemBuy_"+index);count++;
+   TradeRow(content,item.Name+" · "+ItemCategory(item)+" · "+item.Tier+"등급",item.Description,offer.Purchased?"구매 완료":room.Run.Gold<offer.Price?"골드 부족 / "+offer.Price:offer.Price+" GOLD / 구매",room.CanBuyItem(index),()=>Transact(()=>room.BuyItem(index)),"ItemBuy_"+index,item.Id);count++;
   }
   if(tab==1)foreach(var owned in room.Run.Items.ToArray()){
    var item=Item50Catalog.Find(owned.ItemId);string id=owned.ItemId;
-   TradeRow(content,item.Name+" · "+ItemCategory(item)+(item.GrowthCap>0?" · 성장 "+owned.Progress+"/"+item.GrowthCap:""),item.Description,item.SellPrice+" GOLD / 판매",room.CanSellItem(id),()=>Transact(()=>room.SellItem(id)),"ItemSell_"+id);count++;
+   TradeRow(content,item.Name+" · "+ItemCategory(item)+(item.GrowthCap>0?" · 성장 "+owned.Progress+"/"+item.GrowthCap:""),item.Description,item.SellPrice+" GOLD / 판매",room.CanSellItem(id),()=>Transact(()=>room.SellItem(id)),"ItemSell_"+id,item.Id);count++;
   }
   if(tab==2)for(int i=0;i<room.Visit.Offers.Count;i++){
    int index=i;var offer=room.Visit.Offers[i];var card=room.Data.Card(offer.CardId);
@@ -61,11 +61,13 @@ public sealed partial class RoomView {
   }
  }
  void Transact(Func<bool> action){if(flow.Session.IsTransitioning)return;action();ShowTradeTab(tradeTab);}
- void TradeRow(Transform parent,string title,string description,string label,bool enabled,Action action,string actionId="TradeAction"){
+ void TradeRow(Transform parent,string title,string description,string label,bool enabled,Action action,string actionId="TradeAction",string itemId=null){
   var row=BattleUi.Image(parent,actionId+"Row",null,new Color(.07f,.11f,.14f,.98f),Vector2.zero,Vector2.one);
   row.gameObject.AddComponent<LayoutElement>().preferredHeight=160;
-  BattleUi.Text(row.transform,"Name",title,Art.font,25,BattleUi.Gold,new Vector2(.02f,.70f),new Vector2(.75f,.97f));
-  var body=BattleUi.Text(row.transform,"Effect",description,Art.font,20,BattleUi.Pale,new Vector2(.02f,.06f),new Vector2(.75f,.69f));body.resizeTextForBestFit=true;body.resizeTextMinSize=15;body.resizeTextMaxSize=20;
+  bool hasArt=itemId!=null;if(hasArt)RelicArt.Add(row.transform,itemId,new Vector2(.01f,.08f),new Vector2(.16f,.92f));
+  float textLeft=hasArt?.18f:.02f;
+  BattleUi.Text(row.transform,"Name",title,Art.font,25,BattleUi.Gold,new Vector2(textLeft,.70f),new Vector2(.75f,.97f));
+  var body=BattleUi.Text(row.transform,"Effect",description,Art.font,20,BattleUi.Pale,new Vector2(textLeft,.06f),new Vector2(.75f,.69f));body.resizeTextForBestFit=true;body.resizeTextMinSize=15;body.resizeTextMaxSize=20;
   var button=BattleUi.Button(row.transform,actionId,label,Art,new Vector2(.77f,.23f),new Vector2(.98f,.76f),action);button.interactable=enabled;
  }
 }

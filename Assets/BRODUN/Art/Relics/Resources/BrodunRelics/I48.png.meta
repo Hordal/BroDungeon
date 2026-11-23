@@ -1,0 +1,40 @@
+fileFormatVersion: 2
+guid: 1aed28f369ee4c7181876a943491443d
+TextureImporter:
+  serializedVersion: 13
+  externalObjects: {}
+  mipmaps:
+    enableMipMap: 0
+    sRGBTexture: 1
+  isReadable: 0
+  textureSettings:
+    filterMode: 1
+    aniso: 1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  maxTextureSize: 512
+  textureCompression: 1
+  spriteMode: 1
+  spritePixelsToUnits: 100
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  textureType: 8
+  textureShape: 1
+  spriteSheet:
+    serializedVersion: 2
+    sprites: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 6eed845fbbc047ba9e7826536bf42453
+    internalID: 0
+    nameFileIdTable: {}
+  userData: BRODUN relic illustration
+  assetBundleName: 
+  assetBundleVariant: 

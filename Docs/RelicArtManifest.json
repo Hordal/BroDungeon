@@ -1,0 +1,556 @@
+{
+  "count": 50,
+  "generation": "built-in image_gen",
+  "items": [
+    {
+      "id": "I01",
+      "name": "철의 맹세",
+      "resource": "BrodunRelics/I01",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I01.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "e02194a30587319637e43ee4ad3c58987416c8f4dc61b47dbb7f487f34e214ce"
+    },
+    {
+      "id": "I02",
+      "name": "바위의 심장",
+      "resource": "BrodunRelics/I02",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I02.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "e4919bfc9ae5d7c9bc1043f3542ba2d75221027f704b5e83782545640d501f83"
+    },
+    {
+      "id": "I03",
+      "name": "바람깃",
+      "resource": "BrodunRelics/I03",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I03.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "08d13216bf48bac1269187bf8644693f5aa6ee9e9ca176f63645338e15c010af"
+    },
+    {
+      "id": "I04",
+      "name": "새벽 등불",
+      "resource": "BrodunRelics/I04",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I04.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "f6ae892f7df1aa9ce08541f6c44bf0a77732de06ae9e08b15cb5b9253300a34d"
+    },
+    {
+      "id": "I05",
+      "name": "이끼 목걸이",
+      "resource": "BrodunRelics/I05",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I05.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "7701cd54557e9a48ad3d2cd2fb71c092adf8ebe064150e8c50f657fa2e1d2aab"
+    },
+    {
+      "id": "I06",
+      "name": "행운의 주화",
+      "resource": "BrodunRelics/I06",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I06.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "fc5de1d312d14929eaefc23ed95d699acdcdaaccaddb39aa6b05a2d0da78eb80"
+    },
+    {
+      "id": "I07",
+      "name": "균열의 쐐기",
+      "resource": "BrodunRelics/I07",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I07.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "a88b9d71b07d64b4540be11ae4c2114369e749322e6ad8d521ae6e8ca1a3b9e2"
+    },
+    {
+      "id": "I08",
+      "name": "수호의 가죽덧댐",
+      "resource": "BrodunRelics/I08",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I08.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "8bf832dbb7f9bf3969ed810c1f688015110caa0bc06584dcd57afee80ce1afb0"
+    },
+    {
+      "id": "I09",
+      "name": "전술 나침반",
+      "resource": "BrodunRelics/I09",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I09.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "9fe620b6c50c282b66e653b339f03e10551989eb8109fbf979d14e4ad1dc09ce"
+    },
+    {
+      "id": "I10",
+      "name": "전투 기록",
+      "resource": "BrodunRelics/I10",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I10.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "edc75dcef26802c6d72d8f2929be3da5a4bd08e6a6165ddd0e74049981814464"
+    },
+    {
+      "id": "I11",
+      "name": "단단한 매듭",
+      "resource": "BrodunRelics/I11",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I11.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "1b3d96e71e5395f916cf493781408a1d47be5767cd07bcabc53521698241e13d"
+    },
+    {
+      "id": "I12",
+      "name": "잿빛 약초",
+      "resource": "BrodunRelics/I12",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I12.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "7b9ffab91748c972aa627aad59c222a6ae587a733b60350502bd65cdea71a16f"
+    },
+    {
+      "id": "I13",
+      "name": "서약의 촛대",
+      "resource": "BrodunRelics/I13",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I13.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "16d7cda80c88fc3d5832537ad2e2833b097fbbcb832731c7f0dc60a6409dd874"
+    },
+    {
+      "id": "I14",
+      "name": "태엽 회중시계",
+      "resource": "BrodunRelics/I14",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I14.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "d192d79891e3df9458768bb925774701a19207092336d32fd9749e8cba4071f6"
+    },
+    {
+      "id": "I15",
+      "name": "오래된 책갈피",
+      "resource": "BrodunRelics/I15",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I15.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "cb853fb2afc933eaa1df471510e66165cd0462978a3d2853cb4ff212e66e3520"
+    },
+    {
+      "id": "I16",
+      "name": "독사의 송곳니",
+      "resource": "BrodunRelics/I16",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I16.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "b121912388a789bbc9306e4f1c7c093318487f6b373a633fa66c1c593d970380"
+    },
+    {
+      "id": "I17",
+      "name": "검사의 숫돌",
+      "resource": "BrodunRelics/I17",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I17.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "66f147fb79b0c3f3ca7a6e865c7a5855da3a276cc27694bae3533da42d40e46d"
+    },
+    {
+      "id": "I18",
+      "name": "철혈의 완장",
+      "resource": "BrodunRelics/I18",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I18.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "3584dcbdef95f504f7124cfa7591d58ed08c15737bc9df3d6b77fd87b17b883e"
+    },
+    {
+      "id": "I19",
+      "name": "성채의 쐐기",
+      "resource": "BrodunRelics/I19",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I19.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "3b4d8646c391c070efeee98d078a8e323cc0502e4644093514e1f4c7dd6b4e17"
+    },
+    {
+      "id": "I20",
+      "name": "보루의 봉인",
+      "resource": "BrodunRelics/I20",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I20.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "f0621bd7df6eae35f19c8be6124020ecb3ae73a61693aa2b9da3a96be2104aae"
+    },
+    {
+      "id": "I21",
+      "name": "압축 철판",
+      "resource": "BrodunRelics/I21",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I21.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "8c20d82b3c2062161c8b72fe317f666094831f08064a32d76248ba8cc659307e"
+    },
+    {
+      "id": "I22",
+      "name": "수호 일지",
+      "resource": "BrodunRelics/I22",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I22.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "a9d858827282483a39d633541b3225a587e843fdbe69a39c55d8e9369eb62152"
+    },
+    {
+      "id": "I23",
+      "name": "불씨 향로",
+      "resource": "BrodunRelics/I23",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I23.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "1450c4cc95d42304a04a56b4b7b139726c088edfe94551d4a1a853bc3b77ddca"
+    },
+    {
+      "id": "I24",
+      "name": "서리 거울",
+      "resource": "BrodunRelics/I24",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I24.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "f641c078b12910fa40f3069bb0f3a15571c7e6a40513a8ff0c6cf4f2a9674a85"
+    },
+    {
+      "id": "I25",
+      "name": "폭풍 코일",
+      "resource": "BrodunRelics/I25",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I25.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "29b554732013cc9c58ddea9fa9f4b6712dc7d04dae0667a5c5628174b4859ff8"
+    },
+    {
+      "id": "I26",
+      "name": "조수의 소라",
+      "resource": "BrodunRelics/I26",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I26.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "80629c09a4ae164204f333a5077b6d810986bccb7e93de4cc43bb8d0edf85d13"
+    },
+    {
+      "id": "I27",
+      "name": "순풍의 풍경",
+      "resource": "BrodunRelics/I27",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I27.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "ecbad18a6a732b2f6a685cdd66acc8d9feecc18862ff26a2318e412fd56be6df"
+    },
+    {
+      "id": "I28",
+      "name": "비전 축전기",
+      "resource": "BrodunRelics/I28",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I28.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "50fd4938bcfcaf7ac29d66855a8b3b448b9e5c997fe1b175dec4d5fffaddb08e"
+    },
+    {
+      "id": "I29",
+      "name": "낙인의 성배",
+      "resource": "BrodunRelics/I29",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I29.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "7d1baac69699ef37fdc1270508f0e599702ab70dbf01657c097da44e51982e66"
+    },
+    {
+      "id": "I30",
+      "name": "심문의 향",
+      "resource": "BrodunRelics/I30",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I30.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "91490e120d5fc0e0e7447f859f99e6510359a1934ea859f53e8b23b1c4c76354"
+    },
+    {
+      "id": "I31",
+      "name": "은총 묵주",
+      "resource": "BrodunRelics/I31",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I31.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "89ef7c94293a3bae2ae13496638b6492e75c101472dd5e438b8d21683082f0df"
+    },
+    {
+      "id": "I32",
+      "name": "자비의 천",
+      "resource": "BrodunRelics/I32",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I32.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "a751c6002f641fff8de75308e3cf30f2bc2ce8d0bc642388b353577a571a97af"
+    },
+    {
+      "id": "I33",
+      "name": "판결의 인장",
+      "resource": "BrodunRelics/I33",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I33.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "26233d2a36eb4e5355d2bba4858b7af99a16d974bf869749dcda006d98f6cc49"
+    },
+    {
+      "id": "I34",
+      "name": "새벽의 성서",
+      "resource": "BrodunRelics/I34",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I34.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "3d544d64520292210e697511255b173ee2cb42c5171db04d7c34692b0c79e9be"
+    },
+    {
+      "id": "I35",
+      "name": "원정 훈장",
+      "resource": "BrodunRelics/I35",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I35.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "aebdb27032da9a3cbca4d79f9ca01c930e77b8ec40c7f92848143abbac903855"
+    },
+    {
+      "id": "I36",
+      "name": "가벼운 배낭",
+      "resource": "BrodunRelics/I36",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I36.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "ebc4d0dd4f321f26b83bb07e8883ee5a20218d8639fdaf3059e13f529e3ce7c7"
+    },
+    {
+      "id": "I37",
+      "name": "여행자의 금고",
+      "resource": "BrodunRelics/I37",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I37.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "544e6866c45484cad87f3e850b0feb514617d5c3449369bd92e80d94da41d23b"
+    },
+    {
+      "id": "I38",
+      "name": "긴 여정의 망토",
+      "resource": "BrodunRelics/I38",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I38.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "4aae4abc1782a28c99332e9a44d9bae20b181c9ac1893805f96d4a60292e327c"
+    },
+    {
+      "id": "I39",
+      "name": "절박한 부적",
+      "resource": "BrodunRelics/I39",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I39.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "89c6906a35aba746c8730b31d258097694302df4639aa4d038be8a65b0d512e7"
+    },
+    {
+      "id": "I40",
+      "name": "침식 유리병",
+      "resource": "BrodunRelics/I40",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I40.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "aa3698f00c029a747caf2a40421f0ca5a58413bc856163ffc953dddd97e6352f"
+    },
+    {
+      "id": "I41",
+      "name": "붕괴한 초석",
+      "resource": "BrodunRelics/I41",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I41.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "e5634c669ffbda59d49fff88b87fea5d26835b8ab1ed2cca225b277493d7d3fa"
+    },
+    {
+      "id": "I42",
+      "name": "회랑의 기록판",
+      "resource": "BrodunRelics/I42",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I42.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "c24691cd16ab77c4185eb11760d0afa0d890ea04d5e0ec11e0b624a1a6d908ea"
+    },
+    {
+      "id": "I43",
+      "name": "꺼지지 않는 화로",
+      "resource": "BrodunRelics/I43",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I43.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "89534c3548e70000ab50422ab0430608c2d3b3e2364f52f684637fb741c114cd"
+    },
+    {
+      "id": "I44",
+      "name": "재의 심지",
+      "resource": "BrodunRelics/I44",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I44.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "a527e3c30cbe83bfbf05da3a70b0e1fc1dc1083b356813409a1ce919844eab4a"
+    },
+    {
+      "id": "I45",
+      "name": "수맥의 얼음 조각",
+      "resource": "BrodunRelics/I45",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I45.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "579e83d6f97b11eab4107468dc981bcfe82ea5ef7e8c028ff0787dbc0ac79713"
+    },
+    {
+      "id": "I46",
+      "name": "잠긴 은빛 성배",
+      "resource": "BrodunRelics/I46",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I46.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "8c153340f57667b3c54119e3faee4f1aff97ac0015592f8ba2b3f7226973f1c4"
+    },
+    {
+      "id": "I47",
+      "name": "별먹는 나침반",
+      "resource": "BrodunRelics/I47",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I47.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "341eb65b9e7162356e77849d10b505511405be9bc179d082a3087f4d797ca3b2"
+    },
+    {
+      "id": "I48",
+      "name": "검은 성좌 파편",
+      "resource": "BrodunRelics/I48",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I48.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "a7a1e5ab8da30e1894de2d80dea747735a9b2a4fa3f5905f9ad701d855e9bc17"
+    },
+    {
+      "id": "I49",
+      "name": "예비 주머니",
+      "resource": "BrodunRelics/I49",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I49.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "51bba0a6cf44434616ce140b3766cd71de72e6d289fc6a599b066e67336c2b55"
+    },
+    {
+      "id": "I50",
+      "name": "만능 연결고리",
+      "resource": "BrodunRelics/I50",
+      "path": "Assets/BRODUN/Art/Relics/Resources/BrodunRelics/I50.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "4c3cabe828e51af367e4829a94936c0586b021744cff4fafaeac641493bd5606"
+    }
+  ]
+}
